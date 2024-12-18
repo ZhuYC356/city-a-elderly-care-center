@@ -7,14 +7,12 @@ create table admin
     password varchar(255) null comment '密码',
     name     varchar(255) null comment '姓名',
     avatar   varchar(255) null comment '头像',
-    role     varchar(255) null comment '角色标识',
     phone    varchar(255) null comment '电话',
     email    varchar(255) null comment '邮箱',
     status   VARCHAR(50)  null comment '状态,用于删除,1 可用，0 不可用' default 1
 )
     comment '管理员' collate = utf8mb4_unicode_ci
                      row_format = DYNAMIC;
-
 
 
 # 通知表
@@ -50,23 +48,23 @@ CREATE TABLE elderly_info
     nurse_id            INT COMMENT '关联护工信息表的外键'                        default null,
     check_in_time       DATETIME COMMENT '入住时间',
     check_out_time      DATETIME COMMENT '离开时间',
-    level_care          INT COMMENT '护理等级',
+    nurse_level         INT COMMENT '护理等级 1 最高级 ，2 高级，3 中级，4 低级',
     status              VARCHAR(50) COMMENT '入住状态,用于删除,1 已入住，0 已离开' default 1
 ) COMMENT ='存储老人详细信息';
 # 护理项目表
 CREATE TABLE care_project
 (
-    project_id           INT PRIMARY KEY AUTO_INCREMENT COMMENT '护理项目唯一标识符',
-    project_name         VARCHAR(100)   NOT NULL COMMENT '护理项目名称',
-    description          TEXT COMMENT '护理项目描述',
-    service_duration     TIME COMMENT '服务时长',
-    price                DECIMAL(10, 2) NOT NULL COMMENT '服务价格',
-    frequency            CHAR(1) COMMENT '服务频率（如D表示每天，W表示每周，M表示每月等）',
-    required_nurse_level VARCHAR(50) COMMENT '所需护工等级',
-    is_active            TINYINT(1)     NOT NULL                             DEFAULT 1 COMMENT '是否有效（1表示有效，0表示无效）',
-    created_at           TIMESTAMP                                           DEFAULT CURRENT_TIMESTAMP COMMENT '记录创建时间',
-    updated_at           TIMESTAMP                                           DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '记录更新时间',
-    status               VARCHAR(50) COMMENT '状态,用于删除,1 可用，0 不可用' default 1
+    project_id       INT PRIMARY KEY AUTO_INCREMENT COMMENT '护理项目唯一标识符',
+    project_name     VARCHAR(100)   NOT NULL COMMENT '护理项目名称',
+    description      TEXT COMMENT '护理项目描述',
+    service_duration TIME COMMENT '服务时长',
+    price            DECIMAL(10, 2) NOT NULL COMMENT '服务价格',
+    frequency        CHAR(1) COMMENT '服务频率（如D表示每天，W表示每周，M表示每月等）',
+    nurse_level      INT COMMENT '护理等级 1 最高级 ，2 高级，3 中级，4 低级',
+    is_active        TINYINT(1)     NOT NULL                             DEFAULT 1 COMMENT '是否有效（1表示有效，0表示无效）',
+    created_at       TIMESTAMP                                           DEFAULT CURRENT_TIMESTAMP COMMENT '记录创建时间',
+    updated_at       TIMESTAMP                                           DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '记录更新时间',
+    status           VARCHAR(50) COMMENT '状态,用于删除,1 可用，0 不可用' default 1
 ) COMMENT ='存储护理项目信息';
 -- 创建老人项目关联表
 CREATE TABLE elderly_care_project
@@ -105,6 +103,7 @@ CREATE TABLE nurse_info
     photo                    VARCHAR(255) COMMENT '护工照片',
     work_experience          TEXT COMMENT '工作经验描述',
     professional_certificate VARCHAR(255) COMMENT '专业证书',
+    nurse_level              INT COMMENT '护理等级 1 最高级 ，2 高级，3 中级，4 低级',
     service_evaluation       TEXT COMMENT '服务评价',
     status                   VARCHAR(50) COMMENT '状态,用于删除,1 可用，0 不可用' default 1
 ) COMMENT ='存储护工基本信息';
