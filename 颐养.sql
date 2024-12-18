@@ -14,6 +14,9 @@ create table admin
 )
     comment '管理员' collate = utf8mb4_unicode_ci
                      row_format = DYNAMIC;
+
+
+
 # 通知表
 create table notice
 (
