@@ -1,3 +1,4 @@
+
 # 管理员表
 create table admin
 (
