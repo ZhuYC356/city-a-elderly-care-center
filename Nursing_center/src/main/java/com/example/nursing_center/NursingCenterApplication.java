@@ -8,7 +8,6 @@ public class NursingCenterApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(NursingCenterApplication.class, args);
-        System.out.println("11111");
     }
 
 }
