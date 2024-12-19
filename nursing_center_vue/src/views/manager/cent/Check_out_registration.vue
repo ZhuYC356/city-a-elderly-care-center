@@ -1,6 +1,6 @@
 <script>
 export default {
-  name: "Check_out_registration"
+  name: "退住等级"
 }
 </script>
 

@@ -1,6 +1,6 @@
 <script>
 export default {
-  name: "Check_in"
+  name: "入住登记"
 }
 </script>
 

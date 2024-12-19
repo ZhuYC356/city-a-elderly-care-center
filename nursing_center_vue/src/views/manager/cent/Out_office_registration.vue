@@ -3,7 +3,7 @@
 </template>
 <script>
 export default {
-  name: "Out_office_registration"
+  name: "外出登记"
 }
 </script>
 <style scoped>
