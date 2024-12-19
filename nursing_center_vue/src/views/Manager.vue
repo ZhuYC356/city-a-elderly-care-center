@@ -51,8 +51,8 @@
             <template slot="title">
               <i class="el-icon-menu"></i><span>床位管理</span>
             </template>
-            <el-menu-item index="/2">床位示意图</el-menu-item>
-            <el-menu-item index="/2">床位管理</el-menu-item>
+            <el-menu-item index="/bunk">床位示意图</el-menu-item>
+            <el-menu-item index="/bunk_manager">床位管理</el-menu-item>
           </el-submenu>
           <el-submenu index="examine">
             <template slot="title">

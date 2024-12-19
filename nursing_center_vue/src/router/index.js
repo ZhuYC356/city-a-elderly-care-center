@@ -28,6 +28,8 @@ const routes = [
       { path: 'toll', name: 'Toll', meta: { name: '收费' }, component: () => import('../views/manager/Toll') },
       { path: 'refunds', name: 'Refunds', meta: { name: '退费' }, component: () => import('../views/manager/Refunds') },
       { path: 'queryExpenseRecor', name: 'QueryExpenseRecor', meta: { name: '费用记录查询' }, component: () => import('../views/manager/QueryExpenseRecor') },
+      { path: 'bunk', name: 'Bunk', meta: { name: '床位信息' }, component: () => import('../views/manager/cent/Bunk.vue') },
+      { path: 'bunk_manager', name: 'Bunk_manager', meta: { name: '床位管理' }, component: () => import('../views/manager/cent/Bunk_manager.vue') },
       {
         path: 'diagnosis',
         name: 'Diagnosis',
