@@ -1,4 +1,3 @@
-
 # 管理员表
 create table admin
 (
@@ -67,6 +66,7 @@ CREATE TABLE care_project
     updated_at       TIMESTAMP                                           DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '记录更新时间',
     status           VARCHAR(50) COMMENT '状态,用于删除,1 可用，0 不可用' default 1
 ) COMMENT ='存储护理项目信息';
+
 -- 创建老人项目关联表
 CREATE TABLE elderly_care_project
 (
@@ -92,7 +92,19 @@ CREATE TABLE bed_info
     floor        INT COMMENT '楼层',
     status       VARCHAR(50) COMMENT '状态,用于删除,1 可用，0 不可用' default 1
 ) COMMENT ='存储床位基本信息';
-
+CREATE TABLE bed_elderly_association
+(
+    association_id       INT PRIMARY KEY AUTO_INCREMENT COMMENT '关联记录的唯一标识符',
+    bed_id               INT                   NOT NULL COMMENT '与该关联记录关联的床位ID，外键关联到床位表',
+    elderly_id           INT                   NOT NULL COMMENT '与该关联记录关联的老人ID，外键关联到老人表',
+    check_in_date        DATE                  NOT NULL COMMENT '老人入住床位的日期',
+    bed_status           INT NOT NULL DEFAULT '0' COMMENT '指示老人当前是否在床位上 0 在床 1 离床',
+    leave_bed_start_time DATETIME              NULL COMMENT '如果老人离床，记录其离床的开始时间',
+    leave_bed_end_time   DATETIME              NULL COMMENT '如果老人返回床位，记录其返回的时间',
+    remarks              TEXT                  NULL COMMENT '关于床位与老人关联的额外信息或备注',
+    created_at           TIMESTAMP                      DEFAULT CURRENT_TIMESTAMP COMMENT '记录被添加到表中的时间',
+    updated_at           TIMESTAMP                      DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '记录最后一次被修改的时间'
+) COMMENT ='存储疗养院床位与老人之间的关联信息';
 -- 创建护工信息表
 CREATE TABLE nurse_info
 (

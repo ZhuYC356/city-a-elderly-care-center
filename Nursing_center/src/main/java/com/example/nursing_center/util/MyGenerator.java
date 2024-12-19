@@ -28,16 +28,17 @@ public class MyGenerator {
      * 你要生成的表名字符串数组
      */
     private static final String [] tables = {
-            "admin",
-            "bed_info",
-            "care_project",
-            "care_record",
-            "elderly_care_project",
-            "elderly_info",
-            "financial",
-            "notice",
-            "nurse_info",
-            "outing_registration",
+//            "admin",
+//            "bed_info",
+//            "care_project",
+//            "care_record",
+//            "elderly_care_project",
+//            "elderly_info",
+//            "financial",
+//            "notice",
+//            "nurse_info",
+//            "outing_registration",
+            "bed_elderly_association"
     };
 
     public static void main(String[] args) {
