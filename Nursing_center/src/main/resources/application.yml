@@ -3,11 +3,11 @@ server:
 
 spring:
   datasource:
-    url: jdbc:mysql://82.157.184.186:3306/nursing_center?useSSL=false&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&transformedBitIsBoolean=true&serverTimezone=GMT%2B8
+    url: jdbc:mysql://82.157.184.186:3306/mammalia?useSSL=false&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&transformedBitIsBoolean=true&serverTimezone=GMT%2B8
     username: root
     password: Feng183370@
     driver-class-name: com.mysql.jdbc.Driver
 
 mybatis-plus:
   mapper-locations: classpath:mapper/*Mapper.xml
-  type-aliases-package: com.example.mammalia_project.pojo
+  type-aliases-package: com.example.nursing_center.pojo
