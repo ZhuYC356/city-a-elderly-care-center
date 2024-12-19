@@ -12,6 +12,12 @@ const form = reactive({
   bedNumber: '',
   date: ''
 })
+const addForm = reactive({
+  name: '',
+  bedNumber: '',
+  date: '',
+  gender: '',
+})
 const onSubmit = () => {
   alert('提交')
 }
@@ -96,6 +102,9 @@ const drawer = ref(false)
 const toggle = () => {
   drawer.value = !drawer.value
 }
+const submit=() => {
+  alert('提交')
+}
 </script>
 
 <template>
@@ -113,10 +122,18 @@ const toggle = () => {
       <div style="margin-top: 15px;margin-left: 10px">
         <el-form :inline="true" :model="form">
           <el-form-item style="margin-right: 20px">
-            <el-input v-model="form.name" placeholder="请填写老人姓名" clearable/>
+            <el-input v-model="form.name" placeholder="请填写老人姓名" clearable>
+              <template #prefix>
+                <i class="el-icon-user" style="font-size: 15px;margin-left: 3px" ></i>
+              </template>
+            </el-input>
           </el-form-item>
           <el-form-item style="margin-right: 20px">
-            <el-input v-model="form.bedNumber" placeholder="请填写床位号" clearable/>
+            <el-input v-model="form.bedNumber" placeholder="请填写床位号" clearable>
+              <template #prefix>
+                <i class="el-icon-postcard" style="font-size: 15px;margin-left: 3px" ></i>
+              </template>
+            </el-input>
           </el-form-item>
           <el-form-item style="margin-right: 20px">
             <el-date-picker
@@ -140,6 +157,63 @@ const toggle = () => {
         <el-drawer title="I am the title" :with-header="false" :visible.sync="drawer">
           <div style="margin: 15px">
             <span style="font-weight: bolder;font-size: 15px">添加床位</span>
+            <el-form :model="addForm" label-width="auto" style="max-width: 600px">
+              <el-form-item label="姓名" style="margin-top: 15px">
+                <el-input v-model="addForm.name" style="width: 300px;">
+                  <template #prefix>
+                    <i class="el-icon-user" style="font-size: 15px;margin-left: 3px" ></i>
+                  </template>
+                </el-input>
+              </el-form-item>
+
+              <el-form-item label="性别" style="margin-top: 15px">
+                <el-input v-model="addForm.name" style="width: 300px;">
+                  <template #prefix>
+                    <i class="el-icon-toilet-paper" style="font-size: 15px;margin-left: 3px" ></i>
+                  </template>
+                </el-input>
+              </el-form-item>
+              <el-form-item style="margin-right: 20px;" label="出生日期">
+                <el-date-picker
+                    v-model="form.date"
+                    type="date"
+                    placeholder="请选择入住日期"
+                    clearable
+                    style="width: 300px"
+                />
+              </el-form-item>
+              <el-form-item label="监护人电话" style="margin-top: 15px">
+                <el-input v-model="addForm.name" style="width: 300px;">
+                  <template #prefix>
+                    <i class="el-icon-phone" style="font-size: 15px;margin-left: 3px" ></i>
+                  </template>
+                </el-input>
+              </el-form-item>
+              <el-form-item label="楼号" style="margin-top: 15px">
+                <el-input v-model="addForm.name" style="width: 300px;">
+                  <template #prefix>
+                    <i class="el-icon-s-home" style="font-size: 15px;margin-left: 3px" ></i>
+                  </template>
+                </el-input>
+              </el-form-item>
+              <el-form-item label="房间号" style="margin-top: 15px">
+                <el-input v-model="addForm.name" style="width: 300px;">
+                  <template #prefix>
+                    <i class="el-icon-film" style="font-size: 15px;margin-left: 3px" ></i>
+                  </template>
+                </el-input>
+              </el-form-item>
+              <el-form-item label="床位号" style="margin-top: 15px">
+                <el-input v-model="addForm.name" style="width: 300px;">
+                  <template #prefix>
+                    <i class="el-icon-box" style="font-size: 15px;margin-left: 3px" ></i>
+                  </template>
+                </el-input>
+              </el-form-item>
+              <el-button link type="success" size="small" @click="submit" style="margin-left: 20px">
+                <span style="font-weight: bolder">提 交</span>
+              </el-button>
+            </el-form>
           </div>
           <div>
 
