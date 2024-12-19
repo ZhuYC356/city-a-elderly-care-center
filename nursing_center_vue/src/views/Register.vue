@@ -61,14 +61,14 @@ export default {
   },
   methods: {
     register() {
-      this.$request.post('/register', this.form).then(res => {
-        if (res.code === '200') {
-          this.$router.push('/login')  // 跳转登录页面
-          this.$message.success('注册成功')
-        } else {
-          this.$message.error(res.msg)
-        }
-      })
+      // this.$request.post('/register', this.form).then(res => {
+      //   if (res.code === '200') {
+      //     this.$router.push('/login')  // 跳转登录页面
+      //     this.$message.success('注册成功')
+      //   } else {
+      //     this.$message.error(res.msg)
+      //   }
+      // })
     }
   }
 }

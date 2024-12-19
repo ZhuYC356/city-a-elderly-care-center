@@ -4,7 +4,7 @@
     <div class="manager-header">
       <div class="manager-header-left">
         <img src="@/assets/imgs/img.png"/>
-        <div class="title">东软云医院</div>
+        <div class="title">A市疗养中心</div>
       </div>
 
       <div class="manager-header-center">
@@ -40,61 +40,43 @@
           </el-menu-item>
           <el-submenu index="register">
             <template slot="title">
-              <i class="el-icon-menu"></i><span>挂号收费</span>
+              <i class="el-icon-menu"></i><span>客户管理</span>
             </template>
-            <el-menu-item index="/registered">窗口挂号</el-menu-item>
-            <el-menu-item index="/refundNumber">窗口退号</el-menu-item>
-            <el-menu-item index="/toll">收费</el-menu-item>
-            <el-menu-item index="/refunds">退费</el-menu-item>
-            <el-menu-item index="/queryExpenseRecor">退费费用记录查询</el-menu-item>
+            <el-menu-item index="/1">入住登记</el-menu-item>
+            <el-menu-item index="/1">退住登记</el-menu-item>
+            <el-menu-item index="/1">外出登记</el-menu-item>
           </el-submenu>
 
           <el-submenu index="work">
             <template slot="title">
-              <i class="el-icon-menu"></i><span>医生工作</span>
+              <i class="el-icon-menu"></i><span>床位管理</span>
             </template>
-            <el-menu-item index="/patientViewing">患者查看</el-menu-item>
-            <el-menu-item index="/diagnosis">医生诊疗</el-menu-item>
-            <el-menu-item index="/7">看诊记录</el-menu-item>
+            <el-menu-item index="/2">床位示意图</el-menu-item>
+            <el-menu-item index="/2">床位管理</el-menu-item>
           </el-submenu>
           <el-submenu index="examine">
             <template slot="title">
-              <i class="el-icon-menu"></i><span>检查管理</span>
+              <i class="el-icon-menu"></i><span>护理模块</span>
             </template>
-            <el-menu-item index="/9">检查申请</el-menu-item>
-            <el-menu-item index="/00">患者录入</el-menu-item>
-            <el-menu-item index="/99">检查录入</el-menu-item>
-            <el-menu-item index="/88">检查管理</el-menu-item>
+            <el-menu-item index="/3">护理项目</el-menu-item>
+            <el-menu-item index="/3">护理记录</el-menu-item>
+            <el-menu-item index="/3">老人护理项目</el-menu-item>
           </el-submenu>
           <el-submenu index="inspection">
             <template slot="title">
-              <i class="el-icon-menu"></i><span>检验管理</span>
+              <i class="el-icon-menu"></i><span>健康管家</span>
             </template>
-            <el-menu-item index="/11">检验申请</el-menu-item>
-            <el-menu-item index="/22">患者录入</el-menu-item>
-            <el-menu-item index="/44">检验录入</el-menu-item>
-            <el-menu-item index="/33">检验管理</el-menu-item>
+            <el-menu-item index="/11">设置服务对象</el-menu-item>
+            <el-menu-item index="/22">服务关注</el-menu-item>
+            <el-menu-item index="/44">日常护理</el-menu-item>
           </el-submenu>
           <el-submenu index="pharmacy">
             <template slot="title">
-              <i class="el-icon-menu"></i><span>药房管理</span>
+              <i class="el-icon-menu"></i><span>财务管理</span>
             </template>
-            <el-menu-item index="/55">药房发药</el-menu-item>
-            <el-menu-item index="/77">药房退药</el-menu-item>
-            <el-menu-item index="/66">药库管理</el-menu-item>
-            <el-menu-item index="/88">发退药记录管理</el-menu-item>
+            <el-menu-item index="/55">财务账单</el-menu-item>
           </el-submenu>
-          <el-submenu index="dispose">
-            <template slot="title">
-              <i class="el-icon-menu"></i><span>处置管理</span>
-            </template>
-            <el-menu-item index="/999">处置管理</el-menu-item>
-            <el-menu-item index="/111">患者录入</el-menu-item>
-            <el-menu-item index="/222">处置录入</el-menu-item>
-          </el-submenu>
-
         </el-menu>
-
       </div>
 
       <!--  数据表格  -->

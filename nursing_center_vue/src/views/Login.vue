@@ -52,15 +52,16 @@ export default {
   },
   methods: {
     login() {
-      this.$request.post('/web/login', this.form).then(res => {
-        if (res.code === '200') {
-          this.$message.success('登录成功,正在跳转')
-          this.$router.push('/')  // 跳转主页
-          localStorage.setItem('user', JSON.stringify(res.data));
-        } else {
-          this.$message.error(res.msg)
-        }
-      })
+      this.$router.push('/')  // 跳转主页
+      // this.$request.post('/web/login', this.form).then(res => {
+      //   if (res.code === '200') {
+      //     this.$message.success('登录成功,正在跳转')
+      //     this.$router.push('/')  // 跳转主页
+      //     localStorage.setItem('user', JSON.stringify(res.data));
+      //   } else {
+      //     this.$message.error(res.msg)
+      //   }
+      // })
 
     }
   }
