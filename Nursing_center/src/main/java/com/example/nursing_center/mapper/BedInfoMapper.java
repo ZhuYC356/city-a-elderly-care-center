@@ -13,4 +13,5 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface BedInfoMapper extends BaseMapper<BedInfo> {
 
+    Integer add(BedInfo bedInfo);
 }

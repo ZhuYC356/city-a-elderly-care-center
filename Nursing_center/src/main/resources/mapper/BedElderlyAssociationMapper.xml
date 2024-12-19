@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.nursing_center.mapper.BedElderlyAssociationMapper">
+
+    <insert id="add">
+        insert into bed_elderly_association(bed_id,elderly_id,check_in_date,bed_status,check_in_date,remarks)
+        values(#{bedId},#{elderlyId},#{checkInDate},#{bedStatus},now(),#{remarks})
+    </insert>
+</mapper>

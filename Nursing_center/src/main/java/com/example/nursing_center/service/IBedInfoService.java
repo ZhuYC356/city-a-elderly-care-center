@@ -1,7 +1,9 @@
 package com.example.nursing_center.service;
 
+import com.example.nursing_center.common.Result;
 import com.example.nursing_center.pojo.BedInfo;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.example.nursing_center.pojo.ElderlyInfo;
 
 /**
  * <p>
@@ -13,4 +15,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IBedInfoService extends IService<BedInfo> {
 
+    Result add(BedInfo bedInfo);
 }
