@@ -7,8 +7,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @SpringBootTest
 class NursingCenterApplicationTests {
@@ -37,10 +35,7 @@ class NursingCenterApplicationTests {
         user.setContactInfo("123456789");
         user.setCheckInTime(LocalDateTime.now());
         user.setCheckOutTime(LocalDateTime.now());
-        List<ElderlyInfo> list=new ArrayList<>();
-        list.add(user);
-        String str= JSONUtil.toJsonStr(list);
-
+        String str= JSONUtil.toJsonStr(user);
         System.out.println(str);
     }
 
