@@ -30,6 +30,9 @@ const routes = [
       { path: 'queryExpenseRecor', name: 'QueryExpenseRecor', meta: { name: '费用记录查询' }, component: () => import('../views/manager/QueryExpenseRecor') },
       { path: 'bunk', name: 'Bunk', meta: { name: '床位信息' }, component: () => import('../views/manager/cent/Bunk.vue') },
       { path: 'bunk_manager', name: 'Bunk_manager', meta: { name: '床位管理' }, component: () => import('../views/manager/cent/Bunk_manager.vue') },
+      { path: 'check_in', name: 'Check_in', meta: { name: '入住登记' }, component: () => import('../views/manager/cent/Check_in.vue') },
+      { path: 'check_out_registration', name: 'Check_out_registration', meta: { name: '退住登记' }, component: () => import('../views/manager/cent/Check_out_registration.vue') },
+      { path: 'out_office_registration', name: 'Out_office_registration', meta: { name: '外出登记' }, component: () => import('../views/manager/cent/Out_office_registration.vue') },
       {
         path: 'diagnosis',
         name: 'Diagnosis',

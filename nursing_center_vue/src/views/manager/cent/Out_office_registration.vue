@@ -1,13 +1,11 @@
-<script>
-export default {
-  name: "Out_office_registration"
-}
-</script>
-
 <template>
 
 </template>
-
+<script>
+export default {
+  name: "外出登记"
+}
+</script>
 <style scoped>
 
 </style>
