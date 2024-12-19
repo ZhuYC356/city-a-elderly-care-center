@@ -2,6 +2,7 @@ package com.example.nursing_center;
 
 import cn.hutool.json.JSONUtil;
 import com.example.nursing_center.pojo.BedElderlyAssociation;
+import com.example.nursing_center.pojo.BedInfo;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -13,10 +14,12 @@ class NursingCenterApplicationTests {
 
     @Test
     void contextLoads() {
-        BedElderlyAssociation user=new BedElderlyAssociation();
-        user.setAssociationId(1);
-        user.setBedId(1);
-        user.setElderlyId(1);
+        BedInfo user=new BedInfo();
+        user.setBedNumber("1");
+        user.setBedType("2");
+        user.setBedStatus("3");
+        user.setFloorNumber(4);
+        user.setRoomNumber("5");
         String str= JSONUtil.toJsonStr(user);
         System.out.println(str);
     }
