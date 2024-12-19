@@ -20,15 +20,24 @@ public class MyGenerator {
     private static final String USERNAME = "root";
     private static final String PASSWORD = "Feng183370@";
     private static final String PACKAGE_NAME = "com.example.nursing_center";
-    private static final String OUTDIR_JAVA = "D:\\devopment_project\\java_project\\softwareconstruction\\project\\Nursing_center\\src\\main\\java";
-    private static final String OUTDIR_XML = "D:\\devopment_project\\java_project\\softwareconstruction\\project\\Nursing_center\\src\\main\\resources\\mapper";
+    private static final String OUTDIR_JAVA = "D:\\devopment_project\\java_project\\softwareconstruction\\city-a-elderly-care-center\\Nursing_center\\src\\main\\java";
+    private static final String OUTDIR_XML = "D:\\devopment_project\\java_project\\softwareconstruction\\city-a-elderly-care-center\\Nursing_center\\src\\main\\resources\\mapper";
     private static final String AUTHOR_NAME = "第六组";
 
     /**
      * 你要生成的表名字符串数组
      */
     private static final String [] tables = {
-            "t_user",
+            "admin",
+            "bed_info",
+            "care_project",
+            "care_record",
+            "elderly_care_project",
+            "elderly_info",
+            "financial",
+            "notice",
+            "nurse_info",
+            "outing_registration",
     };
 
     public static void main(String[] args) {
