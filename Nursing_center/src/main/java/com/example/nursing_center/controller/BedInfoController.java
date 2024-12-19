@@ -3,13 +3,11 @@ package com.example.nursing_center.controller;
 
 import com.example.nursing_center.common.Result;
 import com.example.nursing_center.pojo.BedInfo;
-import com.example.nursing_center.pojo.ElderlyInfo;
 import com.example.nursing_center.service.IBedInfoService;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import org.springframework.web.bind.annotation.RestController;
 
 /**

@@ -2,7 +2,6 @@ package com.example.nursing_center.controller;
 
 
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -17,4 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/elderly-info")
 public class ElderlyInfoController {
 
+    /*@PostMapping("/back_add")
+    public Result add(@RequestBody ElderlyInfo elderlyInfo){
+        return IElderlyInfoService.add(elderlyInfo);
+    }*/
 }
