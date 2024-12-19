@@ -24,7 +24,8 @@ public class BedElderlyAssociationController {
 
     /**
      * 添加
-     * @param bedElderlyAssociation bed_id,elderly_id,check_in_date,bed_status,check_in_date,remarks
+     * @param bedElderlyAssociation bed_id,elderly_id,check_in_date,bed_status,check_in_date
+     *
      * @return
      */
     @PostMapping("/add")
@@ -54,9 +55,9 @@ public class BedElderlyAssociationController {
     {
         return Result.success(bedElderlyAssociationService.getById(id));
     }
-    @PostMapping("/selectByName")
-    public Result selectByName(@RequestBody BedElderlyAssociation bedElderlyAssociation)
-    {
-        return Result.success(bedElderlyAssociationService.selectByName(bedElderlyAssociation));
-    }
+//    @PostMapping("/selectByName")
+//    public Result selectByName(@RequestBody BedElderlyAssociation bedElderlyAssociation)
+//    {
+//        return Result.success(bedElderlyAssociationService.selectByName(bedElderlyAssociation));
+//    }
 }

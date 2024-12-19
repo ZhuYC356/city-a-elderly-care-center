@@ -25,7 +25,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class BedInfoController {
     @Resource
     private IBedInfoService bedInfoService;
-
     /**
      * 添加
      * @param bedInfo bed_number,bed_type,bed_status,floor_number,room_number,floor
@@ -35,6 +34,5 @@ public class BedInfoController {
     public Result add (@RequestBody BedInfo bedInfo){
         return bedInfoService.add(bedInfo);
     }
-
 
 }
