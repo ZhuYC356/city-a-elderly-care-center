@@ -10,4 +10,4 @@ spring:
 
 mybatis-plus:
   mapper-locations: classpath:mapper/*Mapper.xml
-  type-aliases-package: com.example.mammalia_project.pojo
+  type-aliases-package: com.example.nursing_center.pojo
