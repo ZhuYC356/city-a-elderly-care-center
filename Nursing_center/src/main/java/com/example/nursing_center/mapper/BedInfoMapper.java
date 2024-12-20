@@ -26,4 +26,6 @@ public interface BedInfoMapper extends BaseMapper<BedInfo> {
     List<ManagerElder> selectName(Form form);
 
     List<ManagerElder> selectNumber(Form form);
+
+    BedInfo selectByFRB(BedInfo bedInfo);
 }

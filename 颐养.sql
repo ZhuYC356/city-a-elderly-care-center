@@ -110,6 +110,7 @@ CREATE TABLE bed_info
     floor        INT COMMENT '楼层',
     status       VARCHAR(50) COMMENT '状态,用于删除,1 可用，0 不可用' default 1
 ) COMMENT ='存储床位基本信息';
+
 -- 创建床位和老人的关联表
 CREATE TABLE bed_elderly_association
 (

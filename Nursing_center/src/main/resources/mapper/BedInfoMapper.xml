@@ -30,4 +30,8 @@
         and bed_info.bed_number like "%"#{bedNumber}"%"
     </select>
 
+    <select id="selectByFRB" resultType="com.example.nursing_center.pojo.BedInfo">
+        select * from bed_info where floor_number=#{floorNumber} and room_number=#{roomNumber} and bed_number=#{bedNumber}
+    </select>
+
 </mapper>
