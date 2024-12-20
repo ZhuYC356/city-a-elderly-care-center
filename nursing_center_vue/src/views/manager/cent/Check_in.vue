@@ -11,6 +11,7 @@
         <hr style="margin: 10px">
       </div>
       <div style="margin-top: 15px;margin-left: 10px">
+        <!--        上端按钮-->
         <el-button style="margin-bottom: 10px;background-color: #80d89a" plain icon="el-icon-plus" plain
                    @click="dialogFormVisible = true">
           入住登记
@@ -23,6 +24,8 @@
                    @click="dialogFormVisible2 = true">
           外出登记申请
         </el-button>
+
+        <!--        查询界面-->
         <el-form :inline="true" :model="selectFrom">
           <el-form-item style="margin-right: 20px">
             <el-input v-model="selectFrom.name" placeholder="请填写老人姓名" clearable>
@@ -66,11 +69,12 @@
           <el-table-column property="roomNumber" label="房间号" width="120"/>
           <el-table-column property="bedNumber" label="床位号" width="120"/>
           <el-table-column fixed="right" label="操作" min-width="120">
-            <template #default>
-              <el-button link type="success" size="small" @click="handleClick($index,row)">
+            <template v-slot="scope">
+              <el-button link type="success" size="small" plain  @click="handleClick( scope.$index,scope.row)">
                 <span style="font-weight: bolder">详 情</span>
               </el-button>
-              <el-button link type="primary" size="small" @click="update()"><span style="font-weight: bolder">修 改</span>
+              <el-button link type="primary" size="small" plain  @click="update(scope.$index,scope.row)"><span
+                  style="font-weight: bolder">修 改</span>
               </el-button>
             </template>
           </el-table-column>
@@ -138,7 +142,7 @@
       </template>
     </el-dialog>
     <!--  退住申请-->
-    <el-dialog :visible.sync="dialogFormVisible1" title="新增入住登记" width="500">
+    <el-dialog :visible.sync="dialogFormVisible1" title="退住登记申请" width="500">
       <el-form :model="elderly">
         <el-form-item label="姓名:" :label-width="formLabelWidth">
           <el-input v-model="elderly.name" autocomplete="off"/>
@@ -184,7 +188,7 @@
       </template>
     </el-dialog>
     <!--  外出申请-->
-    <el-dialog :visible.sync="dialogFormVisible2" title="新增入住登记" width="500">
+    <el-dialog :visible.sync="dialogFormVisible2" title="外出登记申请" width="500">
       <el-form :model="elderly">
         <el-form-item label="姓名:" :label-width="formLabelWidth">
           <el-input v-model="elderly.name" autocomplete="off"/>
@@ -230,7 +234,7 @@
       </template>
     </el-dialog>
     <!--  查看详情-->
-    <el-dialog :visible.sync="dialogFormVisible3" title="新增入住登记" width="500">
+    <el-dialog :visible.sync="dialogFormVisible3" title="查询详情" width="500">
       <el-form :model="elderly">
         <el-form-item label="姓名:" :label-width="formLabelWidth">
           <el-input v-model="elderly.name" autocomplete="off"/>
@@ -276,7 +280,7 @@
       </template>
     </el-dialog>
     <!--  修改信息-->
-    <el-dialog :visible.sync="dialogFormVisible4" title="新增入住登记" width="500">
+    <el-dialog :visible.sync="dialogFormVisible4" title="修改信息" width="500">
       <el-form :model="elderly">
         <el-form-item label="姓名:" :label-width="formLabelWidth">
           <el-input v-model="elderly.name" autocomplete="off"/>
@@ -336,13 +340,11 @@ export default {
       this.form.bedNumber = '';
       this.form.date = '';
     },
-    handleClick() {
+    handleClick(index, row) {
       this.dialogFormVisible3 = true
-      console.log('handleClick')
     },
-    update() {
+    update(index, row) {
       this.dialogFormVisible4 = true
-      alert('修改')
     },
     handleSizeChange(val) {
       console.log(`每页 ${val} 条`);
