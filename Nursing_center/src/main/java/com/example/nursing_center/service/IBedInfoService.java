@@ -16,4 +16,6 @@ import com.example.nursing_center.pojo.ElderlyInfo;
 public interface IBedInfoService extends IService<BedInfo> {
 
     Result add(BedInfo bedInfo);
+
+    Result getAll();
 }
