@@ -133,11 +133,13 @@
           </el-select>
         </el-form-item>
         <el-form-item label="选择护工:" :label-width="formLabelWidth">
-          <el-select v-model="riseElderly.nurseId" placeholder="选择护工" :v-for="nurseList">
-            <el-option label="张三" value="1"/>
-            <el-option label="李四" value="2"/>
-            <el-option label="王五" value="3"/>
-            <el-option label="赵六" value="4"/>
+          <el-select v-model="riseElderly.nurseId" placeholder="选择护工">
+            <el-option
+                v-for="item in nurseList"
+                :key="item.nurseId"
+                :label="item.name"
+                :value="item.nurseId">
+            </el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="选择楼号:" :label-width="formLabelWidth">
@@ -269,6 +271,51 @@
     <!--  查看详情-->
     <el-dialog :visible.sync="dialogFormVisible3" title="查询详情" width="500">
       <el-form :model="viewInfo">
+        <span style="">
+          姓名:{{ viewInfo.name }}
+        </span>
+        <br>
+        <br>
+        <span>
+          身份证号:{{ viewInfo.idNumber }}
+        </span>
+        <br>
+        <br>
+        <span>
+          性别:{{ viewInfo.gender }}
+        </span>
+        <br>
+        <br>
+        <span>
+            联系方式:{{ viewInfo.contactInfo }}
+          </span>
+        <br>
+        <br>
+        <span>
+          家庭住址:{{ viewInfo.address }}
+        </span>
+        <br>
+        <br>
+        <span>
+          居住地址:{{ viewInfo.address }}
+        </span>
+        <br>
+        <br>
+        <span>
+          房间号:{{ viewInfo.roomNumber }}
+        </span>
+        <br>
+        <br>
+        <span>
+          楼号:{{ viewInfo.floorNumber }}
+        </span>
+        <br>
+        <br>
+        <span>
+          床号:{{ viewInfo.bedNumber }}
+        </span>
+        <br>
+        <br>
         <!--        展示数据所有老人的数据-->
       </el-form>
       <template #footer>
@@ -370,7 +417,7 @@ export default {
     })
   },
   methods: {
-    openRise(){
+    openRise() {
       this.dialogFormVisible = true
       this.$request.get('/nurse-info/getAll').then(res => {
         this.nurseList = res.data
@@ -394,6 +441,10 @@ export default {
     },
     handleClick(index, row) {
       this.dialogFormVisible3 = true
+      this.$request.get('/elderly-info/getById/' + row.elderlyId).then(res => {
+        console.log(res.data)
+        this.viewInfo = res.data
+      })
     },
     update(index, row) {
       this.dialogFormVisible4 = true
@@ -423,6 +474,7 @@ export default {
         physicalCondition: "",
       },
       viewInfo: {
+        elderlyId: "",
         name: "",
         gender: "",
         age: "",
@@ -470,7 +522,7 @@ export default {
         bedNumber: '',
         date: '',
       },
-      nurseList:[],
+      nurseList: [],
       riseElderly: {
         name: "",
         gender: "",
