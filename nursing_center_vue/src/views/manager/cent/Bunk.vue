@@ -79,10 +79,10 @@
             <!--展示床位状态的模块-->
             <div class="bed-icon-box">
               <i class="iconfont icon-bed" style="font-size: 30px;color: #df007e"></i>
-              <div style="font-size: 20px;">2101-1</div>
+              <div class="fontsize">2101-1</div>
               <br>
               <i class="iconfont icon-bed" style="font-size: 30px;color: #df007e"></i>
-              <div style="font-size: 20px;">2101-1</div>
+              <div class="fontsize">2101-1</div>
             </div>
             <!--展示床位状态的模块-->
           </el-col>
@@ -100,10 +100,10 @@
             <!--展示床位状态的模块-->
             <div class="bed-icon-box">
               <i class="iconfont icon-bed" style="font-size: 30px;color: #df007e"></i>
-              <div style="font-size: 20px;">2101-1</div>
+              <div class="fontsize">2101-1</div>
               <br>
               <i class="iconfont icon-bed" style="font-size: 30px;color: #df007e"></i>
-              <div style="font-size: 20px;">2101-1</div>
+              <div class="fontsize">2101-1</div>
             </div>
             <!--展示床位状态的模块-->
           </el-col>
@@ -112,10 +112,10 @@
             <!--展示床位状态的模块-->
             <div class="bed-icon-box">
               <i class="iconfont icon-bed" style="font-size: 30px;color: #df007e"></i>
-              <div style="font-size: 20px;">2101-1</div>
+              <div class="fontsize">2101-1</div>
               <br>
               <i class="iconfont icon-bed" style="font-size: 30px;color: #df007e"></i>
-              <div style="font-size: 20px;">2101-1</div>
+              <div class="fontsize">2101-1</div>
             </div>
             <!--展示床位状态的模块-->
           </el-col>
@@ -124,10 +124,10 @@
             <!--展示床位状态的模块-->
             <div class="bed-icon-box">
               <i class="iconfont icon-bed" style="font-size: 30px;color: #df007e"></i>
-              <div style="font-size: 20px;">2101-1</div>
+              <div class="fontsize">2101-1</div>
               <br>
               <i class="iconfont icon-bed" style="font-size: 30px;color: #df007e"></i>
-              <div style="font-size: 20px;">2101-1</div>
+              <div class="fontsize">2101-1</div>
             </div>
             <!--展示床位状态的模块-->
           </el-col>
@@ -139,7 +139,7 @@
             <!--展示床位状态的模块-->
             <div class="bed-icon-box">
               <i class="iconfont icon-bed" style="font-size: 30px;color: #df007e"></i>
-              <div style="font-size: 20px;">2101-1</div>
+              <div class="fontsize">2101-1</div>
             </div>
             <!--展示床位状态的模块-->
           </el-col>
@@ -148,7 +148,7 @@
             <!--展示床位状态的模块-->
             <div class="bed-icon-box">
               <i class="iconfont icon-bed" style="font-size: 30px;color: #df007e"></i>
-              <div style="font-size: 20px;">2101-1</div>
+              <div class="fontsize">2101-1</div>
             </div>
             <!--展示床位状态的模块-->
           </el-col>
@@ -163,10 +163,10 @@
             <!--展示床位状态的模块-->
             <div class="bed-icon-box">
               <i class="iconfont icon-bed" style="font-size: 30px;color: #df007e"></i>
-              <div style="font-size: 20px;">2101-1</div>
+              <div class="fontsize">2101-1</div>
               <br>
               <i class="iconfont icon-bed" style="font-size: 30px;color: #df007e"></i>
-              <div style="font-size: 20px;">2101-1</div>
+              <div class="fontsize">2101-1</div>
             </div>
             <!--展示床位状态的模块-->
           </el-col>
@@ -175,10 +175,10 @@
             <!--展示床位状态的模块-->
             <div class="bed-icon-box">
               <i class="iconfont icon-bed" style="font-size: 30px;color: #df007e"></i>
-              <div style="font-size: 20px;">2101-1</div>
+              <div class="fontsize">2101-1</div>
               <br>
               <i class="iconfont icon-bed" style="font-size: 30px;color: #df007e"></i>
-              <div style="font-size: 20px;">2101-1</div>
+              <div class="fontsize">2101-1</div>
             </div>
             <!--展示床位状态的模块-->
           </el-col>
@@ -187,7 +187,7 @@
             <!--展示床位状态的模块-->
             <div class="bed-icon-box">
               <i class="iconfont icon-bed" style="font-size: 30px;color: #df007e"></i>
-              <div style="font-size: 20px;">2101-1</div>
+              <div class="fontsize">2101-1</div>
             </div>
             <!--展示床位状态的模块-->
           </el-col>
@@ -196,10 +196,10 @@
             <!--展示床位状态的模块-->
             <div class="bed-icon-box">
               <i class="iconfont icon-bed" style="font-size: 30px;color: #df007e"></i>
-              <div style="font-size: 20px;">2101-1</div>
+              <div class="fontsize">2101-1</div>
               <br>
               <i class="iconfont icon-bed" style="font-size: 30px;color: #df007e"></i>
-              <div style="font-size: 20px;">2101-1</div>
+              <div class="fontsize">2101-1</div>
             </div>
             <!--展示床位状态的模块-->
           </el-col>
@@ -208,7 +208,7 @@
             <!--展示床位状态的模块-->
             <div class="bed-icon-box">
               <i class="iconfont icon-bed" style="font-size: 30px;color: #df007e"></i>
-              <div style="font-size: 20px;">2101-1</div>
+              <div class="fontsize">2101-1</div>
             </div>
             <!--展示床位状态的模块-->
           </el-col>
@@ -217,10 +217,10 @@
             <!--展示床位状态的模块-->
             <div class="bed-icon-box">
               <i class="iconfont icon-bed" style="font-size: 30px;color: #df007e"></i>
-              <div style="font-size: 20px;">2101-1</div>
+              <div class="fontsize">2101-1</div>
               <br>
               <i class="iconfont icon-bed" style="font-size: 30px;color: #df007e"></i>
-              <div style="font-size: 20px;">2101-1</div>
+              <div class="fontsize">2101-1</div>
             </div>
             <!--展示床位状态的模块-->
           </el-col>
@@ -229,7 +229,7 @@
             <!--展示床位状态的模块-->
             <div class="bed-icon-box">
               <i class="iconfont icon-bed" style="font-size: 30px;color: #df007e"></i>
-              <div style="font-size: 20px;">2101-1</div>
+              <div class="fontsize">2101-1</div>
             </div>
             <!--展示床位状态的模块-->
           </el-col>
@@ -238,7 +238,7 @@
             <!--展示床位状态的模块-->
             <div class="bed-icon-box">
               <i class="iconfont icon-bed" style="font-size: 30px;color: #df007e"></i>
-              <div style="font-size: 20px;">2101-1</div>
+              <div class="fontsize">2101-1</div>
             </div>
             <!--展示床位状态的模块-->
           </el-col>
@@ -247,7 +247,7 @@
             <!--展示床位状态的模块-->
             <div class="bed-icon-box">
               <i class="iconfont icon-bed" style="font-size: 30px;color: #df007e"></i>
-              <div style="font-size: 20px;">2101-1</div>
+              <div class="fontsize">2101-1</div>
             </div>
             <!--展示床位状态的模块-->
           </el-col>
@@ -256,7 +256,7 @@
             <!--展示床位状态的模块-->
             <div class="bed-icon-box">
               <i class="iconfont icon-bed" style="font-size: 30px;color: #df007e"></i>
-              <div style="font-size: 20px;">2101-1</div>
+              <div class="fontsize">2101-1</div>
             </div>
             <!--展示床位状态的模块-->
           </el-col>
@@ -265,10 +265,10 @@
             <!--展示床位状态的模块-->
             <div class="bed-icon-box">
               <i class="iconfont icon-bed" style="font-size: 30px;color: #df007e"></i>
-              <div style="font-size: 20px;">2101-1</div>
+              <div class="fontsize">2101-1</div>
               <br>
               <i class="iconfont icon-bed" style="font-size: 30px;color: #df007e"></i>
-              <div style="font-size: 20px;">2101-1</div>
+              <div class="fontsize">2101-1</div>
             </div>
             <!--展示床位状态的模块-->
           </el-col>
@@ -277,7 +277,7 @@
             <!--展示床位状态的模块-->
             <div class="bed-icon-box">
               <i class="iconfont icon-bed" style="font-size: 30px;color: #df007e"></i>
-              <div style="font-size: 20px;">2101-1</div>
+              <div class="fontsize">2101-1</div>
             </div>
             <!--展示床位状态的模块-->
           </el-col>
@@ -360,6 +360,8 @@ const change = () => {
 
 }
 
-
+.fontsize {
+  font-size: clamp(12px, 20px, 1vw);
+}
 
 </style>
