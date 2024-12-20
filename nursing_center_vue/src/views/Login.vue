@@ -52,8 +52,11 @@ export default {
   },
   methods: {
     login() {
-      this.$router.push('/')  // 跳转主页
-      // this.$request.post('/web/login', this.form).then(res => {
+      // this.$router.push('/')  // 跳转主页
+      this.$request.get('/web/test').then(res => {
+        console.log(res)
+      })
+      // this.$request.post('/web/test', this.form).then(res => {
       //   if (res.code === '200') {
       //     this.$message.success('登录成功,正在跳转')
       //     this.$router.push('/')  // 跳转主页

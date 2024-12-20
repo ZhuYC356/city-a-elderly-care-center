@@ -25,4 +25,9 @@ public class BedInfoServiceImpl extends ServiceImpl<BedInfoMapper, BedInfo> impl
     public Result add(BedInfo bedInfo) {
         return Result.success(bedInfoMapper.add(bedInfo));
     }
+
+    @Override
+    public Result getAll() {
+        return Result.success(bedInfoMapper.getAll());
+    }
 }

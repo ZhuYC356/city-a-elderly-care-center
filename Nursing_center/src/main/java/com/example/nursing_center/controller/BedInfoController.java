@@ -5,10 +5,7 @@ import com.example.nursing_center.common.Result;
 import com.example.nursing_center.pojo.BedInfo;
 import com.example.nursing_center.service.IBedInfoService;
 import jakarta.annotation.Resource;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * <p>
@@ -32,5 +29,8 @@ public class BedInfoController {
     public Result add (@RequestBody BedInfo bedInfo){
         return bedInfoService.add(bedInfo);
     }
-
+    @GetMapping("getAll")
+    public Result getAll(){
+        return bedInfoService.getAll();
+    }
 }

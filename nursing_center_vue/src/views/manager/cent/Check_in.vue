@@ -67,10 +67,10 @@
           <el-table-column property="bedNumber" label="床位号" width="120"/>
           <el-table-column fixed="right" label="操作" min-width="120">
             <template #default>
-              <el-button link type="success" size="small" @click="handleClick">
+              <el-button link type="success" size="small" @click="handleClick($index,row)">
                 <span style="font-weight: bolder">详 情</span>
               </el-button>
-              <el-button link type="primary" size="small" @click="update"><span style="font-weight: bolder">修 改</span>
+              <el-button link type="primary" size="small" @click="update()"><span style="font-weight: bolder">修 改</span>
               </el-button>
             </template>
           </el-table-column>
@@ -230,7 +230,7 @@
       </template>
     </el-dialog>
     <!--  查看详情-->
-    <el-dialog :visible.sync="dialogFormVisible2" title="新增入住登记" width="500">
+    <el-dialog :visible.sync="dialogFormVisible3" title="新增入住登记" width="500">
       <el-form :model="elderly">
         <el-form-item label="姓名:" :label-width="formLabelWidth">
           <el-input v-model="elderly.name" autocomplete="off"/>
@@ -268,15 +268,15 @@
       </el-form>
       <template #footer>
         <div class="dialog-footer">
-          <el-button @click="dialogFormVisible2 = false">取消</el-button>
-          <el-button type="primary" @click="dialogFormVisible2 = false">
+          <el-button @click="dialogFormVisible3 = false">取消</el-button>
+          <el-button type="primary" @click="dialogFormVisible3 = false">
             保存
           </el-button>
         </div>
       </template>
     </el-dialog>
     <!--  修改信息-->
-    <el-dialog :visible.sync="dialogFormVisible2" title="新增入住登记" width="500">
+    <el-dialog :visible.sync="dialogFormVisible4" title="新增入住登记" width="500">
       <el-form :model="elderly">
         <el-form-item label="姓名:" :label-width="formLabelWidth">
           <el-input v-model="elderly.name" autocomplete="off"/>
@@ -314,8 +314,8 @@
       </el-form>
       <template #footer>
         <div class="dialog-footer">
-          <el-button @click="dialogFormVisible2 = false">取消</el-button>
-          <el-button type="primary" @click="dialogFormVisible2 = false">
+          <el-button @click="dialogFormVisible4 = false">取消</el-button>
+          <el-button type="primary" @click="dialogFormVisible4 = false">
             保存
           </el-button>
         </div>
@@ -337,9 +337,11 @@ export default {
       this.form.date = '';
     },
     handleClick() {
+      this.dialogFormVisible3 = true
       console.log('handleClick')
     },
     update() {
+      this.dialogFormVisible4 = true
       alert('修改')
     },
     handleSizeChange(val) {
@@ -378,6 +380,8 @@ export default {
       dialogFormVisible: false,
       dialogFormVisible1: false,
       dialogFormVisible2: false,
+      dialogFormVisible3: false,
+      dialogFormVisible4: false,
       formLabelWidth: '120px',
       currentPage4: 4,
       pageSize4: 100,
