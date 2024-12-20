@@ -34,4 +34,6 @@
         select * from bed_info where floor_number=#{floorNumber} and room_number=#{roomNumber} and bed_number=#{bedNumber}
     </select>
 
+
+
 </mapper>
