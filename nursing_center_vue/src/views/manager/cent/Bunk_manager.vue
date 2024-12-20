@@ -5,8 +5,8 @@
 * @date: 2023/2/13 14:06
 */
 <script setup>
-import {reactive, ref} from 'vue'
-
+import {reactive, ref,onMounted} from 'vue'
+import request from "@/utils/request";
 const form = reactive({
   name: '',
   bedNumber: '',
@@ -29,61 +29,16 @@ const clearAll = () => {
   form.bedNumber = ''
   form.date = ''
 }
-const tableData = [
-  {
-    date: '2016-05-04',
-    name: 'Aleyna Kutzner',
-    address: 'Lohrbergstr. 86c, Süd Lilli, Saarland',
-  },
-  {
-    date: '2016-05-03',
-    name: 'Helen Jacobi',
-    address: '760 A Street, South Frankfield, Illinois',
-  },
-  {
-    date: '2016-05-02',
-    name: 'Brandon Deckert',
-    address: 'Arnold-Ohletz-Str. 41a, Alt Malinascheid, Thüringen',
-  },
-  {
-    date: '2016-05-01',
-    name: 'Margie Smith',
-    address: '23618 Windsor Drive, West Ricardoview, Idaho',
-  }, {
-    date: '2016-05-04',
-    name: 'Aleyna Kutzner',
-    address: 'Lohrbergstr. 86c, Süd Lilli, Saarland',
-  },
-  {
-    date: '2016-05-04',
-    name: 'Aleyna Kutzner',
-    address: 'Lohrbergstr. 86c, Süd Lilli, Saarland',
-  },
-  {
-    date: '2016-05-03',
-    name: 'Helen Jacobi',
-    address: '760 A Street, South Frankfield, Illinois',
-  },
-  {
-    date: '2016-05-02',
-    name: 'Brandon Deckert',
-    address: 'Arnold-Ohletz-Str. 41a, Alt Malinascheid, Thüringen',
-  }, {
-    date: '2016-05-04',
-    name: 'Aleyna Kutzner',
-    address: 'Lohrbergstr. 86c, Süd Lilli, Saarland',
-  },
-  {
-    date: '2016-05-03',
-    name: 'Helen Jacobi',
-    address: '760 A Street, South Frankfield, Illinois',
-  },
-  {
-    date: '2016-05-02',
-    name: 'Brandon Deckert',
-    address: 'Arnold-Ohletz-Str. 41a, Alt Malinascheid, Thüringen',
-  },
-]
+const tableData = ref("")
+const getAll = () => {
+  request("bed-info/getAll").then(res => {
+    tableData.value=res.data
+  })
+}
+onMounted(()=>{
+  getAll()
+  console.log(tableData)
+})
 const handleClick = (index,row) => {
   console.log(index)
   console.log(row)
@@ -107,6 +62,20 @@ const toggle = () => {
 const submit=() => {
   alert('提交')
 }
+
+const radio1 = ref('1')
+const dialogFormVisible = ref(false)
+const update=()=>{
+  dialogFormVisible.value=true
+}
+const updateForm = reactive({
+  name: '',
+  gender:'',
+  date: '',
+  floorNumber: '',
+  bedNumber: '',
+  newBedNumber: ''
+})
 </script>
 
 <template>
@@ -168,13 +137,16 @@ const submit=() => {
                 </el-input>
               </el-form-item>
 
-              <el-form-item label="性别" style="margin-top: 15px">
-                <el-input v-model="addForm.name" style="width: 300px;">
+              <el-form-item label="性别">
+                <el-select v-model="addForm.gender" placeholder="请选择性别">
                   <template #prefix>
                     <i class="el-icon-toilet-paper" style="font-size: 15px;margin-left: 3px" ></i>
                   </template>
-                </el-input>
+                  <el-option label="男" value="男" />
+                  <el-option label="女" value="女" />
+                </el-select>
               </el-form-item>
+
               <el-form-item style="margin-right: 20px;" label="出生日期">
                 <el-date-picker
                     v-model="form.date"
@@ -243,6 +215,66 @@ const submit=() => {
               </el-button>
               <el-button link type="primary" size="small" @click="update"><span style="font-weight: bolder">修 改</span>
               </el-button>
+              <el-dialog  width="50%" :visible.sync="dialogFormVisible" :append-to-body="true">
+                <div>
+                  <span style="font-weight: bolder;font-size: 15px">床位调换</span>
+                  <el-form :model="updateForm" label-width="auto" style="max-width: 600px">
+                    <el-form-item label="姓名" style="margin-top: 15px">
+                      <el-input v-model="addForm.name" style="width: 300px;" placeholder="请输入姓名">
+                        <template #prefix>
+                          <i class="el-icon-user" style="font-size: 15px;margin-left: 3px" ></i>
+                        </template>
+                      </el-input>
+                    </el-form-item>
+                    <el-form-item label="性别">
+                      <el-select v-model="updateForm.gender" placeholder="请选择性别">
+                        <el-option label="男" value="男" />
+                        <el-option label="女" value="女" />
+                      </el-select>
+                    </el-form-item>
+                    <el-form-item label="楼号" style="margin-top: 15px">
+                      <el-input v-model="updateForm.floorNumber" style="width: 300px;" placeholder="请输入楼号">
+                        <template #prefix>
+                          <i class="el-icon-s-home" style="font-size: 15px;margin-left: 3px" ></i>
+                        </template>
+                      </el-input>
+                    </el-form-item>
+                    <el-form-item style="margin-right: 20px;margin-top: 15px" label="出生日期">
+                      <el-date-picker
+                          v-model="updateForm.date"
+                          type="date"
+                          placeholder="请选择日期"
+                          clearable
+                          style="width: 300px"
+                      />
+                    </el-form-item>
+                    <el-form-item style="margin-right: 20px;margin-top: 15px" label="现床位号">
+                      <el-input v-model="updateForm.bedNumber" placeholder="请填写现在床位号" clearable style="width: 300px">
+                        <template #prefix>
+                          <i class="el-icon-postcard" style="font-size: 15px;margin-left: 3px" ></i>
+                        </template>
+                      </el-input>
+                    </el-form-item>
+                    <el-form-item style="margin-right: 20px;margin-top: 15px" label="新床位号">
+                      <el-input v-model="updateForm.newBedNumber" placeholder="请填写你要调换的床位号" clearable style="width: 300px">
+                        <template #prefix>
+                          <i class="el-icon-tickets" style="font-size: 15px;margin-left: 3px" ></i>
+                        </template>
+                      </el-input>
+                    </el-form-item>
+                  </el-form>
+
+                </div>
+                <template #footer>
+                  <div class="dialog-footer">
+                    <el-button @click="dialogFormVisible = false" type="primary"><span style="font-weight: bolder">确 认</span></el-button>
+                    <el-button type="danger" @click="dialogFormVisible = false">
+                      <span style="font-weight: bolder">取 消</span>
+                    </el-button>
+                  </div>
+                </template>
+
+              </el-dialog>
             </template>
           </el-table-column>
         </el-table>
