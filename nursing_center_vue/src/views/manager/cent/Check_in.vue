@@ -7,19 +7,33 @@
           <Notebook/>
         </el-icon>
         <i class="el-icon-notebook-1" style="margin-left: 30px;font-size: 20px"></i>
-        <span style="margin-left: 5px;font-size: 20px;font-weight: bolder">入住登记</span>
+        <span style="margin-left: 5px;font-size: 20px;font-weight: bolder">入住登记信息</span>
         <hr style="margin: 10px">
       </div>
-      <!--    表格    -->
-      <el-button style="margin-top: 10px" type="primary" @click="">新增入住人员</el-button>
-
       <div style="margin-top: 15px;margin-left: 10px">
+        <el-button style="margin-bottom: 10px;background-color: #80d89a"  plain icon="el-icon-plus" plain @click="dialogFormVisible = true">
+          入住登记
+        </el-button>
+        <el-button style="margin-bottom: 10px;background-color: #f3ac34" plain icon="el-icon-plus" plain @click="">
+          退住登记申请
+        </el-button>
+        <el-button style="margin-bottom: 10px;background-color: #6985de" plain icon="el-icon-plus" plain @click="d">
+          外出登记申请
+        </el-button>
         <el-form :inline="true" :model="form">
           <el-form-item style="margin-right: 20px">
-            <el-input v-model="form.name" placeholder="请填写老人姓名" clearable/>
+            <el-input v-model="form.name" placeholder="请填写老人姓名" clearable>
+              <template #prefix>
+                <i class="el-icon-user" style="font-size: 15px;margin-left: 3px"></i>
+              </template>
+            </el-input>
           </el-form-item>
           <el-form-item style="margin-right: 20px">
-            <el-input v-model="form.bedNumber" placeholder="请填写床位号" clearable/>
+            <el-input v-model="form.bedNumber" placeholder="请填写床位号" clearable>
+              <template #prefix>
+                <i class="el-icon-postcard" style="font-size: 15px;margin-left: 3px"></i>
+              </template>
+            </el-input>
           </el-form-item>
           <el-form-item style="margin-right: 20px">
             <el-date-picker
@@ -76,6 +90,52 @@
         </div>
       </div>
     </el-card>
+
+    <el-dialog :visible.sync="dialogFormVisible" title="新增入住登记" width="500">
+      <el-form :model="elderly">
+        <el-form-item label="姓名:" :label-width="formLabelWidth">
+          <el-input v-model="elderly.name" autocomplete="off"/>
+        </el-form-item>
+        <el-form-item label="身份证号:" :label-width="formLabelWidth">
+          <el-input v-model="elderly.name" autocomplete="off"/>
+        </el-form-item>
+        <el-form-item label="家庭联系电话:" :label-width="formLabelWidth">
+          <el-input v-model="elderly.name" autocomplete="off"/>
+        </el-form-item>
+        <el-form-item label="身体状况描述:" :label-width="formLabelWidth">
+          <el-input v-model="elderly.name" autocomplete="off"/>
+        </el-form-item>
+        <el-form-item label="性别:" :label-width="formLabelWidth">
+          <el-select v-model="elderly.region" placeholder="选择性别">
+            <el-option label="男性" value="M"/>
+            <el-option label="女性" value="F"/>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="自理等级:" :label-width="formLabelWidth">
+          <el-select v-model="elderly.region" placeholder="选择自理等级">
+            <el-option label="不自理" value="1"/>
+            <el-option label="部分自理" value="2"/>
+            <el-option label="自理" value="3"/>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="护理等级:" :label-width="formLabelWidth">
+          <el-select v-model="elderly.region" placeholder="选择护理等级">
+            <el-option label="最高级" value="1"/>
+            <el-option label="高级" value="2"/>
+            <el-option label="中级" value="3"/>
+            <el-option label="低级" value="4"/>
+          </el-select>
+        </el-form-item>
+      </el-form>
+      <template #footer>
+        <div class="dialog-footer">
+          <el-button @click="dialogFormVisible = false">取消</el-button>
+          <el-button type="primary" @click="dialogFormVisible = false">
+            保存
+          </el-button>
+        </div>
+      </template>
+    </el-dialog>
   </div>
 </template>
 <script>
@@ -105,11 +165,27 @@ export default {
   },
   data() {
     return {
-      form:{
+      form: {
         name: '',
         bedNumber: '',
         date: '',
       },
+      elderly:{
+        name: "",
+        gender: "",
+        age: "",
+        idNumber:"",
+        selfCareStatus: "",
+        familyContactInfo: "",
+        nurseId: "",
+        bedId: "",
+        floorNumber: "",
+        roomNumber: "",
+        bedNumber: "",
+        physicalCondition: "",
+      },
+      dialogFormVisible: false,
+      formLabelWidth: '120px',
       currentPage4: 4,
       pageSize4: 100,
       size: 'mini',
