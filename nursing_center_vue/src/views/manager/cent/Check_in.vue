@@ -13,7 +13,7 @@
       <div style="margin-top: 15px;margin-left: 10px">
         <!--        上端按钮-->
         <el-button style="margin-bottom: 10px;background-color: #37a9e3" plain icon="el-icon-plus" plain
-                   @click="dialogFormVisible = true">
+                   @click="openRise()">
           入住登记
         </el-button>
         <el-button style="margin-bottom: 10px;background-color: #f3ac34" plain icon="el-icon-plus" plain
@@ -133,7 +133,7 @@
           </el-select>
         </el-form-item>
         <el-form-item label="选择护工:" :label-width="formLabelWidth">
-          <el-select v-model="riseElderly.nurseId" placeholder="选择护工">
+          <el-select v-model="riseElderly.nurseId" placeholder="选择护工" :v-for="nurseList">
             <el-option label="张三" value="1"/>
             <el-option label="李四" value="2"/>
             <el-option label="王五" value="3"/>
@@ -370,6 +370,12 @@ export default {
     })
   },
   methods: {
+    openRise(){
+      this.dialogFormVisible = true
+      this.$request.get('/nurse-info/getAll').then(res => {
+        this.nurseList = res.data
+      })
+    },
     add() {
       this.$request.post('/elderly-info/add', this.riseElderly).then(res => {
         if (res.code === 200) {
@@ -464,6 +470,7 @@ export default {
         bedNumber: '',
         date: '',
       },
+      nurseList:[],
       riseElderly: {
         name: "",
         gender: "",
