@@ -110,7 +110,7 @@
           <el-col :span="2"><div class="grid-content ep-bg-purple" />
             <div class="col">2103</div>
             <!--展示床位状态的模块-->
-            <div class="bed-icon-box">
+            <div class="bed-icon-box grey-background-col">
               <i class="iconfont icon-bed fontsize-icon" style="color: #df007e"></i>
               <div class="fontsize">2101-1</div>
               <br>
@@ -146,7 +146,7 @@
           <el-col :span="2"><div class="grid-content ep-bg-purple" />
             <div class="col">2106</div>
             <!--展示床位状态的模块-->
-            <div class="bed-icon-box">
+            <div class="bed-icon-box grey-background-col">
               <i class="iconfont icon-bed fontsize-icon" style="color: #df007e"></i>
               <div class="fontsize">2101-1</div>
             </div>
@@ -173,7 +173,7 @@
           <el-col :span="2"><div class="grid-content ep-bg-purple" />
             <div class="col">2108</div>
             <!--展示床位状态的模块-->
-            <div class="bed-icon-box">
+            <div class="bed-icon-box grey-background-col">
               <i class="iconfont icon-bed fontsize-icon" style="color: #df007e"></i>
               <div class="fontsize">2101-1</div>
               <br>
@@ -194,7 +194,7 @@
           <el-col :span="2"><div class="grid-content ep-bg-purple" />
             <div class="col">2110</div>
             <!--展示床位状态的模块-->
-            <div class="bed-icon-box">
+            <div class="bed-icon-box grey-background-col">
               <i class="iconfont icon-bed fontsize-icon" style="color: #df007e"></i>
               <div class="fontsize">2101-1</div>
               <br>
@@ -215,7 +215,7 @@
           <el-col :span="2"><div class="grid-content ep-bg-purple" />
             <div class="col">2112</div>
             <!--展示床位状态的模块-->
-            <div class="bed-icon-box">
+            <div class="bed-icon-box grey-background-col">
               <i class="iconfont icon-bed fontsize-icon" style="color: #df007e"></i>
               <div class="fontsize">2101-1</div>
               <br>
@@ -236,7 +236,7 @@
           <el-col :span="2"><div class="grid-content ep-bg-purple" />
             <div class="col">2114</div>
             <!--展示床位状态的模块-->
-            <div class="bed-icon-box">
+            <div class="bed-icon-box grey-background-col">
               <i class="iconfont icon-bed fontsize-icon" style="color: #df007e"></i>
               <div class="fontsize">2101-1</div>
             </div>
@@ -254,7 +254,7 @@
           <el-col :span="2"><div class="grid-content ep-bg-purple" />
             <div class="col">2116</div>
             <!--展示床位状态的模块-->
-            <div class="bed-icon-box">
+            <div class="bed-icon-box grey-background-col">
               <i class="iconfont icon-bed fontsize-icon" style="color: #df007e"></i>
               <div class="fontsize">2101-1</div>
             </div>
@@ -275,7 +275,7 @@
           <el-col :span="2"><div class="grid-content ep-bg-purple" />
             <div class="col">2118</div>
             <!--展示床位状态的模块-->
-            <div class="bed-icon-box">
+            <div class="bed-icon-box grey-background-col">
               <i class="iconfont icon-bed fontsize-icon" style="color: #df007e"></i>
               <div class="fontsize">2101-1</div>
             </div>
@@ -376,5 +376,8 @@ const change = () => {
   margin-left: 10px;
 }
 
+.grey-background-col {
+  background-color: rgba(224,223,223,0.5)
+}
 
 </style>
