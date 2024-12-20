@@ -1,5 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.nursing_center.mapper.OutingRegistrationMapper">
+    <resultMap id="BaseResultMap" type="com.example.nursing_center.pojo.OutingRegistration">
+        <id property="outingId" column="outing_id" jdbcType="INTEGER"/>
+        <result property="elderlyId" column="elderly_id" jdbcType="INTEGER"/>
+        <result property="outingDate" column="outing_date" jdbcType="DATE"/>
+        <result property="outingTime" column="outing_time" jdbcType="TIME"/>
+        <result property="destination" column="destination" jdbcType="VARCHAR"/>
+        <result property="purpose" column="purpose" jdbcType="VARCHAR"/>
+        <result property="accompanyingPerson" column="accompanying_person" jdbcType="VARCHAR"/>
+        <result property="contactInfo" column="contact_info" jdbcType="VARCHAR"/>
+        <result property="remarks" column="remarks" jdbcType="VARCHAR"/>
+        <result property="createdAt" column="created_at" jdbcType="TIMESTAMP"/>
+        <result property="updatedAt" column="updated_at" jdbcType="TIMESTAMP"/>
+        <result property="reviewStatus" column="review_status" jdbcType="INTEGER"/>
+        <result property="status" column="status" jdbcType="VARCHAR"/>
+    </resultMap>
 
+    <sql id="Base_Column_List">
+        outing_id,elderly_id,outing_date,
+        outing_time,destination,purpose,
+        accompanying_person,contact_info,remarks,
+        created_at,updated_at,review_status,
+        status
+    </sql>
 </mapper>
