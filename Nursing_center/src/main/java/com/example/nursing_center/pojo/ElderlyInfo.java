@@ -115,6 +115,7 @@ public class ElderlyInfo implements Serializable {
      */
     private String status;
 
+
     public Integer getElderlyId() {
         return elderlyId;
     }
