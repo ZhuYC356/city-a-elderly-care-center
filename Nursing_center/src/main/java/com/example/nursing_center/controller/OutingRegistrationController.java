@@ -39,6 +39,13 @@ public class OutingRegistrationController {
     public boolean add(@RequestBody OutingRegistration outingRegistration) {
         return iOutingRegistrationService.save(outingRegistration);
     }
+    /*
+     * 修改数据
+     */
+    @PostMapping("/update")
+    public boolean update(@RequestBody OutingRegistration outingRegistration) {
+        return iOutingRegistrationService.updateById(outingRegistration);
+    }
 
 
 }
