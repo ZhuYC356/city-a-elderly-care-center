@@ -5,10 +5,7 @@ import com.example.nursing_center.mapper.OutingRegistrationMapper;
 import com.example.nursing_center.pojo.OutingRegistration;
 import com.example.nursing_center.service.IOutingRegistrationService;
 import jakarta.annotation.Resource;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -22,15 +19,26 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/outing-registration")
+@CrossOrigin(origins = "http://localhost:8080/out_office_registration")
 public class OutingRegistrationController {
     @Resource
     private IOutingRegistrationService iOutingRegistrationService;
 
+    /*
+     * 获取所有数据
+     */
     @GetMapping("/getAll")
-    public List<OutingRegistration> getAll(){
+    public List<OutingRegistration> getAll() {
         return iOutingRegistrationService.list();
     }
+    /*
+     * 添加数据
+     */
 
+    @PostMapping("/add")
+    public boolean add(@RequestBody OutingRegistration outingRegistration) {
+        return iOutingRegistrationService.save(outingRegistration);
+    }
 
 
 }

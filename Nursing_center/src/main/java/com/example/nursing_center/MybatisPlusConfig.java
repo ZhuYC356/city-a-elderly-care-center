@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 
 /**
  * @Author: 第六组
- * @Description: TODO
+ * @Description: MybatisPlus配置类
  * @version: 1.0
  * @DateTime: 2024/12/20 9:30
  **/
