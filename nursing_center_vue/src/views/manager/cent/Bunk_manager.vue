@@ -105,6 +105,18 @@ const toggle = () => {
 const submit=() => {
   alert('提交')
 }
+const radio1 = ref('1')
+const dialogFormVisible = ref(false)
+
+const updateForm = reactive({
+  name: '',
+  gender:'',
+  date: '',
+  floorNumber: '',
+  bedNumber: '',
+  newBedNumber: ''
+})
+
 </script>
 
 <template>
@@ -165,15 +177,13 @@ const submit=() => {
                   </template>
                 </el-input>
               </el-form-item>
-
-              <el-form-item label="性别" style="margin-top: 15px">
-                <el-input v-model="addForm.name" style="width: 300px;">
-                  <template #prefix>
-                    <i class="el-icon-toilet-paper" style="font-size: 15px;margin-left: 3px" ></i>
-                  </template>
-                </el-input>
-              </el-form-item>
-              <el-form-item style="margin-right: 20px;" label="出生日期">
+              <div style="margin-left: 80px;">
+                <el-radio-group v-model="radio1">
+                  <el-radio label="1" value="M" size="large">男</el-radio>
+                  <el-radio label="2" value="F" size="large">女</el-radio>
+                </el-radio-group>
+              </div>
+              <el-form-item style="margin-right: 20px;margin-top: 15px" label="出生日期">
                 <el-date-picker
                     v-model="form.date"
                     type="date"
@@ -215,9 +225,6 @@ const submit=() => {
               </el-button>
             </el-form>
           </div>
-          <div>
-
-          </div>
         </el-drawer>
       </div>
       <div style="margin-top: 5px">
@@ -238,8 +245,69 @@ const submit=() => {
               <el-button link type="success" size="small" @click="handleClick">
                 <span style="font-weight: bolder">详 情</span>
               </el-button>
-              <el-button link type="primary" size="small" @click="update"><span style="font-weight: bolder">修 改</span>
+              <el-button link type="primary" size="small" plain @click="dialogFormVisible=true"><span style="font-weight: bolder">修 改</span>
               </el-button>
+
+              <el-dialog  width="50%" :visible.sync="dialogFormVisible" :append-to-body="true">
+                <div>
+                  <span style="font-weight: bolder;font-size: 15px">床位调换</span>
+                  <el-form :model="updateForm" label-width="auto" style="max-width: 600px">
+                    <el-form-item label="姓名" style="margin-top: 15px">
+                      <el-input v-model="addForm.name" style="width: 300px;" placeholder="请输入姓名">
+                        <template #prefix>
+                          <i class="el-icon-user" style="font-size: 15px;margin-left: 3px" ></i>
+                        </template>
+                      </el-input>
+                    </el-form-item>
+                    <el-form-item label="性别">
+                      <el-select v-model="updateForm.gender" placeholder="请选择性别">
+                        <el-option label="男" value="男" />
+                        <el-option label="女" value="女" />
+                      </el-select>
+                    </el-form-item>
+                    <el-form-item label="楼号" style="margin-top: 15px">
+                      <el-input v-model="updateForm.floorNumber" style="width: 300px;" placeholder="请输入楼号">
+                        <template #prefix>
+                          <i class="el-icon-s-home" style="font-size: 15px;margin-left: 3px" ></i>
+                        </template>
+                      </el-input>
+                    </el-form-item>
+                    <el-form-item style="margin-right: 20px;margin-top: 15px" label="出生日期">
+                      <el-date-picker
+                          v-model="updateForm.date"
+                          type="date"
+                          placeholder="请选择日期"
+                          clearable
+                          style="width: 300px"
+                      />
+                    </el-form-item>
+                    <el-form-item style="margin-right: 20px;margin-top: 15px" label="现床位号">
+                      <el-input v-model="updateForm.bedNumber" placeholder="请填写现在床位号" clearable style="width: 300px">
+                        <template #prefix>
+                          <i class="el-icon-postcard" style="font-size: 15px;margin-left: 3px" ></i>
+                        </template>
+                      </el-input>
+                    </el-form-item>
+                    <el-form-item style="margin-right: 20px;margin-top: 15px" label="新床位号">
+                      <el-input v-model="updateForm.newBedNumber" placeholder="请填写你要调换的床位号" clearable style="width: 300px">
+                        <template #prefix>
+                          <i class="el-icon-tickets" style="font-size: 15px;margin-left: 3px" ></i>
+                        </template>
+                      </el-input>
+                    </el-form-item>
+                  </el-form>
+
+                </div>
+                <template #footer>
+                  <div class="dialog-footer">
+                    <el-button @click="dialogFormVisible = false" type="primary"><span style="font-weight: bolder">确 认</span></el-button>
+                    <el-button type="danger" @click="dialogFormVisible = false">
+                      <span style="font-weight: bolder">取 消</span>
+                    </el-button>
+                  </div>
+                </template>
+
+              </el-dialog>
             </template>
           </el-table-column>
         </el-table>
