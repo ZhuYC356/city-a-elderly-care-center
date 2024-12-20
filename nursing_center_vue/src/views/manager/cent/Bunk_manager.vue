@@ -31,8 +31,14 @@ const clearAll = () => {
 }
 const tableData = ref("")
 const getAll = () => {
-  request("bed-info/getAll").then(res => {
+  request.get("bed-info/getAll").then(res => {
     tableData.value=res.data
+  })
+}
+const select=()=>{
+  request.post("bed-info/select",form).then(res=>{
+    console.log(res)
+    tableData.value=res.data;
   })
 }
 onMounted(()=>{
@@ -63,7 +69,7 @@ const submit=() => {
   alert('提交')
 }
 
-const radio1 = ref('1')
+
 const dialogFormVisible = ref(false)
 const update=()=>{
   dialogFormVisible.value=true
@@ -115,7 +121,7 @@ const updateForm = reactive({
             />
           </el-form-item>
           <el-form-item style="margin-right: 15px">
-            <el-button type="primary" @click="onSubmit"><span style="font-weight: bolder">搜 索</span></el-button>
+            <el-button type="primary" @click="select"><span style="font-weight: bolder">搜 索</span></el-button>
           </el-form-item>
           <el-form-item>
             <el-button type="danger" @click="clearAll"><span style="font-weight: bolder">清 空</span></el-button>

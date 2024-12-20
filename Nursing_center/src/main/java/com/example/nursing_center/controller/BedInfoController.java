@@ -2,6 +2,8 @@ package com.example.nursing_center.controller;
 
 
 import com.example.nursing_center.common.Result;
+
+import com.example.nursing_center.controller.Result.Form;
 import com.example.nursing_center.pojo.BedInfo;
 import com.example.nursing_center.service.IBedInfoService;
 import jakarta.annotation.Resource;
@@ -32,5 +34,10 @@ public class BedInfoController {
     @GetMapping("getAll")
     public Result getAll(){
         return bedInfoService.getAll();
+    }
+    @PostMapping("/select")
+    public Result select (@RequestBody Form form){
+        System.out.println(form);
+        return bedInfoService.select(form);
     }
 }

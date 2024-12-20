@@ -1,5 +1,7 @@
 package com.example.nursing_center.mapper;
 
+import com.example.nursing_center.controller.Result.Form;
+import com.example.nursing_center.controller.Result.ManagerElder;
 import com.example.nursing_center.pojo.BedInfo;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
@@ -17,5 +19,7 @@ public interface BedInfoMapper extends BaseMapper<BedInfo> {
 
     Integer add(BedInfo bedInfo);
 
-    List<BedInfo> getAll();
+    List<ManagerElder> getAll();
+
+    List<ManagerElder> select(Form form);
 }
