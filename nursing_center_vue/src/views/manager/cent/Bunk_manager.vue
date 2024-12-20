@@ -207,7 +207,7 @@ const updateForm = reactive({
           <el-table-column type="selection" width="55"/>
           <el-table-column property="name" label="姓名" width="120"/>
           <el-table-column property="gender" label="性别" width="120"/>
-          <el-table-column label="出生日期" width="120">
+          <el-table-column label="入住时间" width="120">
             <template #default="scope">{{ scope.row.date }}</template>
           </el-table-column>
           <el-table-column property="familyContactInfo" label="监护人电话" width="120"/>

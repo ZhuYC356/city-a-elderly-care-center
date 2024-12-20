@@ -33,6 +33,18 @@ public class BedInfoServiceImpl extends ServiceImpl<BedInfoMapper, BedInfo> impl
 
     @Override
     public Result select(Form form) {
-        return Result.success(bedInfoMapper.select(form));
+        if(form.getName()!=null&&form.getBedNumber()!=null){
+            return Result.success(bedInfoMapper.selectAll(form));
+        }
+        else if(form.getName()!=null&&form.getBedNumber()==null){
+            return Result.success(bedInfoMapper.selectName(form));
+        }
+        else if(form.getName()==null&&form.getBedNumber()!=null){
+            return Result.success(bedInfoMapper.selectNumber(form));
+        }
+        else {
+            return Result.success(bedInfoMapper.getAll());
+        }
+
     }
 }
