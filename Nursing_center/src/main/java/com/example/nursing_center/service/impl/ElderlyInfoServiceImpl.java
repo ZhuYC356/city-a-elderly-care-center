@@ -34,16 +34,19 @@ public class ElderlyInfoServiceImpl extends ServiceImpl<ElderlyInfoMapper, Elder
 
     @Override
     public Result add(Info info) {
+//        1.更新床位并获得床位ID
         BedInfo bedInfo=new BedInfo();
         bedInfo.setFloorNumber(info.getFloorNumber());
         bedInfo.setRoomNumber(info.getRoomNumber());
         bedInfo.setBedNumber(info.getBedNumber());
-        bedInfo.setBedType("1");
-        bedInfo.setBedStatus("O");
-        bedInfoMapper.add(bedInfo);
-        bedInfo=bedInfoMapper.selectByFRB(bedInfo);
-        info.setBedId(bedInfo.getBedId());
+        bedInfo.setBedStatus("C");//设置状态为占用
+        BedInfo newbedInfo=bedInfoMapper.selectByFRB(bedInfo);//获得床位的Id
+        bedInfo.setBedId(newbedInfo.getBedId());
+        bedInfoMapper.updateById(bedInfo);//更新床位已经使用
+//        2.添加老人信息
+        info.setBedId(bedInfo.getBedId());//用于添加老人的信息表
         elderlyInfoMapper.add(info);
+        System.out.println(info);
         return Result.success();
     }
 }

@@ -25,6 +25,7 @@ public class ElderlyInfoController {
     }
     @PostMapping("/add")
     public Result add(@RequestBody Info info){
+        System.out.println(info);
         return elderlyInfoService.add(info);
     }
 
