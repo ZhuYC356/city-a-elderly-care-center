@@ -7,7 +7,8 @@
     </insert>
 
     <select id="getAll" resultType="com.example.nursing_center.controller.request.Info">
-        select name,
+        select elderly_info.elderly_id,
+               name,
                id_number,
                age,
                gender,

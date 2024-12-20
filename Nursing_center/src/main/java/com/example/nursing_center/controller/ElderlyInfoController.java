@@ -28,5 +28,8 @@ public class ElderlyInfoController {
         System.out.println(info);
         return elderlyInfoService.add(info);
     }
-
+    @GetMapping("/getById/{id}")
+    public Result getById(@PathVariable Integer id){
+        return Result.success(elderlyInfoService.getById(id));
+    }
 }

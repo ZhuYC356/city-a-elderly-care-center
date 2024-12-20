@@ -11,6 +11,7 @@ import lombok.Data;
  */
 @Data
 public class Info {
+    private int elderlyId;
     private String name;
     private String idNumber;
     private int age;
