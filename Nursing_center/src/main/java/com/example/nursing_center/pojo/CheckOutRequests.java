@@ -32,14 +32,9 @@ public class CheckOutRequests implements Serializable {
     private String elderlyId;
 
     /**
-     * 房间号或床位号
+     * 外联床位id
      */
-    private String roomNumber;
-
-    /**
-     * 可选：与存储客户详细信息的表的外键关联（例如，租户ID）
-     */
-    private Integer tenantId;
+    private String bedId;
 
     /**
      * 客户的联系电话
@@ -110,19 +105,12 @@ public class CheckOutRequests implements Serializable {
     public void setElderlyId(String elderlyId) {
         this.elderlyId = elderlyId;
     }
-    public String getRoomNumber() {
-        return roomNumber;
+    public String getBedId() {
+        return bedId;
     }
 
-    public void setRoomNumber(String roomNumber) {
-        this.roomNumber = roomNumber;
-    }
-    public Integer getTenantId() {
-        return tenantId;
-    }
-
-    public void setTenantId(Integer tenantId) {
-        this.tenantId = tenantId;
+    public void setBedId(String bedId) {
+        this.bedId = bedId;
     }
     public String getPhoneNumber() {
         return phoneNumber;
@@ -207,8 +195,7 @@ public class CheckOutRequests implements Serializable {
         return "CheckOutRequests{" +
             "requestId=" + requestId +
             ", elderlyId=" + elderlyId +
-            ", roomNumber=" + roomNumber +
-            ", tenantId=" + tenantId +
+            ", bedId=" + bedId +
             ", phoneNumber=" + phoneNumber +
             ", propertyAddress=" + propertyAddress +
             ", checkInDate=" + checkInDate +

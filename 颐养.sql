@@ -66,13 +66,13 @@ CREATE TABLE care_project
     updated_at       TIMESTAMP                                           DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '记录更新时间',
     status           VARCHAR(50) COMMENT '状态,用于删除,1 可用，0 不可用' default 1
 ) COMMENT ='存储护理项目信息';
+
 -- 创建存储退住请求的表
 CREATE TABLE check_out_requests
 (
     request_id       INT AUTO_INCREMENT PRIMARY KEY COMMENT '退住请求的唯一标识符',
     elderly_id       VARCHAR(255) NOT NULL COMMENT '客户的唯一ID（例如，老年人的ID）',
-    room_number      VARCHAR(50) COMMENT '房间号或床位号',
-    tenant_id        INT COMMENT '可选：与存储客户详细信息的表的外键关联（例如，租户ID）',
+    bed_id           VARCHAR(50) COMMENT '外联床位id',
     phone_number     VARCHAR(50)  NOT NULL COMMENT '客户的联系电话',
     property_address VARCHAR(255) COMMENT '住所地址（可能不是必需的，取决于您的设计）',
     check_in_date    DATE COMMENT '入住日期',
@@ -102,14 +102,15 @@ CREATE TABLE elderly_care_project
 CREATE TABLE bed_info
 (
     bed_id       INT PRIMARY KEY AUTO_INCREMENT COMMENT '床位唯一标识符',
-    bed_number   VARCHAR(50) UNIQUE NOT NULL COMMENT '床位号',
-    bed_type     VARCHAR(50)        NOT NULL COMMENT '床位类型',
-    bed_status   CHAR(1)            NOT NULL COMMENT '床位状态（O/C/R：空闲/占用/预留）',
+    bed_number   VARCHAR(50) NOT NULL COMMENT '床位号',
+    bed_type     VARCHAR(50) NOT NULL COMMENT '床位类型',
+    bed_status   CHAR(1)     NOT NULL COMMENT '床位状态（O/C/R：空闲/占用/预留）',
     floor_number INT COMMENT '楼号',
     room_number  VARCHAR(50) COMMENT '房间号',
     floor        INT COMMENT '楼层',
     status       VARCHAR(50) COMMENT '状态,用于删除,1 可用，0 不可用' default 1
 ) COMMENT ='存储床位基本信息';
+-- 创建床位和老人的关联表
 CREATE TABLE bed_elderly_association
 (
     association_id       INT PRIMARY KEY AUTO_INCREMENT COMMENT '关联记录的唯一标识符',

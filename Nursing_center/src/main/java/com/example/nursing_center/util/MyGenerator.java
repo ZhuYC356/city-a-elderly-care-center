@@ -39,7 +39,8 @@ public class MyGenerator {
 //            "nurse_info",
 //            "outing_registration",
 //            "bed_elderly_association",
-            "check_out_requests"
+            "check_out_requests",
+            "bed_info"
     };
 
     public static void main(String[] args) {
