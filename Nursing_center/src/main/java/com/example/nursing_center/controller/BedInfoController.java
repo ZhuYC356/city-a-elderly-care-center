@@ -37,7 +37,7 @@ public class BedInfoController {
     }
     @PostMapping("/select")
     public Result select (@RequestBody Form form){
-        System.out.println(form);
+        System.out.println(form.getName());
         return bedInfoService.select(form);
     }
 }
