@@ -3,11 +3,14 @@ package com.example.nursing_center.controller;
 
 import com.example.nursing_center.common.Result;
 
+import com.example.nursing_center.common.SelectBedInfoResult;
 import com.example.nursing_center.controller.Result.Form;
 import com.example.nursing_center.pojo.BedInfo;
 import com.example.nursing_center.service.IBedInfoService;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * <p>
@@ -40,4 +43,27 @@ public class BedInfoController {
         System.out.println(form);
         return bedInfoService.select(form);
     }
+
+    /**
+     * 测试床位信息是否能返回
+     * 方便后面对床位的 房间号、状态、床位号 进行查询
+     * @return 所有的床位信息
+     */
+    @GetMapping("/getAllBedInfo")
+    public List<BedInfo> getAllBedInfo(){
+        return bedInfoService.list();
+    }
+
+    /**
+     * 通过“楼层”查询“房间号、床位号、床位状态”
+     * 暂时是通过2楼查
+     * @return
+     */
+    @GetMapping("/selectBedInfoByFloor")
+    public List<SelectBedInfoResult> selectBedInfoByFloor(){
+        return bedInfoService.selectBedInfoByFloor();
+    }
+
+
+
 }

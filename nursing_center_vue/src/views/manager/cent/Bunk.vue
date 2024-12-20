@@ -33,7 +33,7 @@
             <div style="font-size: 20px;text-align: right">楼层：</div>
           </el-col>
           <el-col :span="3">
-            <el-select v-model="value" placeholder="请选择楼层">
+            <el-select v-model="value" placeholder="请选择楼层" clearable>
               <el-option
                   v-for="item in options"
                   :key="item.value"
@@ -313,10 +313,6 @@ const options = [
   }
 ]
 
-const className = ref("one")
-const change = () => {
-  className.value = ref("two")
-}
 
 
 </script>

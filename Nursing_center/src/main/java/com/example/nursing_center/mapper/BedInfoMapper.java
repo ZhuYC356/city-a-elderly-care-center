@@ -1,5 +1,6 @@
 package com.example.nursing_center.mapper;
 
+import com.example.nursing_center.common.SelectBedInfoResult;
 import com.example.nursing_center.controller.Result.Form;
 import com.example.nursing_center.controller.Result.ManagerElder;
 import com.example.nursing_center.pojo.BedInfo;
@@ -28,4 +29,6 @@ public interface BedInfoMapper extends BaseMapper<BedInfo> {
     List<ManagerElder> selectNumber(Form form);
 
     BedInfo selectByFRB(BedInfo bedInfo);
+
+    List<SelectBedInfoResult> selectBedInfoByFloor();
 }
