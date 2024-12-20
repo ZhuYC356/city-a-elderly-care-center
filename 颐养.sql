@@ -13,8 +13,6 @@ create table admin
 )
     comment '管理员' collate = utf8mb4_unicode_ci
                      row_format = DYNAMIC;
-
-
 # 通知表
 create table notice
 (
@@ -28,6 +26,22 @@ create table notice
 )
     comment '公告信息表' collate = utf8mb4_unicode_ci
                          row_format = DYNAMIC;
+-- 创建护工信息表
+CREATE TABLE nurse_info
+(
+    nurse_id                 INT PRIMARY KEY AUTO_INCREMENT COMMENT '护工唯一标识符',
+    name                     VARCHAR(50) NOT NULL COMMENT '护工姓名',
+    gender                   CHAR(1)     NOT NULL COMMENT '护工性别（M/F）',
+    age                      INT         NOT NULL COMMENT '护工年龄',
+    contact_info             VARCHAR(50) COMMENT '护工联系方式',
+    photo                    VARCHAR(255) COMMENT '护工照片',
+    work_experience          TEXT COMMENT '工作经验描述',
+    professional_certificate VARCHAR(255) COMMENT '专业证书',
+    nurse_level              INT COMMENT '护理等级 1 最高级 ，2 高级，3 中级，4 低级',
+    service_evaluation       TEXT COMMENT '服务评价',
+    status                   VARCHAR(50) COMMENT '状态,用于删除,1 可用，0 不可用' default 1
+) COMMENT ='存储护工基本信息';
+
 -- 创建老人信息表
 CREATE TABLE elderly_info
 (
@@ -51,6 +65,18 @@ CREATE TABLE elderly_info
     nurse_level         INT COMMENT '护理等级 1 最高级 ，2 高级，3 中级，4 低级',
     status              VARCHAR(50) COMMENT '入住状态,用于删除,1 已入住，0 已离开' default 1
 ) COMMENT ='存储老人详细信息';
+-- 创建床位信息表
+CREATE TABLE bed_info
+(
+    bed_id       INT PRIMARY KEY AUTO_INCREMENT COMMENT '床位唯一标识符',
+    bed_number   VARCHAR(50) NOT NULL COMMENT '床位号',
+    bed_type     VARCHAR(50) NOT NULL COMMENT '床位类型',
+    bed_status   CHAR(1)     NOT NULL COMMENT '床位状态（O/C/R：空闲/占用/预留）',
+    floor_number INT COMMENT '楼号',
+    room_number  VARCHAR(50) COMMENT '房间号',
+    floor        INT COMMENT '楼层',
+    status       VARCHAR(50) COMMENT '状态,用于删除,1 可用，0 不可用' default 1
+) COMMENT ='存储床位基本信息';
 # 护理项目表
 CREATE TABLE care_project
 (
@@ -66,7 +92,6 @@ CREATE TABLE care_project
     updated_at       TIMESTAMP                                           DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '记录更新时间',
     status           VARCHAR(50) COMMENT '状态,用于删除,1 可用，0 不可用' default 1
 ) COMMENT ='存储护理项目信息';
-
 -- 创建存储退住请求的表
 CREATE TABLE check_out_requests
 (
@@ -85,6 +110,25 @@ CREATE TABLE check_out_requests
     created_at       TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT '记录创建时间',
     updated_at       TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '记录最后更新时间'
 );
+# 护理记录表
+CREATE TABLE care_record
+(
+    care_record_id  INT PRIMARY KEY AUTO_INCREMENT COMMENT '护理记录的唯一标识符',
+    elderly_id      INT           NOT NULL COMMENT '与该护理记录关联的老人ID，外键关联到老人表',
+    care_project_id INT           NOT NULL COMMENT '与该护理记录关联的护理项目ID，外键关联到护理项目表',
+    care_date       DATE          NOT NULL COMMENT '护理发生的日期',
+    care_type       VARCHAR(100)  NOT NULL COMMENT '护理的类型或名称',
+    care_duration   TIME          NOT NULL COMMENT '护理的持续时间',
+    caregiver_id    INT           NOT NULL COMMENT '执行护理的护理人员的ID，外键关联到护理人员表',
+    temperature     DECIMAL(5, 2) NULL COMMENT '老人护理时的体温记录',
+    blood_pressure  VARCHAR(10)   NULL COMMENT '老人护理时的血压记录',
+    blood_sugar     DECIMAL(5, 2) NULL COMMENT '老人护理时的血糖记录',
+    other_signs     TEXT          NULL COMMENT '其他需要记录的生命体征信息',
+    remarks         TEXT          NULL COMMENT '护理过程中的备注信息或特殊事件记录',
+    created_at      TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT '记录被添加到表中的时间',
+    updated_at      TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '记录最后一次被修改的时间',
+    status          int       default 1 COMMENT '状态,用于删除,1 可用，0 不可用'
+) COMMENT ='存储老人的护理记录信息';
 -- 创建老人项目关联表
 CREATE TABLE elderly_care_project
 (
@@ -98,19 +142,6 @@ CREATE TABLE elderly_care_project
     updated_at     TIMESTAMP                                           DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '记录更新时间',
     status         VARCHAR(50) COMMENT '状态,用于删除,1 可用，0 不可用' default 1
 ) COMMENT ='存储老人与护理项目的关联信息';
--- 创建床位信息表
-CREATE TABLE bed_info
-(
-    bed_id       INT PRIMARY KEY AUTO_INCREMENT COMMENT '床位唯一标识符',
-    bed_number   VARCHAR(50) NOT NULL COMMENT '床位号',
-    bed_type     VARCHAR(50) NOT NULL COMMENT '床位类型',
-    bed_status   CHAR(1)     NOT NULL COMMENT '床位状态（O/C/R：空闲/占用/预留）',
-    floor_number INT COMMENT '楼号',
-    room_number  VARCHAR(50) COMMENT '房间号',
-    floor        INT COMMENT '楼层',
-    status       VARCHAR(50) COMMENT '状态,用于删除,1 可用，0 不可用' default 1
-) COMMENT ='存储床位基本信息';
-
 -- 创建床位和老人的关联表
 CREATE TABLE bed_elderly_association
 (
@@ -125,22 +156,6 @@ CREATE TABLE bed_elderly_association
     created_at           TIMESTAMP         DEFAULT CURRENT_TIMESTAMP COMMENT '记录被添加到表中的时间',
     updated_at           TIMESTAMP         DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '记录最后一次被修改的时间'
 ) COMMENT ='存储疗养院床位与老人之间的关联信息';
--- 创建护工信息表
-CREATE TABLE nurse_info
-(
-    nurse_id                 INT PRIMARY KEY AUTO_INCREMENT COMMENT '护工唯一标识符',
-    name                     VARCHAR(50) NOT NULL COMMENT '护工姓名',
-    gender                   CHAR(1)     NOT NULL COMMENT '护工性别（M/F）',
-    age                      INT         NOT NULL COMMENT '护工年龄',
-    contact_info             VARCHAR(50) COMMENT '护工联系方式',
-    photo                    VARCHAR(255) COMMENT '护工照片',
-    work_experience          TEXT COMMENT '工作经验描述',
-    professional_certificate VARCHAR(255) COMMENT '专业证书',
-    nurse_level              INT COMMENT '护理等级 1 最高级 ，2 高级，3 中级，4 低级',
-    service_evaluation       TEXT COMMENT '服务评价',
-    status                   VARCHAR(50) COMMENT '状态,用于删除,1 可用，0 不可用' default 1
-) COMMENT ='存储护工基本信息';
-
 # 外出登记表
 CREATE TABLE outing_registration
 (
@@ -175,22 +190,3 @@ CREATE TABLE financial
     updated_at     TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '记录最后一次被修改的时间',
     status         int       default 1 COMMENT '状态,用于删除,1 可用，0 不可用'
 ) COMMENT ='存储老人项目的财务信息';
-# 护理记录表
-CREATE TABLE care_record
-(
-    care_record_id  INT PRIMARY KEY AUTO_INCREMENT COMMENT '护理记录的唯一标识符',
-    elderly_id      INT           NOT NULL COMMENT '与该护理记录关联的老人ID，外键关联到老人表',
-    care_project_id INT           NOT NULL COMMENT '与该护理记录关联的护理项目ID，外键关联到护理项目表',
-    care_date       DATE          NOT NULL COMMENT '护理发生的日期',
-    care_type       VARCHAR(100)  NOT NULL COMMENT '护理的类型或名称',
-    care_duration   TIME          NOT NULL COMMENT '护理的持续时间',
-    caregiver_id    INT           NOT NULL COMMENT '执行护理的护理人员的ID，外键关联到护理人员表',
-    temperature     DECIMAL(5, 2) NULL COMMENT '老人护理时的体温记录',
-    blood_pressure  VARCHAR(10)   NULL COMMENT '老人护理时的血压记录',
-    blood_sugar     DECIMAL(5, 2) NULL COMMENT '老人护理时的血糖记录',
-    other_signs     TEXT          NULL COMMENT '其他需要记录的生命体征信息',
-    remarks         TEXT          NULL COMMENT '护理过程中的备注信息或特殊事件记录',
-    created_at      TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT '记录被添加到表中的时间',
-    updated_at      TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '记录最后一次被修改的时间',
-    status          int       default 1 COMMENT '状态,用于删除,1 可用，0 不可用'
-) COMMENT ='存储老人的护理记录信息';
