@@ -17,6 +17,9 @@ const addForm = reactive({
   bedNumber: '',
   date: '',
   gender: '',
+  familyContactInfo: '',
+  floorNumber: '',
+  roomNumber: ''
 })
 const onSubmit = () => {
   alert('提交')
@@ -81,12 +84,11 @@ const tableData = [
     address: 'Arnold-Ohletz-Str. 41a, Alt Malinascheid, Thüringen',
   },
 ]
-const handleClick = () => {
-  alert('点击了详情')
+const handleClick = (index,row) => {
+  console.log(index)
+  console.log(row)
 }
-const update = () => {
-  alert('点击了修改')
-}
+
 const currentPage4 = ref(5)
 const pageSize4 = ref(100)
 const size = ref('large')
@@ -241,8 +243,8 @@ const updateForm = reactive({
           <el-table-column property="roomNumber" label="房间号" width="120"/>
           <el-table-column property="bedNumber" label="床位号" width="120"/>
           <el-table-column fixed="right" label="Operations" min-width="120">
-            <template #default>
-              <el-button link type="success" size="small" @click="handleClick">
+            <template #default="scope">
+              <el-button link type="success" size="small" @click="handleClick(scope.$index,scope.row)">
                 <span style="font-weight: bolder">详 情</span>
               </el-button>
               <el-button link type="primary" size="small" plain @click="dialogFormVisible=true"><span style="font-weight: bolder">修 改</span>
