@@ -272,15 +272,6 @@ const updateForm = reactive({
                         </template>
                       </el-input>
                     </el-form-item>
-                    <el-form-item style="margin-right: 20px;margin-top: 15px" label="出生日期">
-                      <el-date-picker
-                          v-model="updateForm.date"
-                          type="date"
-                          placeholder="请选择日期"
-                          clearable
-                          style="width: 300px"
-                      />
-                    </el-form-item>
                     <el-form-item style="margin-right: 20px;margin-top: 15px" label="现床位号">
                       <el-input v-model="updateForm.bedNumber" placeholder="请填写现在床位号" clearable style="width: 300px">
                         <template #prefix>
