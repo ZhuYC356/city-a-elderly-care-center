@@ -69,21 +69,21 @@ CREATE TABLE care_project
 -- 创建存储退住请求的表
 CREATE TABLE check_out_requests
 (
-    request_id       INT AUTO_INCREMENT PRIMARY KEY,                                                         -- 退住请求的唯一标识符
-    elderly_id       VARCHAR(255)                              NOT NULL,                                     -- 客户的Id
-    room_number      VARCHAR(50),                                                                            -- 房间号或床位号
-    tenant_id        INT,                                                                                    -- 可选：与存储客户详细信息的表的外键关联
-    phone_number     VARCHAR(50)                               NOT NULL,                                     -- 客户的联系电话
-    property_address VARCHAR(255),                                                                           -- 住所地址（可能不是必需的，取决于您的设计）
-    check_in_date    DATE,                                                                                   -- 入住日期
-    check_out_date   DATE,                                                                                   -- 计划退住日期（实际退住日期可能有所不同）
-    checkout_reason  TEXT,                                                                                   -- 退住原因
-    checkout_type    int comment '正常退住 1, 死亡退住 2, 保留床位 2' NOT NULL,                                     -- 退住类型
-    approval_status  int comment '审核状态 未审核 1, 通过 2, 不通过 3' DEFAULT 1,                                     -- 审核状态
-    approval_time    DATETIME                                  NULL,                                         -- 审批时间（仅当审核通过时设置）
-    approval_person  VARCHAR(255)                              NULL,                                         -- 审批人（仅当审核通过时设置）
-    created_at       TIMESTAMP                         DEFAULT CURRENT_TIMESTAMP,                            -- 记录创建时间
-    updated_at       TIMESTAMP                         DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP -- 记录最后更新时间
+    request_id       INT AUTO_INCREMENT PRIMARY KEY COMMENT '退住请求的唯一标识符',
+    elderly_id       VARCHAR(255) NOT NULL COMMENT '客户的唯一ID（例如，老年人的ID）',
+    room_number      VARCHAR(50) COMMENT '房间号或床位号',
+    tenant_id        INT COMMENT '可选：与存储客户详细信息的表的外键关联（例如，租户ID）',
+    phone_number     VARCHAR(50)  NOT NULL COMMENT '客户的联系电话',
+    property_address VARCHAR(255) COMMENT '住所地址（可能不是必需的，取决于您的设计）',
+    check_in_date    DATE COMMENT '入住日期',
+    check_out_date   DATE COMMENT '计划退住日期（实际退住日期可能有所不同）',
+    checkout_reason  TEXT COMMENT '退住原因（可选的详细描述）',
+    checkout_type    INT          NOT NULL COMMENT '退住类型：1-正常退住, 2-死亡退住, 3-保留床位（注意：这里我修改了原始设计中的值以避免重复，因为您原始设计中死亡退住和保留床位都是2）',
+    approval_status  INT       DEFAULT 1 COMMENT '审核状态：1-未审核, 2-通过, 3-不通过',
+    approval_time    DATETIME     NULL COMMENT '审批时间（仅当审核通过时设置）',
+    approval_person  VARCHAR(255) NULL COMMENT '审批人（仅当审核通过时设置）',
+    created_at       TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT '记录创建时间',
+    updated_at       TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '记录最后更新时间'
 );
 -- 创建老人项目关联表
 CREATE TABLE elderly_care_project

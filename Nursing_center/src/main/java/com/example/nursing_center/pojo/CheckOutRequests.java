@@ -20,41 +20,80 @@ public class CheckOutRequests implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    /**
+     * 退住请求的唯一标识符
+     */
     @TableId(value = "request_id", type = IdType.AUTO)
     private Integer requestId;
 
+    /**
+     * 客户的唯一ID（例如，老年人的ID）
+     */
     private String elderlyId;
 
+    /**
+     * 房间号或床位号
+     */
     private String roomNumber;
 
+    /**
+     * 可选：与存储客户详细信息的表的外键关联（例如，租户ID）
+     */
     private Integer tenantId;
 
+    /**
+     * 客户的联系电话
+     */
     private String phoneNumber;
 
+    /**
+     * 住所地址（可能不是必需的，取决于您的设计）
+     */
     private String propertyAddress;
 
+    /**
+     * 入住日期
+     */
     private LocalDate checkInDate;
 
+    /**
+     * 计划退住日期（实际退住日期可能有所不同）
+     */
     private LocalDate checkOutDate;
 
+    /**
+     * 退住原因（可选的详细描述）
+     */
     private String checkoutReason;
 
     /**
-     * 正常退住 1, 死亡退住 2, 保留床位 2
+     * 退住类型：1-正常退住, 2-死亡退住, 3-保留床位（注意：这里我修改了原始设计中的值以避免重复，因为您原始设计中死亡退住和保留床位都是2）
      */
     private Integer checkoutType;
 
     /**
-     * 审核状态 未审核 1, 通过 2, 不通过 3
+     * 审核状态：1-未审核, 2-通过, 3-不通过
      */
     private Integer approvalStatus;
 
+    /**
+     * 审批时间（仅当审核通过时设置）
+     */
     private LocalDateTime approvalTime;
 
+    /**
+     * 审批人（仅当审核通过时设置）
+     */
     private String approvalPerson;
 
+    /**
+     * 记录创建时间
+     */
     private LocalDateTime createdAt;
 
+    /**
+     * 记录最后更新时间
+     */
     private LocalDateTime updatedAt;
 
     public Integer getRequestId() {
