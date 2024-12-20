@@ -1,12 +1,12 @@
 package com.example.nursing_center.controller;
 
 
+import com.example.nursing_center.common.Result;
+import com.example.nursing_center.controller.Result.Back;
 import com.example.nursing_center.pojo.CheckOutRequests;
 import com.example.nursing_center.service.ICheckOutRequestsService;
 import jakarta.annotation.Resource;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,10 +23,20 @@ import java.util.List;
 public class CheckOutRequestsController {
 
     @Resource
-    private ICheckOutRequestsService iCheckOutRequestsService;
+    private ICheckOutRequestsService checkOutRequestsService;
 
+    /**
+     * 获取所有
+     * @return
+     */
     @GetMapping("list")
     public List<CheckOutRequests> list(){
-        return iCheckOutRequestsService.list();
+        return checkOutRequestsService.list();
     }
+
+    @PostMapping ("select")
+    public Result select(@RequestBody Back back){
+        return checkOutRequestsService.select(back);
+    }
+
 }

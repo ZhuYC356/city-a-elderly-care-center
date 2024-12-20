@@ -1,7 +1,8 @@
 package com.example.nursing_center.mapper;
 
-import com.example.nursing_center.pojo.CheckOutRequests;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.example.nursing_center.controller.Result.Back;
+import com.example.nursing_center.pojo.CheckOutRequests;
 
 /**
  * <p>
@@ -13,4 +14,14 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface CheckOutRequestsMapper extends BaseMapper<CheckOutRequests> {
 
+
+    Object selectAll(Back back);
+
+    Object selectName(Back back);
+
+    Object selectBedId(Back back);
+
+    Object selectDate(Back back);
+
+    Object getAll();
 }

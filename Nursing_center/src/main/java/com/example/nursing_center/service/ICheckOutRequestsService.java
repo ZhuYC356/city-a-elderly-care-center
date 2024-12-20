@@ -1,7 +1,9 @@
 package com.example.nursing_center.service;
 
-import com.example.nursing_center.pojo.CheckOutRequests;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.example.nursing_center.common.Result;
+import com.example.nursing_center.controller.Result.Back;
+import com.example.nursing_center.pojo.CheckOutRequests;
 
 /**
  * <p>
@@ -13,4 +15,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface ICheckOutRequestsService extends IService<CheckOutRequests> {
 
+    Result select(Back back);
 }
