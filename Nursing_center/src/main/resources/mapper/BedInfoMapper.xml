@@ -6,4 +6,7 @@
         insert into bed_info(bed_number,bed_type,bed_status,floor_number,room_number,floor)
         values(#{bedNumber},#{bedType},#{bedStatus},#{floorNumber},#{roomNumber},#{floor})
     </insert>
+    <select id="getAll" resultType="com.example.nursing_center.controller.Result.ManagerElder">
+        select * from bed_info,elderly_info where bed_info.bed_id=elderly_info.bed_id;
+    </select>
 </mapper>

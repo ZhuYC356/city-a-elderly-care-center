@@ -42,9 +42,9 @@
             <template slot="title">
               <i class="el-icon-menu"></i><span>客户管理</span>
             </template>
-            <el-menu-item index="/check_in">入住登记</el-menu-item>
-            <el-menu-item index="/check_out_registration">退住登记审核</el-menu-item>
-            <el-menu-item index="/out_office_registration">外出登记审核</el-menu-item>
+            <el-menu-item index="/check_in">居住信息管理</el-menu-item>
+            <el-menu-item index="/check_out_registration">退住审核</el-menu-item>
+            <el-menu-item index="/out_office_registration">外出审核</el-menu-item>
           </el-submenu>
 
           <el-submenu index="work">
