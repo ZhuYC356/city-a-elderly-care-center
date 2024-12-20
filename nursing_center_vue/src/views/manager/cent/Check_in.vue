@@ -141,6 +141,8 @@
         </div>
       </template>
     </el-dialog>
+
+
     <!--  退住申请-->
     <el-dialog :visible.sync="dialogFormVisible1" title="退住登记申请" width="500">
       <el-form :model="elderly">
@@ -153,21 +155,8 @@
         <el-form-item label="家庭联系电话:" :label-width="formLabelWidth">
           <el-input v-model="elderly.name" autocomplete="off"/>
         </el-form-item>
-        <el-form-item label="身体状况描述:" :label-width="formLabelWidth">
+        <el-form-item label="原因描述:" :label-width="formLabelWidth">
           <el-input v-model="elderly.name" autocomplete="off"/>
-        </el-form-item>
-        <el-form-item label="性别:" :label-width="formLabelWidth">
-          <el-select v-model="elderly.region" placeholder="选择性别">
-            <el-option label="男性" value="M"/>
-            <el-option label="女性" value="F"/>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="自理等级:" :label-width="formLabelWidth">
-          <el-select v-model="elderly.region" placeholder="选择自理等级">
-            <el-option label="不自理" value="1"/>
-            <el-option label="部分自理" value="2"/>
-            <el-option label="自理" value="3"/>
-          </el-select>
         </el-form-item>
         <el-form-item label="护理等级:" :label-width="formLabelWidth">
           <el-select v-model="elderly.region" placeholder="选择护理等级">
@@ -355,6 +344,23 @@ export default {
   },
   data() {
     return {
+      outingRegistration:{
+        elderlyId:'',
+        roomNumber: '',
+        outDate: '',
+        outingReason: '',
+        destruction: '',
+        purpose: '',
+        accompanyingPerson:'',
+        contactInfo: ''
+      },
+      checkOutRequests:{
+        elderlyId:'',
+        roomNumber: '',
+        checkOutDate: '',
+        checkoutReason: '',
+        checkoutType: '',
+      },
       selectFrom: {
         name: '',
         bedNumber: '',

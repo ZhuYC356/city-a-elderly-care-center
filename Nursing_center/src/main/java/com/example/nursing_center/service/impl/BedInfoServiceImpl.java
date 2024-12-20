@@ -1,5 +1,6 @@
 package com.example.nursing_center.service.impl;
 
+import com.example.nursing_center.common.Result;
 import com.example.nursing_center.pojo.BedInfo;
 import com.example.nursing_center.mapper.BedInfoMapper;
 import com.example.nursing_center.service.IBedInfoService;
@@ -17,4 +18,13 @@ import org.springframework.stereotype.Service;
 @Service
 public class BedInfoServiceImpl extends ServiceImpl<BedInfoMapper, BedInfo> implements IBedInfoService {
 
+    @Override
+    public Result add(BedInfo bedInfo) {
+        return null;
+    }
+
+    @Override
+    public Result getAll() {
+        return null;
+    }
 }
