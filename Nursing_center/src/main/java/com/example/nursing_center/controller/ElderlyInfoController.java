@@ -1,8 +1,10 @@
 package com.example.nursing_center.controller;
 
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.example.nursing_center.common.Result;
+import com.example.nursing_center.controller.request.Info;
+import jakarta.annotation.Resource;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * <p>
@@ -15,9 +17,19 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/elderly-info")
 public class ElderlyInfoController {
-
-    /*@PostMapping("/back_add")
-    public Result add(@RequestBody ElderlyInfo elderlyInfo){
-        return IElderlyInfoService.add(elderlyInfo);
-    }*/
+    @Resource
+    private com.example.nursing_center.service.IElderlyInfoService elderlyInfoService;
+    @GetMapping("/getAll")
+    public Result getAll(){
+        return elderlyInfoService.getAll();
+    }
+    @PostMapping("/add")
+    public Result add(@RequestBody Info info){
+        System.out.println(info);
+        return elderlyInfoService.add(info);
+    }
+    @GetMapping("/getById/{id}")
+    public Result getById(@PathVariable Integer id){
+        return Result.success(elderlyInfoService.getById(id));
+    }
 }

@@ -17,7 +17,8 @@
       <div class="manager-header-right">
         <el-dropdown placement="bottom">
           <div class="avatar">
-            <img :src="'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png'"/>
+            <img src="@/assets/imgs/tou.jpg" alt="">
+<!--            <img :src="'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png'"/>-->
             <div>{{ '管理员' }}</div>
           </div>
           <el-dropdown-menu slot="dropdown">

@@ -9,4 +9,35 @@
     <select id="getAll" resultType="com.example.nursing_center.controller.Result.ManagerElder">
         select * from bed_info,elderly_info where bed_info.bed_id=elderly_info.bed_id;
     </select>
+    <!--    <select id="select" resultType="com.example.nursing_center.controller.Result.ManagerElder">-->
+    <!--        select * from bed_info,elderly_info-->
+    <!--        <where>-->
+    <!--            <if test="name!=null and name!=''">-->
+    <!--                and name like '%'#{name}'%'-->
+    <!--            </if>-->
+    <!--        </where>-->
+    <!--    </select>-->
+    <select id="selectAll" resultType="com.example.nursing_center.controller.Result.ManagerElder">
+        select * from bed_info,elderly_info where bed_info.bed_id=elderly_info.bed_id
+                                              and bed_info.bed_number like "%"#{bedNumber}"%" and elderly_info.name like "%"#{name}"%"
+    </select>
+    <select id="selectName" resultType="com.example.nursing_center.controller.Result.ManagerElder">
+        select * from bed_info,elderly_info where bed_info.bed_id=elderly_info.bed_id
+                                              and elderly_info.name like "%"#{name}"%"
+    </select>
+    <select id="selectNumber" resultType="com.example.nursing_center.controller.Result.ManagerElder">
+        select * from bed_info,elderly_info where bed_info.bed_id=elderly_info.bed_id
+                                              and bed_info.bed_number like "%"#{bedNumber}"%"
+    </select>
+
+    <select id="selectByFRB" resultType="com.example.nursing_center.pojo.BedInfo">
+        select * from bed_info where floor_number=#{floorNumber} and room_number=#{roomNumber} and bed_number=#{bedNumber}
+    </select>
+
+    <!--通过楼层查询 房间号、床位号、床位状态-->
+    <select id="selectBedInfoByFloor" resultType="com.example.nursing_center.common.SelectBedInfoResult">
+        select bed_number,bed_status,room_number from bed_info where floor = 2;
+    </select>
+
+
 </mapper>

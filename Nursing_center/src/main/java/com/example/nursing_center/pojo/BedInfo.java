@@ -11,7 +11,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author 第六组
- * @since 2024-12-19
+ * @since 2024-12-20
  */
 @TableName("bed_info")
 public class BedInfo implements Serializable {

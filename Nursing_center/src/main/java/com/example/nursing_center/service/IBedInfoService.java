@@ -1,9 +1,12 @@
 package com.example.nursing_center.service;
 
-import com.example.nursing_center.common.Result;
-import com.example.nursing_center.pojo.BedInfo;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.example.nursing_center.pojo.ElderlyInfo;
+import com.example.nursing_center.common.Result;
+import com.example.nursing_center.common.SelectBedInfoResult;
+import com.example.nursing_center.controller.Result.Form;
+import com.example.nursing_center.pojo.BedInfo;
+
+import java.util.List;
 
 /**
  * <p>
@@ -18,4 +21,8 @@ public interface IBedInfoService extends IService<BedInfo> {
     Result add(BedInfo bedInfo);
 
     Result getAll();
+
+    Result select(Form form);
+
+    List<SelectBedInfoResult> selectBedInfoByFloor();
 }

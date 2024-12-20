@@ -5,82 +5,26 @@
     </div>
 
     <div class="card" style="margin-top: 30px">
-
-<!--<div style="display: flex;margin-top: 20px">
-
-        <div style="font-size: 20px;margin-left: 10px">楼层：</div>
-
-        <div class="flex">
-          <el-select v-model="value" placeholder="请选择楼层" style="width: 180px;">
-            <el-option
-                v-for="item in options"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-                style="font-size: 20px"
-            />
-          </el-select>
-        </div>
-
-        &lt;!&ndash;<i class="iconfont icon-hbed" :class="className" @click="change" style="font-size: 30px;margin-left: 50px;"/>&ndash;&gt;
-        <i class="iconfont icon-bed" style="font-size: 30px;margin-left: 7%;color: #1f61ff"/>
-        <div style="font-size: 20px;margin-left: 10px">总床数：27</div>
-
-        &lt;!&ndash;分成上下两行&ndash;&gt;
-        <div style="margin-left: 10px;height: 64px;margin-top: -22px">
-          &lt;!&ndash;上半部分&ndash;&gt;
-          <div style="display: flex;margin-bottom: 20px">
-            <i class="iconfont icon-bed" style="font-size: 30px;margin-left: 7%;color: #2CBE56"/>
-            <div style="font-size: 20px;margin-left: 10px;width: 150px">空闲：03</div>
-
-            <i class="iconfont icon-bed" style="font-size: 30px;margin-left: 7%;color: #999999"/>
-            <div style="font-size: 20px;margin-left: 10px;width: 150px">离床：12</div>
-
-            <i class="iconfont icon-bed" style="font-size: 30px;margin-left: 7%;color: #ffa406"/>
-            <div style="font-size: 20px;margin-left: 10px;width: 220px">计划内离床：03</div>
-
-            <i class="iconfont icon-bed" style="font-size: 30px;margin-left: 7%;color: #df0003"/>
-            <div style="font-size: 20px;margin-left: 10px;width: 220px">离床超时：03</div>
-          </div>
-          &lt;!&ndash;下半部分&ndash;&gt;
-          <div style="display: flex;">
-            <i class="iconfont icon-bed" style="font-size: 30px;margin-left: 7%;color: #000000"/>
-            <div style="font-size: 20px;margin-left: 10px;width: 150px">有人：12</div>
-
-            <i class="iconfont icon-bed" style="font-size: 30px;margin-left: 7%;color: #409EFF"/>
-            <div style="font-size: 20px;margin-left: 10px;width: 150px">外出：12</div>
-
-            <i class="iconfont icon-bed" style="font-size: 30px;margin-left: 7%;color: #a0a224"/>
-            <div style="font-size: 20px;margin-left: 10px;width: 220px">离开：12</div>
-
-            <i class="iconfont icon-bed" style="font-size: 30px;margin-left: 7%;color: #df007e"/>
-            <div style="font-size: 20px;margin-left: 10px;width: 220px">退住：12</div>
-          </div>
-
-        </div>
-
-      </div>-->
-
       <!--调整为响应式布局-->
       <!--row是行，col是列-->
       <div>
         <!--第一行-->
         <el-row :gutter="20" style="margin-left: 1%">
           <el-col :span="3" :offset="9" style="display: flex">
-            <i class="iconfont icon-bed" style="font-size: 30px;color: #1f61ff"></i>
-            <div style="font-size: 20px;margin-left: 10px">空闲：03</div>
+            <i class="iconfont icon-bed" style="font-size: 30px;color: #2CBE56"></i>
+            <div class="fontsize-top">空闲：03</div>
           </el-col>
           <el-col :span="3" style="display: flex">
-            <i class="iconfont icon-bed" style="font-size: 30px;color: #1f61ff"></i>
-            <div style="font-size: 20px;margin-left: 10px">离床：03</div>
+            <i class="iconfont icon-bed" style="font-size: 30px;color: #999999"></i>
+            <div class="fontsize-top">离床：03</div>
           </el-col>
           <el-col :span="4" style="display: flex">
-            <i class="iconfont icon-bed" style="font-size: 30px;color: #1f61ff"></i>
-            <div style="font-size: 20px;margin-left: 10px">计划内离床：03</div>
+            <i class="iconfont icon-bed" style="font-size: 30px;color: #ffa406"></i>
+            <div class="fontsize-top">计划内离床：03</div>
           </el-col>
           <el-col :span="4" style="display: flex">
-            <i class="iconfont icon-bed" style="font-size: 30px;color: #1f61ff"></i>
-            <div style="font-size: 20px;margin-left: 10px">离床超时：03</div>
+            <i class="iconfont icon-bed" style="font-size: 30px;color: #df0003"></i>
+            <div class="fontsize-top">离床超时：03</div>
           </el-col>
         </el-row>
         <!--第二行-->
@@ -89,7 +33,7 @@
             <div style="font-size: 20px;text-align: right">楼层：</div>
           </el-col>
           <el-col :span="3">
-            <el-select v-model="value" placeholder="请选择楼层">
+            <el-select v-model="value" placeholder="请选择楼层" clearable>
               <el-option
                   v-for="item in options"
                   :key="item.value"
@@ -101,37 +45,46 @@
           </el-col>
           <el-col :span="4" :push="1" style="display: flex;margin-left: 1%">
             <i class="iconfont icon-bed" style="font-size: 30px;color: #1f61ff"></i>
-            <div style="font-size: 20px;margin-left: 10px">总床数：27</div>
+            <div class="fontsize-top">总床数：27</div>
           </el-col>
         </el-row>
         <!--第三行-->
         <el-row :gutter="20" style="margin-left: 1%">
           <el-col :span="3" :offset="9" style="display: flex">
-            <i class="iconfont icon-bed" style="font-size: 30px;color: #1f61ff"></i>
-            <div style="font-size: 20px;margin-left: 10px">有人：12</div>
+            <i class="iconfont icon-bed" style="font-size: 30px;color: #000000"></i>
+            <div class="fontsize-top">有人：12</div>
           </el-col>
           <el-col :span="3" style="display: flex">
-            <i class="iconfont icon-bed" style="font-size: 30px;color: #1f61ff"></i>
-            <div style="font-size: 20px;margin-left: 10px">外出：12</div>
+            <i class="iconfont icon-bed" style="font-size: 30px;color: #409EFF"></i>
+            <div class="fontsize-top">外出：12</div>
           </el-col>
           <el-col :span="4" style="display: flex">
-            <i class="iconfont icon-bed" style="font-size: 30px;color: #1f61ff"></i>
-            <div style="font-size: 20px;margin-left: 10px">离开：12</div>
+            <i class="iconfont icon-bed" style="font-size: 30px;color: #a0a224"></i>
+            <div class="fontsize-top">离开：12</div>
           </el-col>
           <el-col :span="4" style="display: flex">
-            <i class="iconfont icon-bed" style="font-size: 30px;color: #1f61ff"></i>
-            <div style="font-size: 20px;margin-left: 10px">退住：12</div>
+            <i class="iconfont icon-bed" style="font-size: 30px;color: #df007e"></i>
+            <div class="fontsize-top">退住：12</div>
           </el-col>
         </el-row>
       </div>
 
 
 
-      <!--图示部分-->
+      <!--图示上半部分-->
       <div style="margin-top: 30px;height: 200px">
         <el-row :gutter="2">
           <el-col :span="2"><div class="grid-content ep-bg-purple" />
             <div class="col">2101</div>
+            <!--展示床位状态的模块-->
+            <div class="bed-icon-box">
+              <i class="iconfont icon-bed fontsize-icon" style="color: #df007e"></i>
+              <div class="fontsize">2101-1</div>
+              <br>
+              <i class="iconfont icon-bed fontsize-icon" style="color: #df007e"></i>
+              <div class="fontsize">2101-1</div>
+            </div>
+            <!--展示床位状态的模块-->
           </el-col>
           <el-col :span="2"><div class="grid-content ep-bg-purple" />
             <div class="col-plus">电梯房</div>
@@ -143,22 +96,190 @@
             <div class="col-plus" style="background-color: #96ea8d">活动中心</div>
           </el-col>
           <el-col :span="2"><div class="grid-content ep-bg-purple" />
-            <div class="col">2101</div>
+            <div class="col">2102</div>
+            <!--展示床位状态的模块-->
+            <div class="bed-icon-box">
+              <i class="iconfont icon-bed fontsize-icon" style="color: #df007e"></i>
+              <div class="fontsize">2101-1</div>
+              <br>
+              <i class="iconfont icon-bed fontsize-icon" style="color: #df007e"></i>
+              <div class="fontsize">2101-1</div>
+            </div>
+            <!--展示床位状态的模块-->
           </el-col>
           <el-col :span="2"><div class="grid-content ep-bg-purple" />
-            <div class="col">2101</div>
+            <div class="col">2103</div>
+            <!--展示床位状态的模块-->
+            <div class="bed-icon-box grey-background-col">
+              <i class="iconfont icon-bed fontsize-icon" style="color: #df007e"></i>
+              <div class="fontsize">2101-1</div>
+              <br>
+              <i class="iconfont icon-bed fontsize-icon" style="color: #df007e"></i>
+              <div class="fontsize">2101-1</div>
+            </div>
+            <!--展示床位状态的模块-->
           </el-col>
           <el-col :span="2"><div class="grid-content ep-bg-purple" />
-            <div class="col">2101</div>
+            <div class="col">2104</div>
+            <!--展示床位状态的模块-->
+            <div class="bed-icon-box">
+              <i class="iconfont icon-bed fontsize-icon" style="color: #df007e"></i>
+              <div class="fontsize">2101-1</div>
+              <br>
+              <i class="iconfont icon-bed fontsize-icon" style="color: #df007e"></i>
+              <div class="fontsize">2101-1</div>
+            </div>
+            <!--展示床位状态的模块-->
           </el-col>
           <el-col :span="2"><div class="grid-content ep-bg-purple" />
             <div class="col-plus" style="background-color: #feb966">走道</div>
           </el-col>
           <el-col :span="2"><div class="grid-content ep-bg-purple" />
-            <div class="col">2101</div>
+            <div class="col">2105</div>
+            <!--展示床位状态的模块-->
+            <div class="bed-icon-box">
+              <i class="iconfont icon-bed fontsize-icon" style="color: #df007e"></i>
+              <div class="fontsize">2101-1</div>
+            </div>
+            <!--展示床位状态的模块-->
           </el-col>
           <el-col :span="2"><div class="grid-content ep-bg-purple" />
-            <div class="col">2101</div>
+            <div class="col">2106</div>
+            <!--展示床位状态的模块-->
+            <div class="bed-icon-box grey-background-col">
+              <i class="iconfont icon-bed fontsize-icon" style="color: #df007e"></i>
+              <div class="fontsize">2101-1</div>
+            </div>
+            <!--展示床位状态的模块-->
+          </el-col>
+        </el-row>
+      </div>
+
+      <!--图示下半部分-->
+      <div style="height: 200px;margin-top: 2px">
+        <el-row :gutter="2">
+          <el-col :span="2"><div class="grid-content ep-bg-purple" />
+            <div class="col">2107</div>
+            <!--展示床位状态的模块-->
+            <div class="bed-icon-box">
+              <i class="iconfont icon-bed fontsize-icon" style="color: #df007e"></i>
+              <div class="fontsize">2101-1</div>
+              <br>
+              <i class="iconfont icon-bed fontsize-icon" style="color: #df007e"></i>
+              <div class="fontsize">2101-1</div>
+            </div>
+            <!--展示床位状态的模块-->
+          </el-col>
+          <el-col :span="2"><div class="grid-content ep-bg-purple" />
+            <div class="col">2108</div>
+            <!--展示床位状态的模块-->
+            <div class="bed-icon-box grey-background-col">
+              <i class="iconfont icon-bed fontsize-icon" style="color: #df007e"></i>
+              <div class="fontsize">2101-1</div>
+              <br>
+              <i class="iconfont icon-bed fontsize-icon" style="color: #df007e"></i>
+              <div class="fontsize">2101-1</div>
+            </div>
+            <!--展示床位状态的模块-->
+          </el-col>
+          <el-col :span="2"><div class="grid-content ep-bg-purple" />
+            <div class="col">2109</div>
+            <!--展示床位状态的模块-->
+            <div class="bed-icon-box">
+              <i class="iconfont icon-bed fontsize-icon" style="color: #df007e"></i>
+              <div class="fontsize">2101-1</div>
+            </div>
+            <!--展示床位状态的模块-->
+          </el-col>
+          <el-col :span="2"><div class="grid-content ep-bg-purple" />
+            <div class="col">2110</div>
+            <!--展示床位状态的模块-->
+            <div class="bed-icon-box grey-background-col">
+              <i class="iconfont icon-bed fontsize-icon" style="color: #df007e"></i>
+              <div class="fontsize">2101-1</div>
+              <br>
+              <i class="iconfont icon-bed fontsize-icon" style="color: #df007e"></i>
+              <div class="fontsize">2101-1</div>
+            </div>
+            <!--展示床位状态的模块-->
+          </el-col>
+          <el-col :span="2"><div class="grid-content ep-bg-purple" />
+            <div class="col">2111</div>
+            <!--展示床位状态的模块-->
+            <div class="bed-icon-box">
+              <i class="iconfont icon-bed fontsize-icon" style="color: #df007e"></i>
+              <div class="fontsize">2101-1</div>
+            </div>
+            <!--展示床位状态的模块-->
+          </el-col>
+          <el-col :span="2"><div class="grid-content ep-bg-purple" />
+            <div class="col">2112</div>
+            <!--展示床位状态的模块-->
+            <div class="bed-icon-box grey-background-col">
+              <i class="iconfont icon-bed fontsize-icon" style="color: #df007e"></i>
+              <div class="fontsize">2101-1</div>
+              <br>
+              <i class="iconfont icon-bed fontsize-icon" style="color: #df007e"></i>
+              <div class="fontsize">2101-1</div>
+            </div>
+            <!--展示床位状态的模块-->
+          </el-col>
+          <el-col :span="2"><div class="grid-content ep-bg-purple" />
+            <div class="col">2113</div>
+            <!--展示床位状态的模块-->
+            <div class="bed-icon-box">
+              <i class="iconfont icon-bed fontsize-icon" style="color: #df007e"></i>
+              <div class="fontsize">2101-1</div>
+            </div>
+            <!--展示床位状态的模块-->
+          </el-col>
+          <el-col :span="2"><div class="grid-content ep-bg-purple" />
+            <div class="col">2114</div>
+            <!--展示床位状态的模块-->
+            <div class="bed-icon-box grey-background-col">
+              <i class="iconfont icon-bed fontsize-icon" style="color: #df007e"></i>
+              <div class="fontsize">2101-1</div>
+            </div>
+            <!--展示床位状态的模块-->
+          </el-col>
+          <el-col :span="2"><div class="grid-content ep-bg-purple" />
+            <div class="col">2115</div>
+            <!--展示床位状态的模块-->
+            <div class="bed-icon-box">
+              <i class="iconfont icon-bed fontsize-icon" style="color: #df007e"></i>
+              <div class="fontsize">2101-1</div>
+            </div>
+            <!--展示床位状态的模块-->
+          </el-col>
+          <el-col :span="2"><div class="grid-content ep-bg-purple" />
+            <div class="col">2116</div>
+            <!--展示床位状态的模块-->
+            <div class="bed-icon-box grey-background-col">
+              <i class="iconfont icon-bed fontsize-icon" style="color: #df007e"></i>
+              <div class="fontsize">2101-1</div>
+            </div>
+            <!--展示床位状态的模块-->
+          </el-col>
+          <el-col :span="2"><div class="grid-content ep-bg-purple" />
+            <div class="col">2117</div>
+            <!--展示床位状态的模块-->
+            <div class="bed-icon-box">
+              <i class="iconfont icon-bed fontsize-icon" style="color: #df007e"></i>
+              <div class="fontsize">2101-1</div>
+              <br>
+              <i class="iconfont icon-bed fontsize-icon" style="color: #df007e"></i>
+              <div class="fontsize">2101-1</div>
+            </div>
+            <!--展示床位状态的模块-->
+          </el-col>
+          <el-col :span="2"><div class="grid-content ep-bg-purple" />
+            <div class="col">2118</div>
+            <!--展示床位状态的模块-->
+            <div class="bed-icon-box grey-background-col">
+              <i class="iconfont icon-bed fontsize-icon" style="color: #df007e"></i>
+              <div class="fontsize">2101-1</div>
+            </div>
+            <!--展示床位状态的模块-->
           </el-col>
         </el-row>
       </div>
@@ -192,10 +313,6 @@ const options = [
   }
 ]
 
-const className = ref("one")
-const change = () => {
-  className.value = ref("two")
-}
 
 
 </script>
@@ -215,7 +332,8 @@ const change = () => {
   color: #ffffff;
   text-align: center;
   font-weight: 600;
-  font-size: 16px
+  font-size: 16px;
+  height: 20px;
 }
 
 .col-plus {
@@ -229,7 +347,33 @@ const change = () => {
   font-size: 16px
 }
 
+.bed-icon-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 180px
 
+}
 
+.fontsize {
+  font-size: clamp(12px, 20px, 1vw);
+}
+
+.fontsize-icon {
+  font-size: clamp(24px, 40px, 2vw);
+}
+
+.fontsize-top {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: clamp(12px, 20px, 1vw);
+  margin-left: 10px;
+}
+
+.grey-background-col {
+  background-color: rgba(224,223,223,0.5)
+}
 
 </style>
