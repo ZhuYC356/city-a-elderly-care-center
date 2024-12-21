@@ -187,7 +187,6 @@
 <!--          <div>-->
 
 
-
 <!--          </div>-->
 <!--        </el-drawer>-->
 <!--      </div>-->
@@ -243,7 +242,7 @@
 <!--</template>-->
 
 <script setup>
-import { reactive, ref, onMounted } from 'vue';
+import {reactive, ref, onMounted} from 'vue';
 import request from '@/utils/request';
 
 // 表单数据
@@ -318,7 +317,7 @@ const submitAgree = () => {
   }
 
   // 发送同意请求
-  request.post('check-out-requests/agree', { ...addForm }).then(() => {
+  request.post('check-out-requests/agree', {...addForm}).then(() => {
     // 更新表格状态
     updateTableRowStatus(addForm.elderlyId, '同意');
     agreeDialogVisible.value = false;
@@ -333,7 +332,7 @@ const submitRevoke = () => {
   }
 
   // 发送撤销请求
-  request.post('check-out-requests/revoke', { ...addForm }).then(() => {
+  request.post('check-out-requests/revoke', {...addForm}).then(() => {
     // 更新表格状态
     updateTableRowStatus(addForm.elderlyId, '撤销');
     revokeDialogVisible.value = false;
@@ -383,13 +382,13 @@ const reportDialogContent = ref('');
   <div>
     <el-card style="height: 630px">
       <div>
-        <hr style="margin: 10px" />
+        <hr style="margin: 10px"/>
         <el-icon>
-          <Notebook />
+          <Notebook/>
         </el-icon>
         <i class="el-icon-notebook-1" style="margin-left: 30px; font-size: 20px"></i>
         <span style="margin-left: 5px; font-size: 20px; font-weight: bolder">退住登记审核</span>
-        <hr style="margin: 10px" />
+        <hr style="margin: 10px"/>
       </div>
 
       <div style="margin-top: 15px; margin-left: 10px">
@@ -444,10 +443,10 @@ const reportDialogContent = ref('');
       >
         <el-form :model="addForm" label-width="auto">
           <el-form-item label="审批人" style="margin-top: 15px">
-            <el-input v-model="addForm.approvalPerson" />
+            <el-input v-model="addForm.approvalPerson"/>
           </el-form-item>
           <el-form-item label="审批时间" style="margin-top: 15px">
-            <el-date-picker v-model="addForm.approvalTime" type="datetime" />
+            <el-date-picker v-model="addForm.approvalTime" type="datetime"/>
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="submitAgree">提交</el-button>
@@ -465,10 +464,10 @@ const reportDialogContent = ref('');
       >
         <el-form :model="addForm" label-width="auto">
           <el-form-item label="撤销人" style="margin-top: 15px">
-            <el-input v-model="addForm.approvalPerson" />
+            <el-input v-model="addForm.approvalPerson"/>
           </el-form-item>
           <el-form-item label="撤销时间" style="margin-top: 15px">
-            <el-date-picker v-model="addForm.approvalTime" type="datetime" />
+            <el-date-picker v-model="addForm.approvalTime" type="datetime"/>
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="submitRevoke">提交</el-button>
@@ -488,17 +487,18 @@ const reportDialogContent = ref('');
       </el-dialog>
 
       <div style="margin-top: 5px">
-        <el-table :data="tableData" style="width: 100%;" height="390" :stripe="true" :header-cell-style="{background:'#f3f6fd',color:'#555'}" @selection-change="selectedRows = $event">
-          <el-table-column type="selection" width="55" />
-          <el-table-column property="elderlyId" label="ID" width="80" />
-          <el-table-column property="name" label="姓名" width="120" />
-          <el-table-column property="checkInDate" label="入住日期" width="120" />
-          <el-table-column property="checkOutDate" label="退住日期" width="120" />
-          <el-table-column property="bedId" label="床位号" width="80" />
-          <el-table-column property="checkoutType" label="退住类型" width="80" />
-          <el-table-column property="approvalStatus" label="审核状态" width="80" />
-          <el-table-column property="approvalPerson" label="审批人" width="80" />
-          <el-table-column property="approvalTime" label="审批时间" width="120" />
+        <el-table :data="tableData" style="width: 100%;" height="390" :stripe="true"
+                  :header-cell-style="{background:'#f3f6fd',color:'#555'}" @selection-change="selectedRows = $event">
+          <el-table-column type="selection" width="55"/>
+          <el-table-column property="elderlyId" label="ID" width="80"/>
+          <el-table-column property="name" label="姓名" width="120"/>
+          <el-table-column property="checkInDate" label="入住日期" width="120"/>
+          <el-table-column property="checkOutDate" label="退住日期" width="120"/>
+          <el-table-column property="bedId" label="床位号" width="80"/>
+          <el-table-column property="checkoutType" label="退住类型" width="80"/>
+          <el-table-column property="approvalStatus" label="审核状态" width="80"/>
+          <el-table-column property="approvalPerson" label="审批人" width="80"/>
+          <el-table-column property="approvalTime" label="审批时间" width="120"/>
           <el-table-column fixed="right" label="操作" min-width="120">
             <template #default="scope">
               <el-button link type="success" size="small" @click="handleAgree(scope.row)">
