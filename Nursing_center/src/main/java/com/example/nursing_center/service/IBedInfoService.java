@@ -18,7 +18,7 @@ import java.util.List;
  */
 public interface IBedInfoService extends IService<BedInfo> {
 
-    Result add(BedInfo bedInfo);
+    Result  add(BedInfo bedInfo);
 
     Result getAll();
 

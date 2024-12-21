@@ -4,6 +4,7 @@ package com.example.nursing_center.controller;
 import com.example.nursing_center.common.Result;
 
 import com.example.nursing_center.common.SelectBedInfoResult;
+
 import com.example.nursing_center.controller.Result.Form;
 import com.example.nursing_center.pojo.BedInfo;
 import com.example.nursing_center.service.IBedInfoService;

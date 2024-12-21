@@ -282,7 +282,7 @@ const tableData = ref([]);
 
 // 获取数据
 const getData = () => {
-  request.get('check-out-requests/list').then((res) => {
+  request.get('check-out-requests/gainAll').then((res) => {
     console.log(res);
     tableData.value = res;
   });
@@ -327,7 +327,7 @@ const submitAgree = () => {
 // 提交撤销申请
 const submitRevoke = () => {
   if (!addForm.approvalPerson || !addForm.approvalTime) {
-    alert('请填写撤销人和撤销时间');
+    alert('请填写撤销人和审批时间');
     return;
   }
 
@@ -466,7 +466,7 @@ const reportDialogContent = ref('');
           <el-form-item label="撤销人" style="margin-top: 15px">
             <el-input v-model="addForm.approvalPerson"/>
           </el-form-item>
-          <el-form-item label="撤销时间" style="margin-top: 15px">
+          <el-form-item label="审批时间" style="margin-top: 15px">
             <el-date-picker v-model="addForm.approvalTime" type="datetime"/>
           </el-form-item>
           <el-form-item>

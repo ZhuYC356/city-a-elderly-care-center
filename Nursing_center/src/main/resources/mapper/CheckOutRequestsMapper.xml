@@ -3,10 +3,59 @@
 <mapper namespace="com.example.nursing_center.mapper.CheckOutRequestsMapper">
 
     <select id="selectAll" resultType="java.lang.Object">
-        select * from check_out_requests,elderly_info where check_out_requests.elderly_id=elderly_info.elderly_id
+
     </select>
     <select id="selectName" resultType="java.lang.Object"></select>
     <select id="selectBedId" resultType="java.lang.Object"></select>
     <select id="selectDate" resultType="java.lang.Object"></select>
-    <select id="getAll" resultType="java.lang.Object"></select>
+    <select id="getAll" resultType="java.lang.Object">
+
+    </select>
+    <select id="gainAll" resultType="com.example.nursing_center.controller.Result.BackForm">
+        SELECT r.request_id, r.elderly_id, e.name, r.bed_id, r.phone_number, r.check_in_date,
+               r.check_out_date, r.checkout_reason, r.checkout_type, r.approval_status,
+               r.approval_time, r.approval_person
+        FROM check_out_requests r
+                 LEFT JOIN elderly_info e ON r.elderly_id = e.elderly_id;
+    </select>
+
+    <!--<select id="selectAll" resultType="com.example.nursing_center.pojo.CheckOutRequests">
+        SELECT c.*, e.name
+        FROM check_out_requests c
+                 LEFT JOIN elderly_info e ON c.elderly_id = e.elderly_id
+        WHERE c.name = #{name} AND c.bed_id = #{bedId} AND c.check_in_date = #{checkInDate}
+    </select>
+
+    <select id="selectName" resultType="com.example.nursing_center.pojo.CheckOutRequests">
+        SELECT c.*, e.name
+        FROM check_out_requests c
+                 LEFT JOIN elderly_info e ON c.elderly_id = e.elderly_id
+        WHERE c.name = #{name}
+    </select>
+
+    <select id="selectBedId" resultType="com.example.nursing_center.pojo.CheckOutRequests">
+        SELECT c.*, e.name
+        FROM check_out_requests c
+                 LEFT JOIN elderly_info e ON c.elderly_id = e.elderly_id
+        WHERE c.bed_id = #{bedId}
+    </select>
+
+    <select id="selectDate" resultType="com.example.nursing_center.pojo.CheckOutRequests">
+        SELECT c.*, e.name
+        FROM check_out_requests c
+                 LEFT JOIN elderly_info e ON c.elderly_id = e.elderly_id
+        WHERE c.check_in_date = #{checkInDate}
+    </select>
+
+    <select id="getAll" resultType="com.example.nursing_center.pojo.CheckOutRequests">
+        SELECT c.*, e.name
+        FROM check_out_requests c
+                 LEFT JOIN elderly_info e ON c.elderly_id = e.elderly_id
+    </select>-->
+
+
+    <!-- 根据条件查询退住请求 -->
+
+
+
 </mapper>

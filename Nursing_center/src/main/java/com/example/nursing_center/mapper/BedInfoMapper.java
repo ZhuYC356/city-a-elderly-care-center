@@ -1,10 +1,10 @@
 package com.example.nursing_center.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.example.nursing_center.common.SelectBedInfoResult;
 import com.example.nursing_center.controller.Result.Form;
 import com.example.nursing_center.controller.Result.ManagerElder;
 import com.example.nursing_center.pojo.BedInfo;
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 import java.util.List;
 
