@@ -75,14 +75,14 @@
         <el-row :gutter="2">
           <el-col :span="2">
             <div class="grid-content ep-bg-purple"/>
-            <div class="col">2101</div>
+            <div class="col">{{ value }}101</div>
             <!--展示床位状态的模块-->
             <div class="bed-icon-box">
               <i class="iconfont icon-bed fontsize-icon" style="color: #df007e"></i>
-              <div class="fontsize">2101-1</div>
+              <div class="fontsize" v-if="bedInfoData">{{ value }}{{ bedInfoData[0].roomNumber }}-{{ bedInfoData[0].bedNumber }}</div>
               <br>
               <i class="iconfont icon-bed fontsize-icon" style="color: #df007e"></i>
-              <div class="fontsize">2101-1</div>
+              <div class="fontsize" v-if="bedInfoData">{{ value }}{{ bedInfoData[1].roomNumber }}-{{ bedInfoData[1].bedNumber }}</div>
             </div>
             <!--展示床位状态的模块-->
           </el-col>
@@ -100,40 +100,40 @@
           </el-col>
           <el-col :span="2">
             <div class="grid-content ep-bg-purple"/>
-            <div class="col">2102</div>
+            <div class="col">{{ value }}102</div>
             <!--展示床位状态的模块-->
             <div class="bed-icon-box">
               <i class="iconfont icon-bed fontsize-icon" style="color: #df007e"></i>
-              <div class="fontsize">2101-1</div>
+              <div class="fontsize" v-if="bedInfoData">{{ value }}{{ bedInfoData[2].roomNumber }}-{{ bedInfoData[2].bedNumber }}</div>
               <br>
               <i class="iconfont icon-bed fontsize-icon" style="color: #df007e"></i>
-              <div class="fontsize">2101-1</div>
+              <div class="fontsize" v-if="bedInfoData">{{ value }}{{ bedInfoData[3].roomNumber }}-{{ bedInfoData[3].bedNumber }}</div>
             </div>
             <!--展示床位状态的模块-->
           </el-col>
           <el-col :span="2">
             <div class="grid-content ep-bg-purple"/>
-            <div class="col">2103</div>
+            <div class="col">{{ value }}103</div>
             <!--展示床位状态的模块-->
             <div class="bed-icon-box grey-background-col">
               <i class="iconfont icon-bed fontsize-icon" style="color: #df007e"></i>
-              <div class="fontsize">2101-1</div>
+              <div class="fontsize" v-if="bedInfoData">{{ value }}{{ bedInfoData[4].roomNumber }}-{{ bedInfoData[4].bedNumber }}</div>
               <br>
               <i class="iconfont icon-bed fontsize-icon" style="color: #df007e"></i>
-              <div class="fontsize">2101-1</div>
+              <div class="fontsize" v-if="bedInfoData">{{ value }}{{ bedInfoData[5].roomNumber }}-{{ bedInfoData[5].bedNumber }}</div>
             </div>
             <!--展示床位状态的模块-->
           </el-col>
           <el-col :span="2">
             <div class="grid-content ep-bg-purple"/>
-            <div class="col">2104</div>
+            <div class="col">{{ value }}104</div>
             <!--展示床位状态的模块-->
             <div class="bed-icon-box">
               <i class="iconfont icon-bed fontsize-icon" style="color: #df007e"></i>
-              <div class="fontsize">2101-1</div>
+              <div class="fontsize" v-if="bedInfoData">{{ value }}{{ bedInfoData[6].roomNumber }}-{{ bedInfoData[6].bedNumber }}</div>
               <br>
               <i class="iconfont icon-bed fontsize-icon" style="color: #df007e"></i>
-              <div class="fontsize">2101-1</div>
+              <div class="fontsize" v-if="bedInfoData">{{ value }}{{ bedInfoData[7].roomNumber }}-{{ bedInfoData[7].bedNumber }}</div>
             </div>
             <!--展示床位状态的模块-->
           </el-col>
@@ -143,21 +143,21 @@
           </el-col>
           <el-col :span="2">
             <div class="grid-content ep-bg-purple"/>
-            <div class="col">2105</div>
+            <div class="col">{{ value }}105</div>
             <!--展示床位状态的模块-->
             <div class="bed-icon-box">
               <i class="iconfont icon-bed fontsize-icon" style="color: #df007e"></i>
-              <div class="fontsize">2101-1</div>
+              <div class="fontsize" v-if="bedInfoData">{{ value }}{{ bedInfoData[8].roomNumber }}-{{ bedInfoData[8].bedNumber }}</div>
             </div>
             <!--展示床位状态的模块-->
           </el-col>
           <el-col :span="2">
             <div class="grid-content ep-bg-purple"/>
-            <div class="col">2106</div>
+            <div class="col">{{ value }}106</div>
             <!--展示床位状态的模块-->
             <div class="bed-icon-box grey-background-col">
               <i class="iconfont icon-bed fontsize-icon" style="color: #df007e"></i>
-              <div class="fontsize">2101-1</div>
+              <div class="fontsize" v-if="bedInfoData">{{ value }}{{ bedInfoData[9].roomNumber }}-{{ bedInfoData[9].bedNumber }}</div>
             </div>
             <!--展示床位状态的模块-->
           </el-col>
@@ -169,136 +169,136 @@
         <el-row :gutter="2">
           <el-col :span="2">
             <div class="grid-content ep-bg-purple"/>
-            <div class="col">2107</div>
+            <div class="col">{{ value }}107</div>
             <!--展示床位状态的模块-->
             <div class="bed-icon-box">
               <i class="iconfont icon-bed fontsize-icon" style="color: #df007e"></i>
-              <div class="fontsize">2101-1</div>
+              <div class="fontsize" v-if="bedInfoData">{{ value }}{{ bedInfoData[10].roomNumber }}-{{ bedInfoData[10].bedNumber }}</div>
               <br>
               <i class="iconfont icon-bed fontsize-icon" style="color: #df007e"></i>
-              <div class="fontsize">2101-1</div>
+              <div class="fontsize" v-if="bedInfoData">{{ value }}{{ bedInfoData[11].roomNumber }}-{{ bedInfoData[11].bedNumber }}</div>
             </div>
             <!--展示床位状态的模块-->
           </el-col>
           <el-col :span="2">
             <div class="grid-content ep-bg-purple"/>
-            <div class="col">2108</div>
+            <div class="col">{{ value }}108</div>
             <!--展示床位状态的模块-->
             <div class="bed-icon-box grey-background-col">
               <i class="iconfont icon-bed fontsize-icon" style="color: #df007e"></i>
-              <div class="fontsize">2101-1</div>
+              <div class="fontsize" v-if="bedInfoData">{{ value }}{{ bedInfoData[12].roomNumber }}-{{ bedInfoData[12].bedNumber }}</div>
               <br>
               <i class="iconfont icon-bed fontsize-icon" style="color: #df007e"></i>
-              <div class="fontsize">2101-1</div>
+              <div class="fontsize" v-if="bedInfoData">{{ value }}{{ bedInfoData[13].roomNumber }}-{{ bedInfoData[13].bedNumber }}</div>
             </div>
             <!--展示床位状态的模块-->
           </el-col>
           <el-col :span="2">
             <div class="grid-content ep-bg-purple"/>
-            <div class="col">2109</div>
+            <div class="col">{{ value }}109</div>
             <!--展示床位状态的模块-->
             <div class="bed-icon-box">
               <i class="iconfont icon-bed fontsize-icon" style="color: #df007e"></i>
-              <div class="fontsize">2101-1</div>
+              <div class="fontsize" v-if="bedInfoData">{{ value }}{{ bedInfoData[14].roomNumber }}-{{ bedInfoData[14].bedNumber }}</div>
             </div>
             <!--展示床位状态的模块-->
           </el-col>
           <el-col :span="2">
             <div class="grid-content ep-bg-purple"/>
-            <div class="col">2110</div>
+            <div class="col">{{ value }}110</div>
             <!--展示床位状态的模块-->
             <div class="bed-icon-box grey-background-col">
               <i class="iconfont icon-bed fontsize-icon" style="color: #df007e"></i>
-              <div class="fontsize">2101-1</div>
+              <div class="fontsize" v-if="bedInfoData">{{ value }}{{ bedInfoData[15].roomNumber }}-{{ bedInfoData[15].bedNumber }}</div>
               <br>
               <i class="iconfont icon-bed fontsize-icon" style="color: #df007e"></i>
-              <div class="fontsize">2101-1</div>
+              <div class="fontsize" v-if="bedInfoData">{{ value }}{{ bedInfoData[16].roomNumber }}-{{ bedInfoData[16].bedNumber }}</div>
             </div>
             <!--展示床位状态的模块-->
           </el-col>
           <el-col :span="2">
             <div class="grid-content ep-bg-purple"/>
-            <div class="col">2111</div>
+            <div class="col">{{ value }}111</div>
             <!--展示床位状态的模块-->
             <div class="bed-icon-box">
               <i class="iconfont icon-bed fontsize-icon" style="color: #df007e"></i>
-              <div class="fontsize">2101-1</div>
+              <div class="fontsize" v-if="bedInfoData">{{ value }}{{ bedInfoData[17].roomNumber }}-{{ bedInfoData[17].bedNumber }}</div>
             </div>
             <!--展示床位状态的模块-->
           </el-col>
           <el-col :span="2">
             <div class="grid-content ep-bg-purple"/>
-            <div class="col">2112</div>
+            <div class="col">{{ value }}112</div>
             <!--展示床位状态的模块-->
             <div class="bed-icon-box grey-background-col">
               <i class="iconfont icon-bed fontsize-icon" style="color: #df007e"></i>
-              <div class="fontsize">2101-1</div>
+              <div class="fontsize" v-if="bedInfoData">{{ value }}{{ bedInfoData[18].roomNumber }}-{{ bedInfoData[18].bedNumber }}</div>
               <br>
               <i class="iconfont icon-bed fontsize-icon" style="color: #df007e"></i>
-              <div class="fontsize">2101-1</div>
+              <div class="fontsize" v-if="bedInfoData">{{ value }}{{ bedInfoData[19].roomNumber }}-{{ bedInfoData[19].bedNumber }}</div>
             </div>
             <!--展示床位状态的模块-->
           </el-col>
           <el-col :span="2">
             <div class="grid-content ep-bg-purple"/>
-            <div class="col">2113</div>
+            <div class="col">{{ value }}113</div>
             <!--展示床位状态的模块-->
             <div class="bed-icon-box">
               <i class="iconfont icon-bed fontsize-icon" style="color: #df007e"></i>
-              <div class="fontsize">2101-1</div>
+              <div class="fontsize" v-if="bedInfoData">{{ value }}{{ bedInfoData[20].roomNumber }}-{{ bedInfoData[20].bedNumber }}</div>
             </div>
             <!--展示床位状态的模块-->
           </el-col>
           <el-col :span="2">
             <div class="grid-content ep-bg-purple"/>
-            <div class="col">2114</div>
+            <div class="col">{{ value }}114</div>
             <!--展示床位状态的模块-->
             <div class="bed-icon-box grey-background-col">
               <i class="iconfont icon-bed fontsize-icon" style="color: #df007e"></i>
-              <div class="fontsize">2101-1</div>
+              <div class="fontsize" v-if="bedInfoData">{{ value }}{{ bedInfoData[21].roomNumber }}-{{ bedInfoData[21].bedNumber }}</div>
             </div>
             <!--展示床位状态的模块-->
           </el-col>
           <el-col :span="2">
             <div class="grid-content ep-bg-purple"/>
-            <div class="col">2115</div>
+            <div class="col">{{ value }}115</div>
             <!--展示床位状态的模块-->
             <div class="bed-icon-box">
               <i class="iconfont icon-bed fontsize-icon" style="color: #df007e"></i>
-              <div class="fontsize">2101-1</div>
+              <div class="fontsize" v-if="bedInfoData">{{ value }}{{ bedInfoData[22].roomNumber }}-{{ bedInfoData[22].bedNumber }}</div>
             </div>
             <!--展示床位状态的模块-->
           </el-col>
           <el-col :span="2">
             <div class="grid-content ep-bg-purple"/>
-            <div class="col">2116</div>
+            <div class="col">{{ value }}116</div>
             <!--展示床位状态的模块-->
             <div class="bed-icon-box grey-background-col">
               <i class="iconfont icon-bed fontsize-icon" style="color: #df007e"></i>
-              <div class="fontsize">2101-1</div>
+              <div class="fontsize" v-if="bedInfoData">{{ value }}{{ bedInfoData[23].roomNumber }}-{{ bedInfoData[23].bedNumber }}</div>
             </div>
             <!--展示床位状态的模块-->
           </el-col>
           <el-col :span="2">
             <div class="grid-content ep-bg-purple"/>
-            <div class="col">2117</div>
+            <div class="col">{{ value }}117</div>
             <!--展示床位状态的模块-->
             <div class="bed-icon-box">
               <i class="iconfont icon-bed fontsize-icon" style="color: #df007e"></i>
-              <div class="fontsize">2101-1</div>
+              <div class="fontsize" v-if="bedInfoData">{{ value }}{{ bedInfoData[24].roomNumber }}-{{ bedInfoData[24].bedNumber }}</div>
               <br>
               <i class="iconfont icon-bed fontsize-icon" style="color: #df007e"></i>
-              <div class="fontsize">2101-1</div>
+              <div class="fontsize" v-if="bedInfoData">{{ value }}{{ bedInfoData[25].roomNumber }}-{{ bedInfoData[25].bedNumber }}</div>
             </div>
             <!--展示床位状态的模块-->
           </el-col>
           <el-col :span="2">
             <div class="grid-content ep-bg-purple"/>
-            <div class="col">2118</div>
+            <div class="col">{{ value }}118</div>
             <!--展示床位状态的模块-->
             <div class="bed-icon-box grey-background-col">
               <i class="iconfont icon-bed fontsize-icon" style="color: #df007e"></i>
-              <div class="fontsize" v-if="bedInfoData">{{ bedInfoData[3].roomNumber }}-{{ bedInfoData[3].bedNumber }}</div>
+              <div class="fontsize" v-if="bedInfoData">{{ value }}{{ bedInfoData[26].roomNumber }}-{{ bedInfoData[26].bedNumber }}</div>
             </div>
             <!--展示床位状态的模块-->
           </el-col>
@@ -346,7 +346,7 @@ const handleChange = () => {
       .then(response => {
         console.log('从后端成功获取信息:', response.data);
         bedInfoData.value = response.data;
-        console.log('打印bedInfoData的内容:',bedInfoData.value);
+        console.log('打印bedInfoData的内容:', bedInfoData.value);
       })
       .catch(error => {
         console.error('错误:', error);
