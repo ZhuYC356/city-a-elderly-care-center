@@ -56,5 +56,22 @@
             room_number,bed_number
     </select>
 
+    <!--查询每个床位状态对应的数量-->
+    <select id="getBedStatusCount" resultType="com.example.nursing_center.common.enums.BedStatusCount">
+        SELECT
+            count( * ) AS count,
+	        bed_status
+        FROM
+            bed_info
+        WHERE
+            bed_status IN ( SELECT bed_status FROM bed_info WHERE floor = #{floor} )
+          AND floor = #{floor}
+        GROUP BY
+            bed_status
+        ORDER BY
+            bed_status
+
+    </select>
+
 
 </mapper>

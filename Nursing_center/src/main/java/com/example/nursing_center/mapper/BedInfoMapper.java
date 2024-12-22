@@ -2,6 +2,7 @@ package com.example.nursing_center.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.example.nursing_center.common.SelectBedInfoResult;
+import com.example.nursing_center.common.enums.BedStatusCount;
 import com.example.nursing_center.controller.Result.Form;
 import com.example.nursing_center.controller.Result.ManagerElder;
 import com.example.nursing_center.pojo.BedInfo;
@@ -35,4 +36,6 @@ public interface BedInfoMapper extends BaseMapper<BedInfo> {
     BedInfo selectByFRB(BedInfo bedInfo);
 
     List<SelectBedInfoResult> selectBedInfoByFloor(Integer floor);
+
+    List<BedStatusCount> getBedStatusCount(Integer floor);
 }

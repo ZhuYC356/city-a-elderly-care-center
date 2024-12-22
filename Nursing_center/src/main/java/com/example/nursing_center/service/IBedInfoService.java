@@ -3,6 +3,7 @@ package com.example.nursing_center.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.example.nursing_center.common.Result;
 import com.example.nursing_center.common.SelectBedInfoResult;
+import com.example.nursing_center.common.enums.BedStatusCount;
 import com.example.nursing_center.controller.Result.Form;
 import com.example.nursing_center.controller.Result.ManagerElder;
 import com.example.nursing_center.pojo.BedInfo;
@@ -28,4 +29,6 @@ public interface IBedInfoService extends IService<BedInfo> {
     List<SelectBedInfoResult> selectBedInfoByFloor(Integer floor);
     Result addBed(BedInfo bedInfo);
     Result updateBed(ManagerElder managerElder);
+
+    List<BedStatusCount> getBedStatusCount(Integer floor);
 }

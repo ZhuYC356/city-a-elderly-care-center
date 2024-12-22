@@ -3,6 +3,7 @@ package com.example.nursing_center.service.impl;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.nursing_center.common.Result;
 import com.example.nursing_center.common.SelectBedInfoResult;
+import com.example.nursing_center.common.enums.BedStatusCount;
 import com.example.nursing_center.controller.Result.Form;
 import com.example.nursing_center.controller.Result.ManagerElder;
 import com.example.nursing_center.mapper.BedInfoMapper;
@@ -42,6 +43,12 @@ public class BedInfoServiceImpl extends ServiceImpl<BedInfoMapper, BedInfo> impl
     public Result updateBed(ManagerElder managerElder) {
         return Result.success(bedInfoMapper.updateBed(managerElder));
     }
+
+    @Override
+    public List<BedStatusCount> getBedStatusCount(Integer floor) {
+        return bedInfoMapper.getBedStatusCount(floor);
+    }
+
     @Override
     public Result select(Form form) {
         if(form.getName()!=null&&form.getBedNumber()!=null){

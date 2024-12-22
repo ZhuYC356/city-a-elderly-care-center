@@ -5,6 +5,7 @@ import com.example.nursing_center.common.Result;
 
 import com.example.nursing_center.common.SelectBedInfoResult;
 
+import com.example.nursing_center.common.enums.BedStatusCount;
 import com.example.nursing_center.controller.Result.Form;
 import com.example.nursing_center.controller.Result.ManagerElder;
 import com.example.nursing_center.pojo.BedInfo;
@@ -75,6 +76,16 @@ public class BedInfoController {
         return bedInfoService.selectBedInfoByFloor(floor);
     }
 
+
+    /**
+     * 通过楼层查询对应的数据，然后统计床位状态的数量
+     * @param floor
+     * @return
+     */
+    @GetMapping("/getBedStatusCount")
+    public List<BedStatusCount> getBedStatusCount(Integer floor){
+        return bedInfoService.getBedStatusCount(floor);
+    }
 
 
 }

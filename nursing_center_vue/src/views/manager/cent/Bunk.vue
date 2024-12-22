@@ -12,19 +12,19 @@
         <el-row :gutter="20" style="margin-left: 1%">
           <el-col :span="3" :offset="9" style="display: flex">
             <i class="iconfont icon-bed" style="font-size: 30px;color: #2CBE56"></i>
-            <div class="fontsize-top">空闲：03</div>
+            <div class="fontsize-top">空闲：<div class="fontsize-top" v-if="countData">{{ countData[0].count }}</div></div>
           </el-col>
           <el-col :span="3" style="display: flex">
             <i class="iconfont icon-bed" style="font-size: 30px;color: #999999"></i>
-            <div class="fontsize-top">离床：03</div>
+            <div class="fontsize-top">离床：<div class="fontsize-top" v-if="countData">{{ countData[1].count }}</div></div>
           </el-col>
           <el-col :span="4" style="display: flex">
             <i class="iconfont icon-bed" style="font-size: 30px;color: #ffa406"></i>
-            <div class="fontsize-top">计划内离床：03</div>
+            <div class="fontsize-top">计划内离床：<div class="fontsize-top" v-if="countData">{{ countData[2].count }}</div></div>
           </el-col>
           <el-col :span="4" style="display: flex">
             <i class="iconfont icon-bed" style="font-size: 30px;color: #df0003"></i>
-            <div class="fontsize-top">离床超时：03</div>
+            <div class="fontsize-top">离床超时：<div class="fontsize-top" v-if="countData">{{ countData[3].count }}</div></div>
           </el-col>
         </el-row>
         <!--第二行-->
@@ -33,7 +33,7 @@
             <div style="font-size: 20px;text-align: right">楼层：</div>
           </el-col>
           <el-col :span="3">
-            <el-select v-model="value" placeholder="请选择楼层" clearable @change="handleChange">
+            <el-select v-model="value" placeholder="请选择楼层" clearable @change="() => { handleChange(); countBedStatus(); }">
               <el-option
                   v-for="item in options"
                   :key="item.value"
@@ -52,19 +52,19 @@
         <el-row :gutter="20" style="margin-left: 1%">
           <el-col :span="3" :offset="9" style="display: flex">
             <i class="iconfont icon-bed" style="font-size: 30px;color: #000000"></i>
-            <div class="fontsize-top">有人：12</div>
+            <div class="fontsize-top">有人：<div class="fontsize-top" v-if="countData">{{ countData[4].count }}</div></div>
           </el-col>
           <el-col :span="3" style="display: flex">
             <i class="iconfont icon-bed" style="font-size: 30px;color: #409EFF"></i>
-            <div class="fontsize-top">外出：12</div>
+            <div class="fontsize-top">外出：<div class="fontsize-top" v-if="countData">{{ countData[5].count }}</div></div>
           </el-col>
           <el-col :span="4" style="display: flex">
             <i class="iconfont icon-bed" style="font-size: 30px;color: #a0a224"></i>
-            <div class="fontsize-top">离开：12</div>
+            <div class="fontsize-top">离开：<div class="fontsize-top" v-if="countData">{{ countData[6].count }}</div></div>
           </el-col>
           <el-col :span="4" style="display: flex">
             <i class="iconfont icon-bed" style="font-size: 30px;color: #df007e"></i>
-            <div class="fontsize-top">退住：12</div>
+            <div class="fontsize-top">退住：<div class="fontsize-top" v-if="countData">{{ countData[7].count }}</div></div>
           </el-col>
         </el-row>
       </div>
@@ -352,6 +352,28 @@ const handleChange = () => {
         console.error('错误:', error);
       });
 }
+
+// 统计各个状态的床位数量
+const countData = ref("");
+
+const countBedStatus = () => {
+  // 发送 GET 请求到后端
+  axios.get('http://localhost:9090/bed-info/getBedStatusCount', {
+    params: {
+      floor: value.value // 将选择的值作为参数传递
+    }
+  })
+      .then(response => {
+        console.log('从后端成功获取信息:', response.data);
+        countData.value = response.data;
+        console.log('打印countData的内容:', countData.value);
+      })
+      .catch(error => {
+        console.error('错误:', error);
+      });
+}
+
+
 
 
 // const getBedInfoByFloor = async () => {
