@@ -9,7 +9,6 @@ import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * <p>
@@ -36,51 +35,34 @@ public class CheckOutRequestsController {
     }
 
     /**
-     * 添加
-     *
-     * @param backForm
-     * @return
+     * 同意审批
+     * @param approvalData 审批数据
+     * @return 处理结果
      */
-    @PostMapping("/add")
-    public Result add(@RequestBody BackForm backForm){
-        return checkOutRequestsService.add(backForm);
+    @PostMapping("/agree")
+    public Result agree(@RequestBody BackForm approvalData) {
+        return checkOutRequestsService.agree(approvalData);
     }
 
     /**
-     * 查询
-     * @param back
-     * @return*/
-
-    @PostMapping ("/select")
-    public Result select(@RequestBody Back back){
-        return checkOutRequestsService.select(back);
-
-    }
-
-    // 同意审批接口
-    @PostMapping("/agree")
-    public Map<String, Object> agreeApproval(@RequestBody BackForm backForm) {
-        try {
-            // 业务层处理审批逻辑
-            checkOutRequestsService.approveCheckOutRequest(backForm);
-            return Map.of("status", "success", "message", "审批通过");
-        } catch (Exception e) {
-            return Map.of("status", "error", "message", "审批失败: " + e.getMessage());
-        }
-    }
-
-    // 撤销审批接口
+     * 撤销审批
+     * @param approvalData 审批数据
+     * @return 处理结果
+     */
     @PostMapping("/revoke")
-    public Map<String, Object> revokeApproval(@RequestBody BackForm backForm) {
-        try {
-            // 业务层处理撤销逻辑
-            checkOutRequestsService.revokeCheckOutRequest(backForm);
-            return Map.of("status", "success", "message", "审批已撤销");
-        } catch (Exception e) {
-            return Map.of("status", "error", "message", "撤销失败: " + e.getMessage());
-        }
+    public Result revoke(@RequestBody BackForm approvalData) {
+        return checkOutRequestsService.revoke(approvalData);
     }
 
+    /**
+     * 根据条件模糊查询
+     * @param form 查询条件
+     * @return 符合条件的请求列表
+     */
+    @PostMapping("/select")
+    public List<BackForm> select(@RequestBody Back form) {
+        return checkOutRequestsService.select(form);
+    }
 
 
 }

@@ -26,7 +26,7 @@ public class CheckOutRequestsServiceImpl extends ServiceImpl<CheckOutRequestsMap
     @Resource
     private CheckOutRequestsMapper checkOutRequestsMapper;
 
-    @Override
+   /* @Override
     public Result select(Back back) {
         if(back.getName()!=null&&back.getBedId()!=null&&back.getCheckInDate()!=null){
             return Result.success(checkOutRequestsMapper.selectAll());
@@ -43,7 +43,7 @@ public class CheckOutRequestsServiceImpl extends ServiceImpl<CheckOutRequestsMap
         else{
             return Result.success(checkOutRequestsMapper.getAll());
         }
-    }
+    }*/
 
 
 
@@ -53,49 +53,30 @@ public class CheckOutRequestsServiceImpl extends ServiceImpl<CheckOutRequestsMap
         return checkOutRequestsMapper.gainAll();
     }
 
-    @Override
-    public Result agree() {
-        return null;
-    }
 
     @Override
-    public Result add(BackForm backForm) {
-        return null;
-    }
-
-    @Override
-    public Result approveCheckOutRequest(BackForm backForm) {
-        // 检查审批人和审批时间是否存在
-        if (backForm.getApprovalPerson() == null || backForm.getApprovalTime() == null) {
-            throw new IllegalArgumentException("审批人和审批时间不能为空");
+    public Result agree(BackForm approvalData) {
+        int result = checkOutRequestsMapper.updateApprovalStatus(approvalData);
+        if (result > 0) {
+            return Result.success("审批通过");
         }
-
-        // 更新审批状态为通过 (2)，并设置审批人和审批时间
-        checkOutRequestsMapper.updateApprovalStatus(
-                backForm.getElderlyId(),
-                2, // 审批通过
-                backForm.getApprovalPerson(),
-                backForm.getApprovalTime()
-        );
-        return Result.success();
+        return Result.failure("审批失败");
     }
 
     @Override
-    public Result revokeCheckOutRequest(BackForm backForm) {
-        // 检查撤销人和撤销时间是否存在
-        if (backForm.getApprovalPerson() == null || backForm.getApprovalTime() == null) {
-            throw new IllegalArgumentException("撤销人和撤销时间不能为空");
+    public Result revoke(BackForm approvalData) {
+        int result = checkOutRequestsMapper.updateApprovalStatusToRevoke(approvalData);
+        if (result > 0) {
+            return Result.success("撤销成功");
         }
-
-        // 更新审批状态为撤销 (3)，并设置撤销人和撤销时间
-        checkOutRequestsMapper.updateApprovalStatus(
-                backForm.getElderlyId(),
-                3, // 审批撤销
-                backForm.getApprovalPerson(),
-                backForm.getApprovalTime()
-        );
-        return Result.success();
+        return Result.failure("撤销失败");
     }
+
+    @Override
+    public List<BackForm> select(Back form) {
+        return checkOutRequestsMapper.selectByCriteria(form);
+    }
+
 
 
 }

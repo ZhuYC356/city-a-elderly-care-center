@@ -41,24 +41,22 @@ const clearAll = () => {
   getData();
 };
 
-
 const tableData = ref([]);
-
-// 获取数据
+// 获取退住请求
 const getData = () => {
   request.get('check-out-requests/gainAll').then((res) => {
     console.log(res);
     tableData.value = res;
   });
 };
-
 // 组件挂载后获取所有数据
 onMounted(() => {
   getData();
 });
 
-// 弹窗控制
+// 同意申请弹窗控制
 const agreeDialogVisible = ref(false);
+// 撤销申请弹窗控制
 const revokeDialogVisible = ref(false);
 
 // 同意申请
@@ -83,14 +81,13 @@ const submitAgree = () => {
   // 发送同意请求
   request.post('check-out-requests/agree', {...addForm}).then(response => {
     if (response.status === 'success') {
-      // 更新表格状态
-      updateTableRowStatus(addForm.elderlyId, 2);
+      updateTableRowStatus(addForm.elderlyId, '通过');
       agreeDialogVisible.value = false;
     } else {
       alert('审批失败: ' + response.message);
     }
   })
-};
+}
 
 // 提交撤销申请
 const submitRevoke = () => {
@@ -102,28 +99,22 @@ const submitRevoke = () => {
   // 发送撤销请求
   request.post('check-out-requests/revoke', {...addForm}).then(response => {
     if (response.status === 'success') {
-      // 更新表格状态
       updateTableRowStatus(addForm.elderlyId, '撤销');
       revokeDialogVisible.value = false;
     } else {
       alert('撤销失败: ' + response.message);
     }
-  });
-};
+  })
+}
 
 const updateTableRowStatus = (elderlyId, status) => {
   const row = tableData.value.find(item => item.elderlyId === elderlyId);
   if (row) {
     row.approvalStatus = status; // 更新表格中的状态
   }
+}
 
-};
-
-
-const currentPage4 = ref(5);
-const pageSize4 = ref(100);
 const selectedRows = ref([]);
-
 // 生成审批报告
 const submitReport = () => {
   if (selectedRows.value.length === 0) {
@@ -147,11 +138,9 @@ const submitReport = () => {
   reportDialogVisible.value = true;
 };
 
-
-
 // 弹窗显示报告
-  const reportDialogVisible = ref(false);
-  const reportDialogContent = ref('');
+const reportDialogVisible = ref(false);
+const reportDialogContent = ref('');
 </script>
 
 <template>
@@ -167,6 +156,7 @@ const submitReport = () => {
         <hr style="margin: 10px"/>
       </div>
 
+      <!--      搜索条件：-->
       <div style="margin-top: 15px; margin-left: 10px">
         <el-form :inline="true" :model="form">
           <el-form-item style="margin-right: 20px">
@@ -204,67 +194,14 @@ const submitReport = () => {
         </el-form>
       </div>
 
+      <!--生成审批报告-->
       <div>
         <el-button type="primary" style="margin-left: 10px" @click="submitReport">
           <span style="font-weight: bolder">生成审批信息报告</span>
         </el-button>
       </div>
 
-      <!-- 同意申请弹窗 -->
-      <el-dialog
-          title="同意申请"
-          :visible.sync="agreeDialogVisible"
-          width="30%"
-          @close="agreeDialogVisible = false"
-      >
-        <el-form :model="addForm" label-width="auto">
-          <el-form-item label="审批人" style="margin-top: 15px">
-            <el-input v-model="addForm.approvalPerson"/>
-          </el-form-item>
-          <el-form-item label="审批时间" style="margin-top: 15px">
-            <el-date-picker v-model="addForm.approvalTime" type="datetime"/>
-          </el-form-item>
-          <el-form-item>
-            <el-button type="primary" @click="submitAgree">提交</el-button>
-            <el-button @click="agreeDialogVisible = false">取消</el-button>
-          </el-form-item>
-        </el-form>
-      </el-dialog>
-
-      <!-- 撤销申请弹窗 -->
-      <el-dialog
-          title="撤销申请"
-          :visible.sync="revokeDialogVisible"
-          width="30%"
-          @close="revokeDialogVisible = false"
-      >
-        <el-form :model="addForm" label-width="auto">
-          <el-form-item label="撤销人" style="margin-top: 15px">
-            <el-input v-model="addForm.approvalPerson"/>
-          </el-form-item>
-          <el-form-item label="审批时间" style="margin-top: 15px">
-            <el-date-picker v-model="addForm.approvalTime" type="datetime"/>
-          </el-form-item>
-          <el-form-item>
-            <el-button type="primary" @click="submitRevoke">提交</el-button>
-            <el-button @click="revokeDialogVisible = false">取消</el-button>
-          </el-form-item>
-        </el-form>
-      </el-dialog>
-
-      <!-- 审批报告弹窗 -->
-      <el-dialog
-          title="审批报告"
-          :visible.sync="reportDialogVisible"
-          width="50%"
-          @close="reportDialogVisible = false"
-      >
-<!--        <el-pre>{{ reportDialogContent }}</el-pre>-->
-        <!-- 使用 v-html 渲染内容 -->
-        <div v-html="reportDialogContent"></div>
-
-      </el-dialog>
-
+      <!--表单内容-->
       <div style="margin-top: 5px">
         <el-table :data="tableData" style="width: 100%;" height="390" :stripe="true"
                   :header-cell-style="{background:'#f3f6fd',color:'#555'}" @selection-change="selectedRows = $event">
@@ -281,28 +218,16 @@ const submitReport = () => {
           <el-table-column fixed="right" label="操作" min-width="120">
             <template #default="scope">
               <el-button link type="success" size="small" @click="handleAgree(scope.row)">
-                <span style="font-weight: bolder">同意申请</span>
+                <span style="font-weight: bolder">同意</span>
               </el-button>
               <el-button link type="primary" size="small" @click="handleRevoke(scope.row)">
-                <span style="font-weight: bolder">撤销申请</span>
+                <span style="font-weight: bolder">撤销</span>
               </el-button>
             </template>
           </el-table-column>
         </el-table>
 
-        <!--        <div style="margin-top: 10px">
-                  <el-pagination
-                      v-model:current-page="currentPage4"
-                      v-model:page-size="pageSize4"
-                      :page-sizes="[100, 200, 300, 400]"
-                      :size="size"
-                      :disabled="disabled"
-                      :background="background"
-                      layout="total, sizes, prev, pager, next, jumper"
-                      :total="400"
-                  />
-                </div>-->
-
+        <!--分页-->
         <div style="margin-top: 10px">
           <el-pagination
               v-model:current-page="currentPage"
@@ -312,8 +237,63 @@ const submitReport = () => {
               :total="tableData.length"
           />
         </div>
+
       </div>
     </el-card>
+
+    <!-- 同意申请弹窗 -->
+    <el-dialog
+        title="同意申请"
+        :visible.sync="agreeDialogVisible"
+        width="30%"
+        @close="agreeDialogVisible = false"
+    >
+      <el-form :model="addForm" label-width="auto">
+        <el-form-item label="审批人" style="margin-top: 15px">
+          <el-input v-model="addForm.approvalPerson"/>
+        </el-form-item>
+        <el-form-item label="审批时间" style="margin-top: 15px">
+          <el-date-picker v-model="addForm.approvalTime" type="datetime"/>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="submitAgree">提交</el-button>
+          <el-button @click="agreeDialogVisible = false">取消</el-button>
+        </el-form-item>
+      </el-form>
+    </el-dialog>
+
+    <!-- 撤销申请弹窗 -->
+    <el-dialog
+        title="撤销申请"
+        :visible.sync="revokeDialogVisible"
+        width="30%"
+        @close="revokeDialogVisible = false"
+    >
+      <el-form :model="addForm" label-width="auto">
+        <el-form-item label="撤销人" style="margin-top: 15px">
+          <el-input v-model="addForm.approvalPerson"/>
+        </el-form-item>
+        <el-form-item label="审批时间" style="margin-top: 15px">
+          <el-date-picker v-model="addForm.approvalTime" type="datetime"/>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="submitRevoke">提交</el-button>
+          <el-button @click="revokeDialogVisible = false">取消</el-button>
+        </el-form-item>
+      </el-form>
+    </el-dialog>
+
+    <!-- 审批报告弹窗 -->
+    <el-dialog
+        title="审批报告"
+        :visible.sync="reportDialogVisible"
+        width="50%"
+        @close="reportDialogVisible = false"
+    >
+      <!-- 使用 v-html 渲染内容 -->
+      <div v-html="reportDialogContent"></div>
+    </el-dialog>
+
   </div>
 </template>
 

@@ -50,6 +50,12 @@ public class Result {
         return tResult;
     }
 
+    //新增失败方法
+    //failure方法
+    public static Result failure(String 撤销失败) {
+        return error("-1",撤销失败);
+    }
+
     public String getCode() {
         return code;
     }
