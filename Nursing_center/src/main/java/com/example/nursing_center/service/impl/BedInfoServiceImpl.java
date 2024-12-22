@@ -51,7 +51,7 @@ public class BedInfoServiceImpl extends ServiceImpl<BedInfoMapper, BedInfo> impl
     }
 
     @Override
-    public List<SelectBedInfoResult> selectBedInfoByFloor() {
-        return bedInfoMapper.selectBedInfoByFloor();
+    public List<SelectBedInfoResult> selectBedInfoByFloor(Integer floor) {
+        return bedInfoMapper.selectBedInfoByFloor(floor);
     }
 }

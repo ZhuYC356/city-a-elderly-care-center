@@ -30,5 +30,5 @@ public interface BedInfoMapper extends BaseMapper<BedInfo> {
 
     BedInfo selectByFRB(BedInfo bedInfo);
 
-    List<SelectBedInfoResult> selectBedInfoByFloor();
+    List<SelectBedInfoResult> selectBedInfoByFloor(Integer floor);
 }

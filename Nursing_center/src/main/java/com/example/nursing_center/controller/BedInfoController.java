@@ -61,8 +61,8 @@ public class BedInfoController {
      * @return
      */
     @GetMapping("/selectBedInfoByFloor")
-    public List<SelectBedInfoResult> selectBedInfoByFloor(){
-        return bedInfoService.selectBedInfoByFloor();
+    public List<SelectBedInfoResult> selectBedInfoByFloor(Integer floor){
+        return bedInfoService.selectBedInfoByFloor(floor);
     }
 
 

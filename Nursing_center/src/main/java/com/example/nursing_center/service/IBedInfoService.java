@@ -24,5 +24,5 @@ public interface IBedInfoService extends IService<BedInfo> {
 
     Result select(Form form);
 
-    List<SelectBedInfoResult> selectBedInfoByFloor();
+    List<SelectBedInfoResult> selectBedInfoByFloor(Integer floor);
 }

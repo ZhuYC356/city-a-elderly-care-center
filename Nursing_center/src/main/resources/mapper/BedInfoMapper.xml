@@ -36,7 +36,7 @@
 
     <!--通过楼层查询 房间号、床位号、床位状态-->
     <select id="selectBedInfoByFloor" resultType="com.example.nursing_center.common.SelectBedInfoResult">
-        select bed_number,bed_status,room_number from bed_info where floor = 2;
+        select bed_number,bed_status,room_number from bed_info where floor = #{floor};
     </select>
 
 
