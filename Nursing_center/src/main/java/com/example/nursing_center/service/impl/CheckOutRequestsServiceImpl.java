@@ -45,14 +45,56 @@ public class CheckOutRequestsServiceImpl extends ServiceImpl<CheckOutRequestsMap
         }
     }
 
-    @Override
-    public Result add(CheckOutRequests checkOutRequests) {
-        return Result.success();
-    }
+
+
 
     @Override
     public List<BackForm> gainAll() {
         return checkOutRequestsMapper.gainAll();
+    }
+
+    @Override
+    public Result agree() {
+        return null;
+    }
+
+    @Override
+    public Result add(BackForm backForm) {
+        return null;
+    }
+
+    @Override
+    public Result approveCheckOutRequest(BackForm backForm) {
+        // 检查审批人和审批时间是否存在
+        if (backForm.getApprovalPerson() == null || backForm.getApprovalTime() == null) {
+            throw new IllegalArgumentException("审批人和审批时间不能为空");
+        }
+
+        // 更新审批状态为通过 (2)，并设置审批人和审批时间
+        checkOutRequestsMapper.updateApprovalStatus(
+                backForm.getElderlyId(),
+                2, // 审批通过
+                backForm.getApprovalPerson(),
+                backForm.getApprovalTime()
+        );
+        return Result.success();
+    }
+
+    @Override
+    public Result revokeCheckOutRequest(BackForm backForm) {
+        // 检查撤销人和撤销时间是否存在
+        if (backForm.getApprovalPerson() == null || backForm.getApprovalTime() == null) {
+            throw new IllegalArgumentException("撤销人和撤销时间不能为空");
+        }
+
+        // 更新审批状态为撤销 (3)，并设置撤销人和撤销时间
+        checkOutRequestsMapper.updateApprovalStatus(
+                backForm.getElderlyId(),
+                3, // 审批撤销
+                backForm.getApprovalPerson(),
+                backForm.getApprovalTime()
+        );
+        return Result.success();
     }
 
 

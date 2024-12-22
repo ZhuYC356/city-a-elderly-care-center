@@ -9,6 +9,9 @@ import lombok.Data;
  **/
 @Data
 public class BackForm {
+    /**
+     * 前端的显示信息
+     */
     String elderlyId;
     String name;
     String checkInDate;

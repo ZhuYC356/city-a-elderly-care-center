@@ -4,12 +4,12 @@ package com.example.nursing_center.controller;
 import com.example.nursing_center.common.Result;
 import com.example.nursing_center.controller.Result.Back;
 import com.example.nursing_center.controller.Result.BackForm;
-import com.example.nursing_center.pojo.CheckOutRequests;
 import com.example.nursing_center.service.ICheckOutRequestsService;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -27,7 +27,7 @@ public class CheckOutRequestsController {
     private ICheckOutRequestsService checkOutRequestsService;
 
     /**
-     * 获取所有
+     * 获取所有表单数据
      * @return
      */
     @GetMapping("/gainAll")
@@ -37,12 +37,13 @@ public class CheckOutRequestsController {
 
     /**
      * 添加
-     * @param checkOutRequests
-     * @return*/
-
+     *
+     * @param backForm
+     * @return
+     */
     @PostMapping("/add")
-    public Result add(@RequestBody CheckOutRequests checkOutRequests){
-        return checkOutRequestsService.add(checkOutRequests);
+    public Result add(@RequestBody BackForm backForm){
+        return checkOutRequestsService.add(backForm);
     }
 
     /**
@@ -55,5 +56,31 @@ public class CheckOutRequestsController {
         return checkOutRequestsService.select(back);
 
     }
+
+    // 同意审批接口
+    @PostMapping("/agree")
+    public Map<String, Object> agreeApproval(@RequestBody BackForm backForm) {
+        try {
+            // 业务层处理审批逻辑
+            checkOutRequestsService.approveCheckOutRequest(backForm);
+            return Map.of("status", "success", "message", "审批通过");
+        } catch (Exception e) {
+            return Map.of("status", "error", "message", "审批失败: " + e.getMessage());
+        }
+    }
+
+    // 撤销审批接口
+    @PostMapping("/revoke")
+    public Map<String, Object> revokeApproval(@RequestBody BackForm backForm) {
+        try {
+            // 业务层处理撤销逻辑
+            checkOutRequestsService.revokeCheckOutRequest(backForm);
+            return Map.of("status", "success", "message", "审批已撤销");
+        } catch (Exception e) {
+            return Map.of("status", "error", "message", "撤销失败: " + e.getMessage());
+        }
+    }
+
+
 
 }

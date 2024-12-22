@@ -20,7 +20,14 @@ public interface ICheckOutRequestsService extends IService<CheckOutRequests> {
 
     Result select(Back back);
 
-    Result add(CheckOutRequests checkOutRequests);
+    Result add(BackForm backForm);
 
     List<BackForm> gainAll();
+
+
+    Result agree();
+
+    Result approveCheckOutRequest(BackForm backForm);
+
+    Result revokeCheckOutRequest(BackForm backForm);
 }

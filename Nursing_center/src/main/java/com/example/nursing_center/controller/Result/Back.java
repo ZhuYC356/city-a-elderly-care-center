@@ -9,6 +9,9 @@ import lombok.Data;
  **/
 @Data
 public class Back {
+    /**
+     * 前端查询的字段
+     */
     String name;
     String bedId;
     String checkInDate;
