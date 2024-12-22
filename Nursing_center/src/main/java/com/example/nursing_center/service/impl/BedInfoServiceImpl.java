@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.nursing_center.common.Result;
 import com.example.nursing_center.common.SelectBedInfoResult;
 import com.example.nursing_center.controller.Result.Form;
+import com.example.nursing_center.controller.Result.ManagerElder;
 import com.example.nursing_center.mapper.BedInfoMapper;
 import com.example.nursing_center.pojo.BedInfo;
 import com.example.nursing_center.service.IBedInfoService;
@@ -25,6 +26,10 @@ public class BedInfoServiceImpl extends ServiceImpl<BedInfoMapper, BedInfo> impl
     @Resource
     private BedInfoMapper bedInfoMapper;
     @Override
+    public Result addBed(BedInfo bedInfo) {
+        return Result.success(bedInfoMapper.addBed(bedInfo));
+    }
+    @Override
     public Result add(BedInfo bedInfo) {
         return null;
     }
@@ -33,7 +38,10 @@ public class BedInfoServiceImpl extends ServiceImpl<BedInfoMapper, BedInfo> impl
     public Result getAll() {
         return Result.success(bedInfoMapper.getAll());
     }
-
+    @Override
+    public Result updateBed(ManagerElder managerElder) {
+        return Result.success(bedInfoMapper.updateBed(managerElder));
+    }
     @Override
     public Result select(Form form) {
         if(form.getName()!=null&&form.getBedNumber()!=null){

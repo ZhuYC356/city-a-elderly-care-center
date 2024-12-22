@@ -22,6 +22,10 @@ public interface BedInfoMapper extends BaseMapper<BedInfo> {
 
     List<ManagerElder> getAll();
 
+    int updateBed(ManagerElder managerElder);
+
+    int addBed(BedInfo bedInfo);
+
     List<ManagerElder> selectAll(Form form);
 
     List<ManagerElder> selectName(Form form);

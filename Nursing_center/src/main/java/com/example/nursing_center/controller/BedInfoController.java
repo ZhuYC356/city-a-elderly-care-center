@@ -6,6 +6,7 @@ import com.example.nursing_center.common.Result;
 import com.example.nursing_center.common.SelectBedInfoResult;
 
 import com.example.nursing_center.controller.Result.Form;
+import com.example.nursing_center.controller.Result.ManagerElder;
 import com.example.nursing_center.pojo.BedInfo;
 import com.example.nursing_center.service.IBedInfoService;
 import jakarta.annotation.Resource;
@@ -44,7 +45,16 @@ public class BedInfoController {
         System.out.println(form);
         return bedInfoService.select(form);
     }
-
+    @PostMapping("/addBed")
+    public Result addBed (@RequestBody BedInfo bedInfo){
+        System.out.println(bedInfo);
+        return bedInfoService.addBed(bedInfo);
+    }
+    @PostMapping("/updateBed")
+    public Result updateBed(@RequestBody ManagerElder managerElder){
+        System.out.println(managerElder);
+        return Result.success(bedInfoService.updateBed(managerElder));
+    }
     /**
      * 测试床位信息是否能返回
      * 方便后面对床位的 房间号、状态、床位号 进行查询

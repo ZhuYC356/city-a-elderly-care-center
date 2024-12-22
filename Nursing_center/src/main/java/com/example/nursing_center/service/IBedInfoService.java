@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.example.nursing_center.common.Result;
 import com.example.nursing_center.common.SelectBedInfoResult;
 import com.example.nursing_center.controller.Result.Form;
+import com.example.nursing_center.controller.Result.ManagerElder;
 import com.example.nursing_center.pojo.BedInfo;
 
 import java.util.List;
@@ -25,4 +26,6 @@ public interface IBedInfoService extends IService<BedInfo> {
     Result select(Form form);
 
     List<SelectBedInfoResult> selectBedInfoByFloor(Integer floor);
+    Result addBed(BedInfo bedInfo);
+    Result updateBed(ManagerElder managerElder);
 }

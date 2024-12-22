@@ -6,9 +6,15 @@ import lombok.Data;
 public class ManagerElder {
     String name;
     String gender;
-    String date;
+    String age;
+    String idNumber;
+    String selfCareStratus;
+    String address;
+    String checkInTime;
     String familyContactInfo;
     String floorNumber;
     String roomNumber;
     String bedNumber;
+    String newBedNumber;
+    String newRoomNumber;
 }
