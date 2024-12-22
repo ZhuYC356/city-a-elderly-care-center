@@ -3,6 +3,9 @@ package com.example.nursing_center.common;
 
 import com.example.nursing_center.common.enums.ResultCodeEnum;
 
+/**
+ * 返回结果类
+ */
 public class Result {
     private String code;
     private String msg;
