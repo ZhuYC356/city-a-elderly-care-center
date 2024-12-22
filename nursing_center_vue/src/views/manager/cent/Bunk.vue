@@ -1,7 +1,15 @@
 <template>
   <div>
     <div class="card" style="padding: 15px;padding-left: 30px">
-      <h1>床位示意图</h1>
+      <div>
+        <hr style="margin: 10px">
+        <el-icon>
+          <Notebook/>
+        </el-icon>
+        <i class="el-icon-notebook-1" style="margin-left: 30px;font-size: 20px"></i>
+        <span style="margin-left: 5px;font-size: 20px;font-weight: bolder">床位示意图</span>
+        <hr style="margin: 10px">
+      </div>
     </div>
 
     <div class="card" style="margin-top: 30px">
