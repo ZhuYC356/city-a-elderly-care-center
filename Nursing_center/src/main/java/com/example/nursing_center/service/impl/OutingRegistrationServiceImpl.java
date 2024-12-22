@@ -4,7 +4,11 @@ import com.example.nursing_center.pojo.OutingRegistration;
 import com.example.nursing_center.mapper.OutingRegistrationMapper;
 import com.example.nursing_center.service.IOutingRegistrationService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * <p>
@@ -16,5 +20,11 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class OutingRegistrationServiceImpl extends ServiceImpl<OutingRegistrationMapper, OutingRegistration> implements IOutingRegistrationService {
+    @Resource
+    private OutingRegistrationMapper outingRegistrationMapper;
 
+    @Override
+    public List<OutingRegistration> getByCondition(String name, Integer bedNumber, LocalDateTime checkInTime) {
+        return outingRegistrationMapper.getByCondition(name, bedNumber, checkInTime);
+    }
 }

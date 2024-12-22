@@ -5,7 +5,7 @@ import java.security.NoSuchAlgorithmException;
 
 /**
  * @Author: 竹永灿 224804356
- * @Description: TODO
+ * @Description: MD5加密工具类
  * @version: 1.0
  * @DateTime: 2024/12/19 16:07
  **/

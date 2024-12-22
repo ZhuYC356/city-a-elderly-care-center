@@ -24,4 +24,40 @@
         created_at,updated_at,review_status,
         status
     </sql>
+    <select id="getByCondition" resultType="com.example.nursing_center.pojo.OutingRegistration">
+        SELECT
+        outing.outing_id AS outingId,
+        outing.elderly_id AS elderlyId,
+        outing.outing_date AS outingDate,
+        outing.outing_time AS outingTime,
+        outing.destination AS destination,
+        outing.purpose AS purpose,
+        outing.accompanying_person AS accompanyingPerson,
+        outing.contact_info AS contactInfo,
+        outing.remarks AS remarks,
+        outing.created_at AS createdAt,
+        outing.updated_at AS updatedAt,
+        outing.review_status AS reviewStatus,
+        outing.status AS status,
+        ei.name AS elderlyName,
+        ei.bed_id AS bedNumber,
+        ei.check_in_time AS checkInTime
+        FROM
+        outing_registration outing
+        LEFT JOIN
+        elderly_info ei ON outing.elderly_id = ei.elderly_id
+        WHERE
+        1=1
+        <if test="name != null and name != ''">
+            AND ei.name LIKE CONCAT('%', #{name}, '%')
+        </if>
+        <if test="bedNumber != null and bedNumber != ''">
+            AND ei.bed_id = #{bedNumber}
+        </if>
+        <if test="checkInTime != null and checkInTime != ''">
+            AND ei.check_in_time = #{checkInTime}
+        </if>
+    </select>
+
+
 </mapper>

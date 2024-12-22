@@ -3,6 +3,9 @@ package com.example.nursing_center.service;
 import com.example.nursing_center.pojo.OutingRegistration;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
 /**
  * <p>
  * 存储老人外出登记信息 服务类
@@ -13,4 +16,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IOutingRegistrationService extends IService<OutingRegistration> {
 
+    List<OutingRegistration> getByCondition(String name, Integer bedNumber, LocalDateTime checkInTime);
 }
