@@ -298,7 +298,7 @@
             <!--展示床位状态的模块-->
             <div class="bed-icon-box grey-background-col">
               <i class="iconfont icon-bed fontsize-icon" style="color: #df007e"></i>
-              <div class="fontsize" v-for="item in bedInfoData">{{ item.roomNumber }}-{{ item.bedNumber }}</div>
+              <div class="fontsize" v-if="bedInfoData">{{ bedInfoData[3].roomNumber }}-{{ bedInfoData[3].bedNumber }}</div>
             </div>
             <!--展示床位状态的模块-->
           </el-col>
