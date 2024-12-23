@@ -1,6 +1,7 @@
 <script setup>
 import {reactive, ref, onMounted} from 'vue';
 import request from '@/utils/request';
+import axios from "axios";
 
 // 表单数据
 const form = reactive({
@@ -25,13 +26,24 @@ const pageSize = ref(10);
 
 // 搜索按钮点击事件
 const onSubmit = () => {
-  request.post("check-out-requests/select", form).then(res => {
-    console.log(res)
-    tableData.value = res.data;
-  })
+  let selectLink = 'http://localhost:9090/check-out-requests/select?';
+  selectLink += `name=${form.name}`
+  selectLink += `&bedId=${form.bedId}`
+  selectLink += `&checkInTime=${form.checkInDate}`
+
+  axios
+      .get(selectLink)
+      .then((res) => {
+        tableData.value = []
+        console.log(res.data);
+        tableData.value = res.data;
+      })
+      .catch((err) => {
+        console.error(err);
+      });
 }
 onMounted(() => {
-  gainAll()
+  getData()
   console.log(tableData)
 })
 const clearAll = () => {
@@ -71,6 +83,7 @@ const handleRevoke = (row) => {
   revokeDialogVisible.value = true;
 };
 
+
 // 提交同意申请
 const submitAgree = () => {
   if (!addForm.approvalPerson || !addForm.approvalTime) {
@@ -79,14 +92,17 @@ const submitAgree = () => {
   }
 
   // 发送同意请求
-  request.post('check-out-requests/agree', {...addForm}).then(response => {
+  request.post('check-out-requests/agree', addForm).then(response => {
     if (response.status === 'success') {
-      updateTableRowStatus(addForm.elderlyId, '通过');
+      updateTableRowStatus(addForm.approvalStatus, '通过');
       agreeDialogVisible.value = false;
     } else {
       alert('审批失败: ' + response.message);
     }
   })
+  addForm.approvalStatus=''
+  addForm.approvalTime=''
+  addForm.approvalPerson=''
 }
 
 // 提交撤销申请
@@ -97,7 +113,7 @@ const submitRevoke = () => {
   }
 
   // 发送撤销请求
-  request.post('check-out-requests/revoke', {...addForm}).then(response => {
+  request.post('check-out-requests/revoke', addForm).then(response => {
     if (response.status === 'success') {
       updateTableRowStatus(addForm.elderlyId, '撤销');
       revokeDialogVisible.value = false;
@@ -108,7 +124,7 @@ const submitRevoke = () => {
 }
 
 const updateTableRowStatus = (elderlyId, status) => {
-  const row = tableData.value.find(item => item.elderlyId === elderlyId);
+  const row = tableData.value.find(item => item.approvalStatus === approvalStatus);
   if (row) {
     row.approvalStatus = status; // 更新表格中的状态
   }
@@ -167,7 +183,7 @@ const reportDialogContent = ref('');
             </el-input>
           </el-form-item>
           <el-form-item style="margin-right: 20px">
-            <el-input v-model="form.bedId" placeholder="请填写床位号" clearable>
+            <el-input v-model="form.bedId" placeholder="请填写床号" clearable>
               <template #prefix>
                 <i class="el-icon-postcard" style="font-size: 15px; margin-left: 3px"></i>
               </template>

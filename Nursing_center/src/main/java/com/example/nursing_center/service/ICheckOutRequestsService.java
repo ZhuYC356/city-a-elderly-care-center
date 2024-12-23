@@ -2,7 +2,6 @@ package com.example.nursing_center.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.example.nursing_center.common.Result;
-import com.example.nursing_center.controller.Result.Back;
 import com.example.nursing_center.controller.Result.BackForm;
 import com.example.nursing_center.pojo.CheckOutRequests;
 
@@ -24,7 +23,7 @@ public interface ICheckOutRequestsService extends IService<CheckOutRequests> {
 
     Result agree(BackForm approvalData);
     Result revoke(BackForm approvalData);
-    List<BackForm> select(Back form);
 
 
+    List<BackForm> select(String name, String bedId, String checkInDate);
 }

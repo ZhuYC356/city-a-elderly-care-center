@@ -10,7 +10,7 @@ import lombok.Data;
 @Data
 public class BackForm {
     /**
-     * 前端的显示信息
+     * 前端表单的显示信息
      */
     String elderlyId;
     String name;

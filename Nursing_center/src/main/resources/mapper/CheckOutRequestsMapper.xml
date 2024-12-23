@@ -3,26 +3,61 @@
 <mapper namespace="com.example.nursing_center.mapper.CheckOutRequestsMapper">
 
     <!--<select id="selectAll" resultType="com.example.nursing_center.controller.Result.BackForm">
-        SELECT * FROM check_out_requests;
+        SELECT * FROM check_out_requests,elderly_info where elderly_info.elderly_id = check_out_requests.elderly_id
+                                                        and elderly_id= #{elderlyId}
+                                                        and elderly_info.name like "%"#{name}"%"
+                                                        and check_out_requests.check_in_date like "%"#{checkInDate}"%";
     </select>
     <select id="selectName" resultType="com.example.nursing_center.controller.Result.BackForm">
-        SELECT * FROM check_out_requests WHERE name = #{name};
+        SELECT * FROM check_out_requests,elderly_info where elderly_info.elderly_id = check_out_requests.elderly_id
+                                                        and elderly_info.name like "%"#{name}"%";
     </select>
-    <select id="selectBedId" resultType="com.example.nursing_center.controller.Result.BackForm">
-        SELECT * FROM check_out_requests WHERE bed_id = #{bedId};
+    <select id="selectElderlyId" resultType="com.example.nursing_center.controller.Result.BackForm">
+        SELECT * FROM check_out_requests,elderly_info where elderly_info.elderly_id = check_out_requests.elderly_id
+                                                        and elderly_id= #{elderlyId};
     </select>
     <select id="selectDate" resultType="com.example.nursing_center.controller.Result.BackForm">
-        SELECT * FROM check_out_requests WHERE check_in_date = #{checkInDate};
+        SELECT * FROM check_out_requests,elderly_info where elderly_info.elderly_id = check_out_requests.elderly_id
+                                                        and check_out_requests.check_in_date like "%"#{checkInDate}"%";
     </select>
     <select id="getAll" resultType="com.example.nursing_center.controller.Result.BackForm">
-        SELECT * FROM check_out_requests;
+        SELECT * FROM check_out_requests,elderly_info where elderly_info.elderly_id = check_out_requests.elderly_id;
     </select>-->
+
     <select id="gainAll" resultType="com.example.nursing_center.controller.Result.BackForm">
         SELECT r.request_id, r.elderly_id, e.name, r.bed_id, r.phone_number, r.check_in_date,
                r.check_out_date, r.checkout_reason, r.checkout_type, r.approval_status,
                r.approval_time, r.approval_person
         FROM check_out_requests r
                  LEFT JOIN elderly_info e ON r.elderly_id = e.elderly_id;
+    </select>
+    <select id="select" resultType="com.example.nursing_center.controller.Result.BackForm">
+        SELECT
+        ei.elderly_id AS elderlyId,
+        ei.name AS name,
+        ei.check_in_time AS checkInDate,
+        ei.bed_id AS bedId,
+        ei.check_out_time AS checkOutDate,
+        ci.checkout_type AS checkoutType,
+        ci.approval_status AS approvalStatus,
+        ci.approval_person AS approvalPerson,
+        ci.approval_time AS approvalTime
+        FROM
+        elderly_info ei
+        LEFT JOIN
+        check_out_requests ci ON ei.elderly_id = ci.elderly_id
+        WHERE
+        1 = 1
+        <if test="name != null and name !='' ">
+            AND ei.name LIKE CONCAT('%', #{name}, '%')
+        </if>
+        <if test="bedId != null and bedId != ''" >
+            AND ei.bed_id = #{bedId}
+        </if>
+        <if test="checkInDate != null and checkInDate !=''">
+            AND ei.check_in_time = #{checkInDate}
+        </if>
+
     </select>
 
     <update id="updateApprovalStatus">
@@ -43,29 +78,6 @@
           AND approval_status = 2;
     </update>
 
-    <select id="selectByCriteria" resultType="com.example.nursing_center.controller.Result.BackForm">
-        SELECT c.request_id,
-               c.elderly_id,
-               c.bed_id,
-               c.phone_number,
-               c.property_address,
-               c.check_in_date,
-               c.check_out_date,
-               c.checkout_reason,
-               c.checkout_type,
-               c.approval_status,
-               c.approval_time,
-               c.approval_person,
-               e.name,
-               e.age,
-               e.gender
-        FROM check_out_requests c
-                 LEFT JOIN elderly_info e ON c.elderly_id = e.elderly_id
-        WHERE (e.name LIKE CONCAT('%', #{name}, '%') OR #{name} IS NULL)
-          AND (c.bed_id LIKE CONCAT('%', #{bedId}, '%') OR #{bedId} IS NULL)
-          AND (c.check_in_date = #{checkInDate} OR #{checkInDate} IS NULL)
-          AND (c.check_out_date = #{checkOutDate} OR #{checkOutDate} IS NULL)
-        ORDER BY c.created_at DESC;
-    </select>
+
 
 </mapper>

@@ -1,7 +1,6 @@
 package com.example.nursing_center.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.example.nursing_center.controller.Result.Back;
 import com.example.nursing_center.controller.Result.BackForm;
 import com.example.nursing_center.pojo.CheckOutRequests;
 
@@ -24,7 +23,7 @@ public interface CheckOutRequestsMapper extends BaseMapper<CheckOutRequests> {
 
     List<BackForm> selectName(Back back);
 
-    List<BackForm> selectBedId(Back back);
+    List<BackForm> selectElderlyId(Back back);
 
     List<BackForm> selectDate(Back back);
 
@@ -33,14 +32,9 @@ public interface CheckOutRequestsMapper extends BaseMapper<CheckOutRequests> {
     List<BackForm> gainAll();
 
     int updateApprovalStatus(BackForm approvalData);
+
     int updateApprovalStatusToRevoke(BackForm approvalData);
-    List<BackForm> selectByCriteria(Back form);
 
-
-
-
-
-
-
+    List<BackForm> select(String name, String bedId, String checkInDate);
 
 }

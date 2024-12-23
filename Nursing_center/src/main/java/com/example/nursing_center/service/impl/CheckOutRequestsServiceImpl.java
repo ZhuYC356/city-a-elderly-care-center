@@ -2,7 +2,6 @@ package com.example.nursing_center.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.nursing_center.common.Result;
-import com.example.nursing_center.controller.Result.Back;
 import com.example.nursing_center.controller.Result.BackForm;
 import com.example.nursing_center.mapper.CheckOutRequestsMapper;
 import com.example.nursing_center.pojo.CheckOutRequests;
@@ -26,21 +25,27 @@ public class CheckOutRequestsServiceImpl extends ServiceImpl<CheckOutRequestsMap
     @Resource
     private CheckOutRequestsMapper checkOutRequestsMapper;
 
+
    /* @Override
     public Result select(Back back) {
-        if(back.getName()!=null&&back.getBedId()!=null&&back.getCheckInDate()!=null){
+        // 如果提供了姓名、老人ID和入住日期，则查询所有条件的记录
+        if (back.getName() != null && back.getElderlyId() != null && back.getCheckInDate() != null) {
             return Result.success(checkOutRequestsMapper.selectAll());
         }
-        else if(back.getName()!=null&&back.getBedId()==null&&back.getCheckInDate()==null){
+        // 如果只提供了老人姓名，则查询姓名匹配的记录
+        else if (back.getName() != null && back.getElderlyId() == null && back.getCheckInDate() == null) {
             return Result.success(checkOutRequestsMapper.selectName(back));
         }
-        else if(back.getName()==null&&back.getBedId()!=null&&back.getCheckInDate()==null){
-            return Result.success(checkOutRequestsMapper.selectBedId(back));
+        // 如果只提供了老人ID，则查询ID匹配的记录
+        else if (back.getName() == null && back.getElderlyId() != null && back.getCheckInDate() == null) {
+            return Result.success(checkOutRequestsMapper.selectElderlyId(back));
         }
-        else if(back.getName()==null&&back.getBedId()==null&&back.getCheckInDate()!=null){
+        // 如果只提供了入住日期，则查询入住日期匹配的记录
+        else if (back.getName() == null && back.getElderlyId() == null && back.getCheckInDate() != null) {
             return Result.success(checkOutRequestsMapper.selectDate(back));
         }
-        else{
+        // 如果没有提供任何查询条件，则查询所有数据
+        else {
             return Result.success(checkOutRequestsMapper.getAll());
         }
     }*/
@@ -73,10 +78,9 @@ public class CheckOutRequestsServiceImpl extends ServiceImpl<CheckOutRequestsMap
     }
 
     @Override
-    public List<BackForm> select(Back form) {
-        return checkOutRequestsMapper.selectByCriteria(form);
+    public List<BackForm> select(String name, String bedId, String checkInDate) {
+        return checkOutRequestsMapper.select(name, bedId, checkInDate);
     }
-
 
 
 }

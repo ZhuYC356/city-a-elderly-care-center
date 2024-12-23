@@ -2,7 +2,6 @@ package com.example.nursing_center.controller;
 
 
 import com.example.nursing_center.common.Result;
-import com.example.nursing_center.controller.Result.Back;
 import com.example.nursing_center.controller.Result.BackForm;
 import com.example.nursing_center.service.ICheckOutRequestsService;
 import jakarta.annotation.Resource;
@@ -56,13 +55,14 @@ public class CheckOutRequestsController {
 
     /**
      * 根据条件模糊查询
-     * @param form 查询条件
+     * @param
      * @return 符合条件的请求列表
      */
-    @PostMapping("/select")
-    public List<BackForm> select(@RequestBody Back form) {
-        return checkOutRequestsService.select(form);
-    }
 
+    @GetMapping("/select")
+    public List<BackForm> select(@RequestParam(required = false) String name,@RequestParam(required = false) String bedId,@RequestParam(required = false) String checkInDate){
+        System.out.println(name);
+        return checkOutRequestsService.select(name, bedId, checkInDate);
+    }
 
 }
