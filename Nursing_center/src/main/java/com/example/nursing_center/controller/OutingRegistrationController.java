@@ -1,12 +1,17 @@
 package com.example.nursing_center.controller;
 
-
 import com.example.nursing_center.mapper.OutingRegistrationMapper;
 import com.example.nursing_center.pojo.OutingRegistration;
 import com.example.nursing_center.service.IOutingRegistrationService;
+import com.example.nursing_center.util.ExcelUtils;
+import io.swagger.annotations.ApiOperation;
 import jakarta.annotation.Resource;
+
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.web.bind.annotation.*;
 
+//import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -32,6 +37,17 @@ public class OutingRegistrationController {
     public List<OutingRegistration> getAll() {
         return iOutingRegistrationService.list();
     }
+
+    /*
+     * 导出所有数据为Excel
+     */
+    @GetMapping("/export")
+    @ApiOperation(value = "按对象导出（基础）", produces = "application/octet-stream")
+    public void export(HttpServletResponse response) throws IOException {
+        List<OutingRegistration> list = iOutingRegistrationService.list();
+        ExcelUtils.export(response, "outings registration", list, OutingRegistration.class);
+    }
+
     /*
      * 添加数据
      */
@@ -44,7 +60,7 @@ public class OutingRegistrationController {
     /*
      * 删除数据
      */
-    @DeleteMapping("/delete")
+    @GetMapping("/delete")
     public boolean delete(@RequestParam Integer id) {
         return iOutingRegistrationService.removeById(id);
     }

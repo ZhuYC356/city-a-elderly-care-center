@@ -56,6 +56,13 @@
           </el-form-item>
         </el-form>
       </div>
+      <div>
+        <a href="http://localhost:9090/outing-registration/export" style="float: right;margin-right: 30px">
+          <el-button type="primary" style="margin-left: 10px">
+            <span style="font-weight: bolder">外出登记导出Excel表</span>
+          </el-button>
+        </a>
+      </div>
       <div style="margin-top: 5px">
         <el-table
             :data="tableData"
@@ -100,10 +107,10 @@
         <el-dialog v-model="dialogFormVisible" :visible.sync="dialogTableVisible" title="Shipping address" width="500">
           <el-form>
             <el-form-item label="外出记录ID" :label-width="formLabelWidth">
-              <el-input v-model="elderForm.outingId" autocomplete="off"/>
+              <el-input v-model="elderForm.outingId" autocomplete="off" :disabled="true"/>
             </el-form-item>
             <el-form-item label="老人ID" :label-width="formLabelWidth">
-              <el-input v-model="elderForm.elderlyId" autocomplete="off"/>
+              <el-input v-model="elderForm.elderlyId" autocomplete="off" :disabled="true"/>
             </el-form-item>
             <el-form-item label="外出日期" :label-width="formLabelWidth">
               <el-date-picker v-model="elderForm.outingDate" type="date" placeholder="选择日期"/>
@@ -127,7 +134,7 @@
               <el-input v-model="elderForm.remarks" type="textarea" autocomplete="off"/>
             </el-form-item>
             <el-form-item label="创建时间" :label-width="formLabelWidth">
-              <el-date-picker v-model="elderForm.createdAt" type="datetime" placeholder="选择创建时间"/>
+              <el-date-picker v-model="elderForm.createdAt" type="datetime" placeholder="选择创建时间" :disabled="true"/>
             </el-form-item>
             <el-form-item label="更新时间" :label-width="formLabelWidth">
               <el-date-picker v-model="elderForm.updatedAt" type="datetime" placeholder="选择更新时间"/>
@@ -164,7 +171,7 @@
 import axios from "axios";
 
 export default {
-  name: "外出登记",
+  name: "out-office-registration",
   data() {
     return {
       tableData: [],
@@ -231,19 +238,6 @@ export default {
     handleClick(index) {
       let itemData = this.tableData[index];
       this.dialogTableVisible = true;
-      // this.elderForm.outingId=itemData.outingId;
-      // this.elderForm.elderlyId=itemData.elderlyId;
-      // this.elderForm.outingDate=itemData.outingDate;
-      // this.elderForm.outingTime=itemData.outingTime;
-      // this.elderForm.destination=itemData.destination;
-      // this.elderForm.purpose=itemData.purpose;
-      // this.elderForm.accompanyingPerson=itemData.accompanyingPerson;
-      // this.elderForm.contactInfo=itemData.contactInfo;
-      // this.elderForm.remarks=itemData.remarks;
-      // this.elderForm.createdAt=itemData.createdAt;
-      // this.elderForm.updatedAt=itemData.updatedAt;
-      // this.elderForm.reviewStatus=itemData.reviewStatus;
-      // this.elderForm.status=itemData.status;
       this.elderForm = itemData;
     },
     dialogFormSubmit() {
@@ -252,8 +246,8 @@ export default {
           .then((response) => {
             this.$message({
               showClose: true,
-              message: '糟糕！提交失败',
-              type: 'error'
+              message: '恭喜你，提交成功',
+              type: 'success'
             });
             console.log(response);
           })
