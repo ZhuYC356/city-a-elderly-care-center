@@ -76,7 +76,6 @@ public class BedInfoController {
 
     /**
      * 通过“楼层”查询“房间号、床位号、床位状态”
-     * 暂时是通过2楼查
      *
      * @return
      */
@@ -105,7 +104,21 @@ public class BedInfoController {
     }
     @GetMapping("/getAllRoomByFloorNumber/{floorNumber}")
     public Result getAllRoomByFloorNumber(@PathVariable("floorNumber") Integer floorNumber){
+        System.out.println(floorNumber);
         return bedInfoService.getAllRoomByFloor(floorNumber);
     }
+    @GetMapping("/getAllBedByRoom/{roomNumber}")
+    public Result getAllBedByRoom(@PathVariable("roomNumber") Integer roomNumber){
+        return bedInfoService.getAllBedByRoom(roomNumber);
+    }
+    @GetMapping("/getAllRoom")
+    public Result getAllRoom(){
+        return bedInfoService.getAllRoom();
+    }
+    @GetMapping("/getAllBed")
+    public Result getAllBed(){
+        return bedInfoService.getAllBed();
+    }
+
 
 }

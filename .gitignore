@@ -18,5 +18,8 @@ bin-release/
 # information for Eclipse / Flash Builder.
 /nursing_center_vue/node_modules/
 /nursing_center_vue/node_modules/
+/Nursing_center/target/
+/nursing_center_vue/node_modules/
+/nursing_center_vue/node_modules/
 /nursing_center_vue/node_modules/
 /nursing_center_vue/node_modules/
