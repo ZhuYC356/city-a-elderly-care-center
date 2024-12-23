@@ -31,4 +31,8 @@ public interface IBedInfoService extends IService<BedInfo> {
     Result updateBed(ManagerElder managerElder);
 
     List<BedStatusCount> getBedStatusCount(Integer floor);
+
+    Result getBedByAllFloor();
+
+    Result getAllRoomByFloor(Integer floorNumber);
 }

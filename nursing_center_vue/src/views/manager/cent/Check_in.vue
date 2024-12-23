@@ -8,7 +8,7 @@
         </el-icon>
         <i class="el-icon-notebook-1" style="margin-left: 30px;font-size: 20px"></i>
         <span style="margin-left: 5px;font-size: 20px;font-weight: bolder">入住登记信息</span>
-<!--        <Clock></Clock>-->
+        <!--        <Clock></Clock>-->
         <hr style="margin: 10px">
       </div>
       <div style="margin-top: 15px;margin-left: 10px">
@@ -59,7 +59,7 @@
         </el-form>
       </div>
       <div style="margin-top: 5px">
-<!--        表格-->
+        <!--        表格-->
         <el-table :data="elderlyList" style="width: 100%;" height="365" :stripe="true"
                   :header-cell-style="{background:'#f3f6fd',color:'#555'}">
           <el-table-column type="selection" width="55"/>
@@ -146,26 +146,37 @@
         </el-form-item>
         <el-form-item label="选择楼号:" :label-width="formLabelWidth">
           <el-select v-model="riseElderly.floorNumber" placeholder="选择楼号">
-            <el-option label="5号楼" value="1"/>
-            <el-option label="6号楼" value="2"/>
-            <el-option label="7号楼" value="3"/>
-            <el-option label="8号楼" value="4"/>
+            <el-option
+                v-for="item in floorList"
+                :key="item"
+                :label="item+'号楼'"
+                :value="item"
+            >
+            </el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="选择房间号:" :label-width="formLabelWidth">
           <el-select v-model="riseElderly.roomNumber" placeholder="选择房间号">
-            <el-option label="101" value="1"/>
-            <el-option label="102" value="2"/>
-            <el-option label="103" value="3"/>
-            <el-option label="104" value="4"/>
+            <el-option
+                v-for="item in roomList"
+                :key="item"
+                :label="item+'号房间'"
+                :value="item"
+                :on-click="selectRoom(item)"
+            >
+            </el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="选择床位:" :label-width="formLabelWidth">
           <el-select v-model="riseElderly.bedId" placeholder="选择床位">
-            <el-option label="1" value="1"/>
-            <el-option label="2" value="2"/>
-            <el-option label="3" value="3"/>
-            <el-option label="4" value="4"/>
+            <el-option
+                v-for="item in bedList"
+                :key="item"
+                :label="item+'号床'"
+                :value="item"
+                :on-click="selectBed(item)"
+            >
+            </el-option>
           </el-select>
         </el-form-item>
       </el-form>
@@ -412,6 +423,7 @@
 </template>
 <script>
 import Clock from "@/components/Clock.vue";
+
 export default {
   name: "入住登记",
   created() {
@@ -420,10 +432,34 @@ export default {
     })
   },
   methods: {
+    selectRoom() {
+      if (this.selectFrom.floorNumber === '') {
+        alert('请先选择楼号')
+      } else {
+        this.$request.get('/bed-info/getAllRoomByFloorNumber/'+this.selectFrom.floorNumber).then(res => {
+          console.log(res.data)
+          this.roomList = res.data
+        })
+      }
+    },
+    selectBed() {
+      if (this.selectFrom.roomNumber === '') {
+        alert('请先选择房间号')
+      } else {
+        this.$request.get('/bed-info/getAllBedByRoom').then(res => {
+          console.log(res.data)
+          this.bedList = res.data
+        })
+      }
+    },
     openRise() {
       this.dialogFormVisible = true
       this.$request.get('/nurse-info/getAll').then(res => {
         this.nurseList = res.data
+      })
+      this.$request.get('/bed-info/getBedByAllFloor').then(res => {
+        console.log(res.data)
+        this.floorList = res.data
       })
     },
     add() {
@@ -435,12 +471,16 @@ export default {
       this.dialogFormVisible = false
     },
     select() {
-      if (this.selectFrom.name === ''&&this.selectFrom.bedNumber===''&&this.selectFrom.date===''){
+      if (this.selectFrom.name === '' && this.selectFrom.bedNumber === '' && this.selectFrom.date === '') {
         alert('请输入查询条件')
-      }else {
+      } else {
         this.$request.post('/elderly-info/selectByFrom', this.selectFrom).then(res => {
           console.log(res)
-          this.elderlyList = res.data
+          if (res.data.length === 0) {
+            alert('没有查询到数据')
+          } else {
+            this.elderlyList = res.data
+          }
         })
       }
       console.log('submit!');
@@ -449,6 +489,7 @@ export default {
       this.selectFrom.name = '';
       this.selectFrom.bedNumber = '';
       this.selectFrom.date = '';
+      location.reload();
     },
     handleClick(index, row) {
       this.dialogFormVisible3 = true
@@ -533,7 +574,10 @@ export default {
         bedNumber: '',
         date: '',
       },
+      floorList: [],
       nurseList: [],
+      roomList: [],
+      bedList: [],
       riseElderly: {
         name: "",
         gender: "",
@@ -563,7 +607,7 @@ export default {
       background: false,
     }
   },
-  components:{
+  components: {
     Clock,
   }
 }

@@ -64,9 +64,10 @@ class NursingCenterApplicationTests {
     @Test
     public void test2(){
         ElderlyInfo elderlyInfo=new ElderlyInfo();
-        elderlyInfo.setName("小");
-//        elderlyInfo.setIdNumber("111111111111111111");
+//        elderlyInfo.setName("小");
+//        elderlyInfo.setIdNumber("1");
 //        elderlyInfo.setSelfCareStatus(1);
+        elderlyInfo.setBedId(1);
 //        elderlyInfo.setHomeAddress("Beijing");
 //        elderlyInfo.setContactInfo("123456789");
         String str = JSONUtil.toJsonStr(elderlyInfo);

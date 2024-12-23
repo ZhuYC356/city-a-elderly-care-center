@@ -72,6 +72,14 @@
             bed_status
 
     </select>
-
-
+    <select id="getAllFloor" resultType="java.lang.Integer">
+        select distinct floor_number from bed_info
+    </select>
+    <select id="selectAllRoomByFloor" resultType="java.lang.Integer">
+        select distinct room_number
+        from bed_info
+        where floor_number = #{floorNumber}
+          and bed_status = 'O' # 该楼层有空的房间
+        and status = '1'
+    </select>
 </mapper>
