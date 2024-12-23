@@ -17,24 +17,13 @@ import java.util.List;
 public interface CheckOutRequestsMapper extends BaseMapper<CheckOutRequests> {
 
 
-
-
-    /*List<BackForm> selectAll();
-
-    List<BackForm> selectName(Back back);
-
-    List<BackForm> selectElderlyId(Back back);
-
-    List<BackForm> selectDate(Back back);
-
-    List<BackForm> getAll();*/
-
     List<BackForm> gainAll();
-
-    int updateApprovalStatus(BackForm approvalData);
 
     int updateApprovalStatusToRevoke(BackForm approvalData);
 
-    List<BackForm> select(String name, String bedId, String checkInDate);
+    List<BackForm> select(String name, Integer bedId, String checkInDate);
+
+    Integer updateApprovalStatus(BackForm backForm);
+
 
 }

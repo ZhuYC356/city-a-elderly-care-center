@@ -35,12 +35,11 @@ public class CheckOutRequestsController {
 
     /**
      * 同意审批
-     * @param approvalData 审批数据
      * @return 处理结果
      */
     @PostMapping("/agree")
-    public Result agree(@RequestBody BackForm approvalData) {
-        return checkOutRequestsService.agree(approvalData);
+    public Result agree(@RequestBody BackForm backForm) {
+        return checkOutRequestsService.agree(backForm);
     }
 
     /**
@@ -60,9 +59,10 @@ public class CheckOutRequestsController {
      */
 
     @GetMapping("/select")
-    public List<BackForm> select(@RequestParam(required = false) String name,@RequestParam(required = false) String bedId,@RequestParam(required = false) String checkInDate){
+    public List<BackForm> select(@RequestParam(required = false) String name,@RequestParam(required = false) Integer bedId,@RequestParam(required = false) String checkInDate){
         System.out.println(name);
         return checkOutRequestsService.select(name, bedId, checkInDate);
     }
+
 
 }

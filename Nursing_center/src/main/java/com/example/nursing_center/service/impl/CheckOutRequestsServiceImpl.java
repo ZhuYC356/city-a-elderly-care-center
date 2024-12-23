@@ -26,47 +26,12 @@ public class CheckOutRequestsServiceImpl extends ServiceImpl<CheckOutRequestsMap
     private CheckOutRequestsMapper checkOutRequestsMapper;
 
 
-   /* @Override
-    public Result select(Back back) {
-        // 如果提供了姓名、老人ID和入住日期，则查询所有条件的记录
-        if (back.getName() != null && back.getElderlyId() != null && back.getCheckInDate() != null) {
-            return Result.success(checkOutRequestsMapper.selectAll());
-        }
-        // 如果只提供了老人姓名，则查询姓名匹配的记录
-        else if (back.getName() != null && back.getElderlyId() == null && back.getCheckInDate() == null) {
-            return Result.success(checkOutRequestsMapper.selectName(back));
-        }
-        // 如果只提供了老人ID，则查询ID匹配的记录
-        else if (back.getName() == null && back.getElderlyId() != null && back.getCheckInDate() == null) {
-            return Result.success(checkOutRequestsMapper.selectElderlyId(back));
-        }
-        // 如果只提供了入住日期，则查询入住日期匹配的记录
-        else if (back.getName() == null && back.getElderlyId() == null && back.getCheckInDate() != null) {
-            return Result.success(checkOutRequestsMapper.selectDate(back));
-        }
-        // 如果没有提供任何查询条件，则查询所有数据
-        else {
-            return Result.success(checkOutRequestsMapper.getAll());
-        }
-    }*/
-
-
-
-
     @Override
     public List<BackForm> gainAll() {
         return checkOutRequestsMapper.gainAll();
     }
 
 
-    @Override
-    public Result agree(BackForm approvalData) {
-        int result = checkOutRequestsMapper.updateApprovalStatus(approvalData);
-        if (result > 0) {
-            return Result.success("审批通过");
-        }
-        return Result.failure("审批失败");
-    }
 
     @Override
     public Result revoke(BackForm approvalData) {
@@ -78,9 +43,16 @@ public class CheckOutRequestsServiceImpl extends ServiceImpl<CheckOutRequestsMap
     }
 
     @Override
-    public List<BackForm> select(String name, String bedId, String checkInDate) {
+    public List<BackForm> select(String name, Integer bedId, String checkInDate) {
         return checkOutRequestsMapper.select(name, bedId, checkInDate);
     }
+
+    @Override
+    public Result agree(BackForm backForm) {
+        return Result.success(checkOutRequestsMapper.updateApprovalStatus(backForm));
+    }
+
+
 
 
 }

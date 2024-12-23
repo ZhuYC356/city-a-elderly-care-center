@@ -19,10 +19,14 @@ const addForm = reactive({
   approvalStatus: '',
   approvalPerson: '',
   approvalTime: '',
+  adminId: '',
 });
 // 分页配置
 const currentPage = ref(1);
 const pageSize = ref(10);
+
+const approvalPerson=ref('')
+const approvalTime=ref('')
 
 // 搜索按钮点击事件
 const onSubmit = () => {
@@ -53,6 +57,7 @@ const clearAll = () => {
   getData();
 };
 
+
 const tableData = ref([]);
 // 获取退住请求
 const getData = () => {
@@ -72,56 +77,67 @@ const agreeDialogVisible = ref(false);
 const revokeDialogVisible = ref(false);
 
 // 同意申请
-const handleAgree = (row) => {
-  addForm.elderlyId = row.elderlyId; // 记录被同意的条目ID
-  agreeDialogVisible.value = true;
+const handleAgree = (index,row) => {
+  addForm.value=row
+  addForm.value.adminId=1
+  console.log("111")
+  console.log(addForm.value)
+  let flag = row.approvalStatus
+  if (flag == 2) {
+    alert("审批状态为“1”或“3”才可以点击同意喔~")
+    return
+  }
+  console.log("审批")
+  console.log(addForm.value)
+  axios.post('http://localhost:9090/check-out-requests/agree', addForm.value)
+      .then((response) => {
+        if (response.data.msg=='成功'){
+          alert('提交成功')
+          console.log(response);
+          // location.reload()
+          getData()
+        }
+        else {
+          alert('糟糕！提交失败')
+        }
+      })
+      .catch((error) => {
+        alert('糟糕！提交失败')
+        console.log(error);
+      });
 };
 
 // 撤销申请
-const handleRevoke = (row) => {
-  addForm.elderlyId = row.elderlyId; // 记录被撤销的条目ID
-  revokeDialogVisible.value = true;
+const handleRevoke = (index,row) => {
+  addForm.value=row
+  addForm.value.adminId=1
+  console.log("111")
+  console.log(addForm.value)
+  let itemData = tableData.value[index];
+  let flag = itemData.approvalStatus
+  if (flag == 1 || flag == 3) {
+    alert("审批状态为“2”才可以点击撤销喔~")
+    return
+  }
+  console.log("审批")
+  console.log(addForm.value)
+  axios.post('http://localhost:9090/check-out-requests/revoke', addForm.value)
+      .then((response) => {
+        if (response.data.msg=='成功'){
+          alert('提交成功')
+          console.log(response);
+          // location.reload()
+          getData()
+        }
+        else {
+          alert('糟糕！提交失败')
+        }
+      })
+      .catch((error) => {
+        alert('糟糕！提交失败')
+        console.log(error);
+      });
 };
-
-
-// 提交同意申请
-const submitAgree = () => {
-  if (!addForm.approvalPerson || !addForm.approvalTime) {
-    alert('请填写审批人和审批时间');
-    return;
-  }
-
-  // 发送同意请求
-  request.post('check-out-requests/agree', addForm).then(response => {
-    if (response.status === 'success') {
-      updateTableRowStatus(addForm.approvalStatus, '通过');
-      agreeDialogVisible.value = false;
-    } else {
-      alert('审批失败: ' + response.message);
-    }
-  })
-  addForm.approvalStatus=''
-  addForm.approvalTime=''
-  addForm.approvalPerson=''
-}
-
-// 提交撤销申请
-const submitRevoke = () => {
-  if (!addForm.approvalPerson || !addForm.approvalTime) {
-    alert('请填写撤销人和审批时间');
-    return;
-  }
-
-  // 发送撤销请求
-  request.post('check-out-requests/revoke', addForm).then(response => {
-    if (response.status === 'success') {
-      updateTableRowStatus(addForm.elderlyId, '撤销');
-      revokeDialogVisible.value = false;
-    } else {
-      alert('撤销失败: ' + response.message);
-    }
-  })
-}
 
 const updateTableRowStatus = (elderlyId, status) => {
   const row = tableData.value.find(item => item.approvalStatus === approvalStatus);
@@ -233,10 +249,10 @@ const reportDialogContent = ref('');
           <el-table-column property="approvalTime" label="审批时间" width="120"/>
           <el-table-column fixed="right" label="操作" min-width="120">
             <template #default="scope">
-              <el-button link type="success" size="small" @click="handleAgree(scope.row)">
+              <el-button link type="success" size="small" @click="handleAgree(scope.$index, scope.row)">
                 <span style="font-weight: bolder">同意</span>
               </el-button>
-              <el-button link type="primary" size="small" @click="handleRevoke(scope.row)">
+              <el-button link type="primary" size="small" @click="handleRevoke(scope.$index, scope.row)">
                 <span style="font-weight: bolder">撤销</span>
               </el-button>
             </template>
@@ -257,7 +273,7 @@ const reportDialogContent = ref('');
       </div>
     </el-card>
 
-    <!-- 同意申请弹窗 -->
+<!--    &lt;!&ndash; 同意申请弹窗 &ndash;&gt;
     <el-dialog
         title="同意申请"
         :visible.sync="agreeDialogVisible"
@@ -266,10 +282,10 @@ const reportDialogContent = ref('');
     >
       <el-form :model="addForm" label-width="auto">
         <el-form-item label="审批人" style="margin-top: 15px">
-          <el-input v-model="addForm.approvalPerson"/>
+          <el-input v-model="approvalPerson"/>
         </el-form-item>
         <el-form-item label="审批时间" style="margin-top: 15px">
-          <el-date-picker v-model="addForm.approvalTime" type="datetime"/>
+          <el-date-picker v-model="approvalTime" type="datetime"/>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="submitAgree">提交</el-button>
@@ -278,7 +294,7 @@ const reportDialogContent = ref('');
       </el-form>
     </el-dialog>
 
-    <!-- 撤销申请弹窗 -->
+    &lt;!&ndash; 撤销申请弹窗 &ndash;&gt;
     <el-dialog
         title="撤销申请"
         :visible.sync="revokeDialogVisible"
@@ -297,7 +313,7 @@ const reportDialogContent = ref('');
           <el-button @click="revokeDialogVisible = false">取消</el-button>
         </el-form-item>
       </el-form>
-    </el-dialog>
+    </el-dialog>-->
 
     <!-- 审批报告弹窗 -->
     <el-dialog

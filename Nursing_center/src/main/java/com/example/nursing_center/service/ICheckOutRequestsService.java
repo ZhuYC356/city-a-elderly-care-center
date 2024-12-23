@@ -17,13 +17,14 @@ import java.util.List;
  */
 public interface ICheckOutRequestsService extends IService<CheckOutRequests> {
 
-    /*Result select(Back back);*/
 
     List<BackForm> gainAll();
-
-    Result agree(BackForm approvalData);
+    
     Result revoke(BackForm approvalData);
 
 
-    List<BackForm> select(String name, String bedId, String checkInDate);
+    List<BackForm> select(String name, Integer bedId, String checkInDate);
+
+    Result agree(BackForm backForm);
+
 }
