@@ -76,7 +76,6 @@ public class BedInfoController {
 
     /**
      * 通过“楼层”查询“房间号、床位号、床位状态”
-     * 暂时是通过2楼查
      *
      * @return
      */
