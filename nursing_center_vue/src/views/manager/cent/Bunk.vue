@@ -306,7 +306,7 @@
             <div class="col">{{ value }}118</div>
             <!--展示床位状态的模块-->
             <div class="bed-icon-box grey-background-col">
-              <i class="iconfont icon-bed fontsize-icon" style="color: #a0a224"></i>
+              <i class="iconfont icon-bed fontsize-icon" style="color: #a0a224" sc></i>
               <div class="fontsize" v-if="bedInfoData">{{ value }}{{ bedInfoData[26].roomNumber }}-{{ bedInfoData[26].bedNumber }}</div>
             </div>
             <!--展示床位状态的模块-->
@@ -324,7 +324,7 @@
 
 <script setup>
 import axios from "axios";
-import {onMounted, ref} from 'vue'
+import {onMounted, onUnmounted, ref} from 'vue'
 
 const value = ref('')// 用于存储选择的值
 
@@ -382,6 +382,43 @@ const countBedStatus = () => {
       });
 }
 
+const switchColor = (num) =>{
+  switch(num){
+    case 1:
+      alert("1");
+      break;
+    case 2:
+      alert("2");
+      break;
+    case 3:
+      alert("3");
+      break;
+    case 4:
+      alert("4");
+      break;
+    case 5:
+      alert("5");
+      break;
+    case 6:
+      alert("6");
+      break;
+    case 7:
+      alert("7");
+      break;
+    case 8:
+      alert("8");
+      break;
+  }
+}
+onMounted(() => {
+  switchColor();
+})
+
+
+// function switchColor(num){
+
+// }
+
 
 
 
@@ -396,9 +433,7 @@ const countBedStatus = () => {
 //     console.error('接收数据时出错：', error);
 //   }
 // }
-// onMounted(() => {
-//   getBedInfoByFloor();
-// })
+
 
 
 </script>
@@ -461,6 +496,41 @@ const countBedStatus = () => {
 .grey-background-col {
   background-color: rgba(224, 223, 223, 0.5)
 }
+
+
+//8种床位状态对应的颜色
+.status-one {
+  color: #2CBE56;
+}
+
+.status-two {
+  color: #999999;
+}
+
+.status-three {
+  color: #ffa406;
+}
+
+.status-four {
+  color: #df0003;
+}
+
+.status-five {
+  color: #000000;
+}
+
+.status-six {
+  color: #409EFF;
+}
+
+.status-seven {
+  color: #a0a224;
+}
+
+.status-eight {
+  color: #df007e;
+}
+
 
 
 </style>
