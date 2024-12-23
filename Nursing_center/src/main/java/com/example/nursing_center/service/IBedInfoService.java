@@ -35,4 +35,10 @@ public interface IBedInfoService extends IService<BedInfo> {
     Result getBedByAllFloor();
 
     Result getAllRoomByFloor(Integer floorNumber);
+
+    Result getAllBedByRoom(Integer roomNumber);
+
+    Result getAllRoom();
+
+    Result getAllBed();
 }

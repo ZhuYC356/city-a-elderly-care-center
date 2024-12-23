@@ -105,7 +105,21 @@ public class BedInfoController {
     }
     @GetMapping("/getAllRoomByFloorNumber/{floorNumber}")
     public Result getAllRoomByFloorNumber(@PathVariable("floorNumber") Integer floorNumber){
+        System.out.println(floorNumber);
         return bedInfoService.getAllRoomByFloor(floorNumber);
     }
+    @GetMapping("/getAllBedByRoom/{roomNumber}")
+    public Result getAllBedByRoom(@PathVariable("roomNumber") Integer roomNumber){
+        return bedInfoService.getAllBedByRoom(roomNumber);
+    }
+    @GetMapping("/getAllRoom")
+    public Result getAllRoom(){
+        return bedInfoService.getAllRoom();
+    }
+    @GetMapping("/getAllBed")
+    public Result getAllBed(){
+        return bedInfoService.getAllBed();
+    }
+
 
 }

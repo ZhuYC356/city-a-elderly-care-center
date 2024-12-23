@@ -96,8 +96,8 @@ CREATE TABLE care_project
 CREATE TABLE check_out_requests
 (
     request_id       INT AUTO_INCREMENT PRIMARY KEY COMMENT '退住请求的唯一标识符',
-    elderly_id       VARCHAR(255) NOT NULL COMMENT '客户的唯一ID（例如，老年人的ID）',
-    bed_id           VARCHAR(50) COMMENT '外联床位id',
+    elderly_id       INT NOT NULL COMMENT '客户的唯一ID（例如，老年人的ID）',
+    bed_id           INT COMMENT '外联床位id',
     phone_number     VARCHAR(50)  NOT NULL COMMENT '客户的联系电话',
     property_address VARCHAR(255) COMMENT '住所地址（可能不是必需的，取决于您的设计）',
     check_in_date    DATE COMMENT '入住日期',
