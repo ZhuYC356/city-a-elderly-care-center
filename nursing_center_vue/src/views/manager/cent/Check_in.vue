@@ -143,6 +143,7 @@
                 :value="item.nurseId">
             </el-option>
           </el-select>
+
         </el-form-item>
         <el-form-item label="选择楼号:" :label-width="formLabelWidth">
           <el-select v-model="riseElderly.floorNumber" placeholder="选择楼号">
