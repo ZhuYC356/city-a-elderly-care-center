@@ -30,7 +30,7 @@
                   当前入住总人数：
                 </span>
             <span>
-                  {{ dataFrom.sumPerson }}
+                  {{ dataFrom.sumPerson }}人
                 </span>
           </div>
         </el-col>
@@ -50,7 +50,7 @@
                   外出人数：
                 </span>
             <span>
-                  {{ dataFrom.sumOut }}
+                  {{ dataFrom.sumOut }}人
                 </span>
           </div>
         </el-col>
@@ -60,7 +60,7 @@
                   当前护工在岗数量：
                 </span>
             <span>
-                  {{ dataFrom.sumNurse }}
+                  {{ dataFrom.sumNurse }}人
                 </span>
           </div>
         </el-col>

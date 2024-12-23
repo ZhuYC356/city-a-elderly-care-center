@@ -49,4 +49,9 @@ public class ElderlyInfoServiceImpl extends ServiceImpl<ElderlyInfoMapper, Elder
         System.out.println(info);
         return Result.success();
     }
+
+    @Override
+    public Result selectByFrom(ElderlyInfo elderlyInfo) {
+        return Result.success(elderlyInfoMapper.selectByFrom(elderlyInfo));
+    }
 }

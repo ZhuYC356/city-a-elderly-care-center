@@ -8,6 +8,7 @@
         </el-icon>
         <i class="el-icon-notebook-1" style="margin-left: 30px;font-size: 20px"></i>
         <span style="margin-left: 5px;font-size: 20px;font-weight: bolder">入住登记信息</span>
+<!--        <Clock></Clock>-->
         <hr style="margin: 10px">
       </div>
       <div style="margin-top: 15px;margin-left: 10px">
@@ -25,7 +26,7 @@
           外出登记申请
         </el-button>
 
-        <!--        查询界面-->
+        <!--        查询输入框-->
         <el-form :inline="true" :model="selectFrom">
           <el-form-item style="margin-right: 20px">
             <el-input v-model="selectFrom.name" placeholder="请填写老人姓名" clearable>
@@ -43,14 +44,14 @@
           </el-form-item>
           <el-form-item style="margin-right: 20px">
             <el-date-picker
-                v-model="selectFrom.date"
+                v-model="selectFrom.checkInTime"
                 type="date"
                 placeholder="请选择入住日期"
                 clearable
             />
           </el-form-item>
           <el-form-item style="margin-right: 15px">
-            <el-button type="primary" @click="onSubmit"><span style="font-weight: bolder">搜 索</span></el-button>
+            <el-button type="primary" @click="select()"><span style="font-weight: bolder">搜 索</span></el-button>
           </el-form-item>
           <el-form-item>
             <el-button type="danger" @click="clearAll"><span style="font-weight: bolder">清 空</span></el-button>
@@ -58,6 +59,7 @@
         </el-form>
       </div>
       <div style="margin-top: 5px">
+<!--        表格-->
         <el-table :data="elderlyList" style="width: 100%;" height="365" :stripe="true"
                   :header-cell-style="{background:'#f3f6fd',color:'#555'}">
           <el-table-column type="selection" width="55"/>
@@ -409,6 +411,7 @@
 
 </template>
 <script>
+import Clock from "@/components/Clock.vue";
 export default {
   name: "入住登记",
   created() {
@@ -431,7 +434,15 @@ export default {
       })
       this.dialogFormVisible = false
     },
-    onSubmit() {
+    select() {
+      if (this.selectFrom.name === ''&&this.selectFrom.bedNumber===''&&this.selectFrom.date===''){
+        alert('请输入查询条件')
+      }else {
+        this.$request.post('/elderly-info/selectByFrom', this.selectFrom).then(res => {
+          console.log(res)
+          this.elderlyList = res.data
+        })
+      }
       console.log('submit!');
     },
     clearAll() {
@@ -515,7 +526,7 @@ export default {
       selectFrom: {
         name: '',
         bedNumber: '',
-        date: '',
+        checkInTime: '',
       },
       form: {
         name: '',
@@ -551,6 +562,9 @@ export default {
       disabled: false,
       background: false,
     }
+  },
+  components:{
+    Clock,
   }
 }
 </script>

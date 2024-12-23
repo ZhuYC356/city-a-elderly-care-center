@@ -21,4 +21,28 @@
              bed_elderly_association
         where elderly_info.bed_id = bed_info.bed_id
     </select>
+    <select id="selectByFrom" resultType="com.example.nursing_center.controller.request.Info">
+        select elderly_info.elderly_id,
+        name,
+        id_number,
+        age,
+        gender,
+        family_contact_info,
+        bed_number,
+        floor_number,
+        room_number
+        from elderly_info,
+        bed_info
+        where elderly_info.bed_id = bed_info.bed_id
+
+        <if test="name!=null">
+            and name like "%"#{name}"%"
+        </if>
+        <if test="idNumber!=null">
+            and id_number like "%"#{idNumber}"%"
+        </if>
+        <if test="checkInTime!=null">
+            and check_in_time=#{checkInTime}
+        </if>
+    </select>
 </mapper>

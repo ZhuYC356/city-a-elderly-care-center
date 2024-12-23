@@ -19,4 +19,6 @@ public interface IElderlyInfoService extends IService<ElderlyInfo> {
     Result getAll();
 
     Result add(Info info);
+
+    Result selectByFrom(ElderlyInfo elderlyInfo);
 }

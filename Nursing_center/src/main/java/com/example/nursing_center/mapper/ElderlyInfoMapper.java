@@ -1,5 +1,6 @@
 package com.example.nursing_center.mapper;
 
+import com.example.nursing_center.common.Result;
 import com.example.nursing_center.controller.request.Info;
 import com.example.nursing_center.pojo.ElderlyInfo;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
@@ -20,4 +21,6 @@ public interface ElderlyInfoMapper extends BaseMapper<ElderlyInfo> {
     List<Info> getAll();
 
     Integer add(Info info);
+
+    List<Info> selectByFrom(ElderlyInfo elderlyInfo);
 }

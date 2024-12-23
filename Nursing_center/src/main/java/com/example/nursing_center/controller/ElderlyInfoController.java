@@ -3,6 +3,7 @@ package com.example.nursing_center.controller;
 
 import com.example.nursing_center.common.Result;
 import com.example.nursing_center.controller.request.Info;
+import com.example.nursing_center.pojo.ElderlyInfo;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,5 +32,9 @@ public class ElderlyInfoController {
     @GetMapping("/getById/{id}")
     public Result getById(@PathVariable Integer id){
         return Result.success(elderlyInfoService.getById(id));
+    }
+    @PostMapping("/selectByFrom")
+    public Result selectByFrom(@RequestBody ElderlyInfo elderlyInfo){
+        return elderlyInfoService.selectByFrom(elderlyInfo);
     }
 }

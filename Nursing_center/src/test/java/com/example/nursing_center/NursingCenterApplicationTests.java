@@ -1,16 +1,22 @@
 package com.example.nursing_center;
 
 import cn.hutool.json.JSONUtil;
+import com.example.nursing_center.common.Result;
 import com.example.nursing_center.controller.request.Info;
 import com.example.nursing_center.pojo.BedElderlyAssociation;
 import com.example.nursing_center.pojo.ElderlyInfo;
+import com.example.nursing_center.service.IElderlyInfoService;
+import jakarta.annotation.Resource;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @SpringBootTest
 class NursingCenterApplicationTests {
+    @Resource
+    private IElderlyInfoService elderlyInfoService;
 
     @Test
     void contextLoads() {
@@ -53,6 +59,18 @@ class NursingCenterApplicationTests {
         info.setFloorNumber(1);
         info.setRoomNumber("1");
         String str = JSONUtil.toJsonStr(info);
+        System.out.println(str);
+    }
+    @Test
+    public void test2(){
+        ElderlyInfo elderlyInfo=new ElderlyInfo();
+        elderlyInfo.setName("小");
+//        elderlyInfo.setIdNumber("111111111111111111");
+//        elderlyInfo.setSelfCareStatus(1);
+//        elderlyInfo.setHomeAddress("Beijing");
+//        elderlyInfo.setContactInfo("123456789");
+        String str = JSONUtil.toJsonStr(elderlyInfo);
+//        Result str = elderlyInfoService.selectByFrom(elderlyInfo);
         System.out.println(str);
     }
 
