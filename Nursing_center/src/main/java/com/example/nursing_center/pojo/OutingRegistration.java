@@ -3,6 +3,8 @@ package com.example.nursing_center.pojo;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.example.nursing_center.util.ExcelUtils;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -24,67 +26,80 @@ public class OutingRegistration implements Serializable {
     /**
      * 外出记录的唯一标识符
      */
+    @ExcelUtils.ExcelExport(name = "outingId")
     @TableId(value = "outing_id", type = IdType.AUTO)
     private Integer outingId;
 
     /**
      * 外出老人的唯一标识符，外键关联到老人表
      */
+    @ExcelUtils.ExcelExport(name = "外出老人Id")
     private Integer elderlyId;
 
     /**
      * 外出的日期
      */
+    @ExcelUtils.ExcelExport(name = "外出日期")
     private LocalDate outingDate;
 
     /**
      * 外出的具体时间
      */
+    @ExcelUtils.ExcelExport(name = "外出时间")
     private LocalTime outingTime;
 
     /**
      * 外出的目的地描述
      */
+    @ExcelUtils.ExcelExport(name = "目的地")
     private String destination;
 
     /**
      * 外出的目的或活动描述
      */
+    @ExcelUtils.ExcelExport(name = "外出目的")
     private String purpose;
 
     /**
      * 陪同老人的人员姓名或身份描述
      */
+    @ExcelUtils.ExcelExport(name = "陪同人员")
     private String accompanyingPerson;
 
     /**
      * 外出时可用于联系的电话号码
      */
+    @ExcelUtils.ExcelExport(name = "联系电话")
     private String contactInfo;
 
     /**
      * 其他需要记录的备注信息
      */
+    @ExcelUtils.ExcelExport(name = "备注")
     private String remarks;
 
     /**
      * 记录被添加到表中的时间
      */
+    @ExcelUtils.ExcelExport(name = "创建时间")
     private LocalDateTime createdAt;
 
     /**
      * 记录最后一次被修改的时间
      */
+    @ExcelUtils.ExcelExport(name = "修改时间")
     private LocalDateTime updatedAt;
 
     /**
      * 审核状态，默认为0（未审核） 1表示已审核，-1表示审核未通过
      */
+    @ExcelUtils.ExcelExport(name = "审核状态 ")
     private Integer reviewStatus;
 
     /**
      * 状态,用于删除,1 可用，0 不可用
      */
+    @ExcelUtils.ExcelExport(name = "状态")
     private String status;
 
     public Integer getOutingId() {
