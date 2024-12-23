@@ -156,25 +156,23 @@
           </el-select>
         </el-form-item>
         <el-form-item label="选择房间号:" :label-width="formLabelWidth">
-          <el-select v-model="riseElderly.roomNumber" placeholder="选择房间号">
+          <el-select v-model="riseElderly.roomNumber" placeholder="选择房间号" >
             <el-option
                 v-for="item in roomList"
                 :key="item"
-                :label="item+'号房间'"
+                :label="item +'号房间'"
                 :value="item"
-                :on-click="selectRoom(item)"
             >
             </el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="选择床位:" :label-width="formLabelWidth">
-          <el-select v-model="riseElderly.bedId" placeholder="选择床位">
+          <el-select v-model="riseElderly.bedId" placeholder="选择床位" >
             <el-option
                 v-for="item in bedList"
                 :key="item"
                 :label="item+'号床'"
                 :value="item"
-                :on-click="selectBed(item)"
             >
             </el-option>
           </el-select>
@@ -432,26 +430,26 @@ export default {
     })
   },
   methods: {
-    selectRoom() {
-      if (this.selectFrom.floorNumber === '') {
-        alert('请先选择楼号')
-      } else {
-        this.$request.get('/bed-info/getAllRoomByFloorNumber/'+this.selectFrom.floorNumber).then(res => {
-          console.log(res.data)
-          this.roomList = res.data
-        })
-      }
-    },
-    selectBed() {
-      if (this.selectFrom.roomNumber === '') {
-        alert('请先选择房间号')
-      } else {
-        this.$request.get('/bed-info/getAllBedByRoom').then(res => {
-          console.log(res.data)
-          this.bedList = res.data
-        })
-      }
-    },
+    // getRoomList() {
+    //   if (this.riseElderly.floorNumber === '') {
+    //     alert('请先选择楼号123')
+    //   } else {
+    //     this.$request.get('/bed-info/getAllRoomByFloorNumber/' + this.riseElderly.floorNumber).then(res => {
+    //       console.log(res.data)
+    //       this.roomList = res.data
+    //     })
+    //   }
+    // },
+    // getBedList() {
+    //   if (this.riseElderly.roomNumber === '') {
+    //     alert('请先选择房间号')
+    //   } else {
+    //     this.$request.get('/bed-info/getAllBedByRoom/'+this.riseElderly.roomNumber).then(res => {
+    //       console.log(res.data)
+    //       this.bedList = res.data
+    //     })
+    //   }
+    // },
     openRise() {
       this.dialogFormVisible = true
       this.$request.get('/nurse-info/getAll').then(res => {
@@ -461,8 +459,27 @@ export default {
         console.log(res.data)
         this.floorList = res.data
       })
+      this.$request.get('/bed-info/getAllRoom').then(res => {
+        console.log(res.data)
+        this.roomList = res.data
+      })
+      this.$request.get('/bed-info/getAllBed').then(res => {
+        console.log(res.data)
+        this.bedList = res.data
+      })
     },
     add() {
+      if (this.riseElderly.name === ''||
+          this.riseElderly.idNumber === ''||
+          this.riseElderly.familyContactInfo === ''||
+          this.riseElderly.physicalCondition === ''||
+          this.riseElderly.gender === ''||
+          this.riseElderly.selfCareStatus === ''||
+          this.riseElderly.nurseLevel === ''||
+          this.riseElderly.nurseId === ''||
+          this.riseElderly.floorNumber === ''||
+          this.riseElderly.roomNumber === ''||
+          this.riseElderly.bedId === '')
       this.$request.post('/elderly-info/add', this.riseElderly).then(res => {
         if (res.code === 200) {
           this.$message.success('添加成功')
