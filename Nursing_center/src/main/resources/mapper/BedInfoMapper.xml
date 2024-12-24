@@ -78,23 +78,21 @@
         select distinct room_number
         from bed_info
         where floor_number = #{floorNumber}
-          and bed_status = 'O' # 该楼层有空的房间
+          and bed_status = '1' # 该楼层有空的房间
         and status = '1'
     </select>
     <select id="getAllBedByRoom" resultType="java.lang.Integer">
         select distinct bed_number
         from bed_info
         where room_number = #{roomNumber}
-          and bed_status = 'O' # 该房间有空的床位
+          and bed_status = '1' # 该房间有空的床位
     </select>
-    <select id="getAllRoom" resultType="java.lang.Integer">
+    <select id="selectAllRoomByFlooralready" resultType="java.lang.Integer">
         select distinct room_number
         from bed_info
-        where status = '1'
-    </select>
-    <select id="getAllBed" resultType="java.lang.Integer">
-        select distinct bed_number from bed_info
-        where status = '1'
-          and bed_status = 'O'
+        where floor_number = #{floorNumber}
+          and bed_status != '1' # 该楼层已经使用的房间
+          and bed_status !='8'
+          and status = '1'
     </select>
 </mapper>

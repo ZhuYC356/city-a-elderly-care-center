@@ -39,19 +39,33 @@ public class ElderlyInfoServiceImpl extends ServiceImpl<ElderlyInfoMapper, Elder
         bedInfo.setFloorNumber(info.getFloorNumber());
         bedInfo.setRoomNumber(info.getRoomNumber());
         bedInfo.setBedNumber(info.getBedNumber());
-        bedInfo.setBedStatus("C");//设置状态为占用
+        bedInfo.setBedStatus("5");//设置状态为占用
         BedInfo newbedInfo=bedInfoMapper.selectByFRB(bedInfo);//获得床位的Id
         bedInfo.setBedId(newbedInfo.getBedId());
         bedInfoMapper.updateById(bedInfo);//更新床位已经使用
+
 //        2.添加老人信息
+
         info.setBedId(bedInfo.getBedId());//用于添加老人的信息表
         elderlyInfoMapper.add(info);
         System.out.println(info);
-        return Result.success();
+        return Result.success(1);
     }
 
     @Override
     public Result selectByFrom(ElderlyInfo elderlyInfo) {
         return Result.success(elderlyInfoMapper.selectByFrom(elderlyInfo));
+    }
+
+    @Override
+    public Result updateAllById(Info info) {
+//        todo 添加修改
+        return Result.success();
+//        return Result.success(elderlyInfoMapper.updateAllById(info));
+    }
+
+    @Override
+    public Result getElderlyInfoByRoomAndBed(String roomNumber, String bedNumber, Integer floorNumber) {
+        return Result.success(elderlyInfoMapper.getElderlyInfoByRoomAndBed(roomNumber,bedNumber,floorNumber));
     }
 }

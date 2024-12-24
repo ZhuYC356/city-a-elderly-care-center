@@ -45,4 +45,21 @@
             and check_in_time=#{checkInTime}
         </if>
     </select>
+    <select id="getElderlyInfoByRoomAndBed" resultType="com.example.nursing_center.controller.request.Info">
+        select elderly_info.elderly_id,
+        name,
+        id_number,
+        age,
+        gender,
+        family_contact_info,
+        bed_number,
+        floor_number,
+        room_number
+        from elderly_info,
+        bed_info
+        where elderly_info.bed_id = bed_info.bed_id
+        and room_number=#{roomNumber}
+        and bed_number=#{bedNumber}
+        and floor_number=#{floorNumber}
+    </select>
 </mapper>

@@ -59,9 +59,9 @@
             <template slot="title">
               <i class="el-icon-menu"></i><span>护理模块</span>
             </template>
-            <el-menu-item index="/3">护理项目</el-menu-item>
+            <el-menu-item index="/Nursing_programs_Manager">护理项目</el-menu-item>
             <el-menu-item index="/3">护理记录</el-menu-item>
-            <el-menu-item index="/3">老人护理项目</el-menu-item>
+            <el-menu-item index="/Set_Elderly_Care_Programs">设置老人护理项目</el-menu-item>
           </el-submenu>
           <el-submenu index="inspection">
             <template slot="title">

@@ -23,4 +23,8 @@ public interface ElderlyInfoMapper extends BaseMapper<ElderlyInfo> {
     Integer add(Info info);
 
     List<Info> selectByFrom(ElderlyInfo elderlyInfo);
+
+    Info getElderlyInfoByRoomAndBed(String roomNumber, String bedNumber, Integer floorNumber);
+
+//    Integer updateAllById(Info info);
 }

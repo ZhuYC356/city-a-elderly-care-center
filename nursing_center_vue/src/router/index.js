@@ -33,6 +33,8 @@ const routes = [
       { path: 'check_in', name: 'Check_in', meta: { name: '入住登记' }, component: () => import('../views/manager/cent/Check_in.vue') },
       { path: 'check_out_registration', name: 'Check_out_registration', meta: { name: '退住登记' }, component: () => import('../views/manager/cent/Check_out_registration.vue') },
       { path: 'out_office_registration', name: 'Out_office_registration', meta: { name: '外出登记' }, component: () => import('../views/manager/cent/Out_office_registration.vue') },
+      { path: 'nursing_programs_Manager', name: 'Nursing_programs_Manager', meta: { name: '护理项目管理' }, component: () => import('../views/manager/cent/Nursing_programs_Manager.vue') },
+      { path: 'set_Elderly_Care_Programs', name: 'Set_Elderly_Care_Programs', meta: { name: '设置护理项目' }, component: () => import('../views/manager/cent/Set_Elderly_Care_Programs.vue') },
       {
         path: 'diagnosis',
         name: 'Diagnosis',

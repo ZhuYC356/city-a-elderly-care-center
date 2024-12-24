@@ -37,4 +37,13 @@ public class ElderlyInfoController {
     public Result selectByFrom(@RequestBody ElderlyInfo elderlyInfo){
         return elderlyInfoService.selectByFrom(elderlyInfo);
     }
+    @PostMapping("/updateById")
+    public Result updateById(@RequestBody Info info){
+        System.out.println(info);
+        return elderlyInfoService.updateAllById(info);
+    }
+    @GetMapping("/getElderlyInfoByRoomAndBed/{floorNumber}/{roomNumber}/{bedNumber}")
+    public Result getElderlyInfoByRoomAndBed(@PathVariable Integer floorNumber,@PathVariable String roomNumber,@PathVariable String bedNumber){
+        return elderlyInfoService.getElderlyInfoByRoomAndBed(roomNumber,bedNumber,floorNumber);
+    }
 }

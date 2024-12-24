@@ -3,6 +3,7 @@ package com.example.nursing_center.controller;
 
 import com.example.nursing_center.common.Result;
 import com.example.nursing_center.controller.Result.BackForm;
+import com.example.nursing_center.controller.request.Info;
 import com.example.nursing_center.service.ICheckOutRequestsService;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
@@ -64,5 +65,14 @@ public class CheckOutRequestsController {
         return checkOutRequestsService.select(name, bedId, checkInDate);
     }
 
+    /**
+     * 添加
+     * @param info
+     * @return
+     */
+    @PostMapping("/add")
+    public Result add(@RequestBody Info info){
+        return checkOutRequestsService.add(info);
+    }
 
 }

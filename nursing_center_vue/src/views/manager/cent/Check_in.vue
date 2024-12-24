@@ -18,7 +18,7 @@
           入住登记
         </el-button>
         <el-button style="margin-bottom: 10px;background-color: #f3ac34" plain icon="el-icon-plus" plain
-                   @click="dialogFormVisible1 = true">
+                   @click="openRiseCheckOut()">
           退住登记申请
         </el-button>
         <el-button style="margin-bottom: 10px;background-color: #84d570" plain icon="el-icon-plus" plain
@@ -107,6 +107,9 @@
         <el-form-item label="身份证号:" :label-width="formLabelWidth">
           <el-input v-model="riseElderly.idNumber" autocomplete="off"/>
         </el-form-item>
+        <el-form-item label="年龄:" :label-width="formLabelWidth">
+          <el-input v-model="riseElderly.age" autocomplete="off"/>
+        </el-form-item>
         <el-form-item label="家庭联系电话:" :label-width="formLabelWidth">
           <el-input v-model="riseElderly.familyContactInfo" autocomplete="off"/>
         </el-form-item>
@@ -143,10 +146,9 @@
                 :value="item.nurseId">
             </el-option>
           </el-select>
-
         </el-form-item>
         <el-form-item label="选择楼号:" :label-width="formLabelWidth">
-          <el-select v-model="riseElderly.floorNumber" placeholder="选择楼号">
+          <el-select v-model="riseElderly.floorNumber" placeholder="选择楼号" @change="getRoomList(1)">
             <el-option
                 v-for="item in floorList"
                 :key="item"
@@ -157,7 +159,7 @@
           </el-select>
         </el-form-item>
         <el-form-item label="选择房间号:" :label-width="formLabelWidth">
-          <el-select v-model="riseElderly.roomNumber" placeholder="选择房间号" >
+          <el-select v-model="riseElderly.roomNumber" placeholder="选择房间号" @change="getBedList(1)">
             <el-option
                 v-for="item in roomList"
                 :key="item"
@@ -165,10 +167,11 @@
                 :value="item"
             >
             </el-option>
+
           </el-select>
         </el-form-item>
         <el-form-item label="选择床位:" :label-width="formLabelWidth">
-          <el-select v-model="riseElderly.bedId" placeholder="选择床位" >
+          <el-select v-model="riseElderly.bedNumber" placeholder="选择床位">
             <el-option
                 v-for="item in bedList"
                 :key="item"
@@ -193,14 +196,49 @@
     <!--  退住申请-->
     <el-dialog :visible.sync="dialogFormVisible1" title="退住登记申请" width="500">
       <el-form :model="checkOutRequests">
+        <el-form-item label="选择楼号:" :label-width="formLabelWidth">
+          <el-select v-model="checkOutRequests.floorNumber" placeholder="选择楼号" @change="getRoomList()">
+            <el-option
+                v-for="item in floorList"
+                :key="item"
+                :label="item+'号楼'"
+                :value="item"
+            >
+            </el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="选择房间号:" :label-width="formLabelWidth">
+          <el-select v-model="checkOutRequests.roomNumber" placeholder="选择房间号" @change="getBedList(2)">
+            <el-option
+                v-for="item in roomList"
+                :key="item"
+                :label="item +'号房间'"
+                :value="item"
+            >
+            </el-option>
+
+          </el-select>
+        </el-form-item>
+        <el-form-item label="选择床位:" :label-width="formLabelWidth">
+          <el-select v-model="checkOutRequests.bedId" placeholder="选择床位" @change="getElderlyInfo(2)">
+            <el-option
+                v-for="item in bedList"
+                :key="item"
+                :label="item+'号床'"
+                :value="item"
+            >
+            </el-option>
+          </el-select>
+        </el-form-item>
+
         <el-form-item label="姓名:" :label-width="formLabelWidth">
-          <el-input v-model="checkOutRequests.name" autocomplete="off"/>
+          <el-input v-model="checkOutRequests.name" autocomplete="off" disabled/>
         </el-form-item>
         <el-form-item label="身份证号:" :label-width="formLabelWidth">
-          <el-input v-model="checkOutRequests.idNumber" autocomplete="off"/>
+          <el-input v-model="checkOutRequests.idNumber" autocomplete="off" disabled/>
         </el-form-item>
         <el-form-item label="家庭联系电话:" :label-width="formLabelWidth">
-          <el-input v-model="checkOutRequests.familyContactInfo" autocomplete="off"/>
+          <el-input v-model="checkOutRequests.familyContactInfo" autocomplete="off" disabled/>
         </el-form-item>
         <el-form-item label="原因描述:" :label-width="formLabelWidth">
           <el-input v-model="checkOutRequests.checkoutReason" autocomplete="off"/>
@@ -212,11 +250,11 @@
             <el-option label="保留床位" value="3"/>
           </el-select>
         </el-form-item>
-        <el-form-item style="margin-right: 20px" label="外出时间:">
+        <el-form-item style="margin-right: 20px" label="退住时间:">
           <el-date-picker
               v-model="checkOutRequests.checkoutDate"
               type="date"
-              placeholder="请选择外出时间:"
+              placeholder="请选择退住时间:"
               clearable
           />
         </el-form-item>
@@ -224,7 +262,7 @@
       <template #footer>
         <div class="dialog-footer">
           <el-button @click="dialogFormVisible1 = false">取消</el-button>
-          <el-button type="primary" @click="dialogFormVisible1 = false">
+          <el-button type="primary" @click="saveCheckOutRequests()">
             提交审核
           </el-button>
         </div>
@@ -243,6 +281,7 @@
         <el-form-item label="家庭联系电话:" :label-width="formLabelWidth">
           <el-input v-model="outingRegistration.familyContactInfo" autocomplete="off"/>
         </el-form-item>
+
         <el-form-item label="外出原因:" :label-width="formLabelWidth">
           <el-input v-model="outingRegistration.outingReason" autocomplete="off"/>
         </el-form-item>
@@ -282,58 +321,98 @@
 
     <!--  查看详情-->
     <el-dialog :visible.sync="dialogFormVisible3" title="查询详情" width="500">
-      <el-form :model="viewInfo">
-        <span style="">
-          姓名:{{ viewInfo.name }}
-        </span>
-        <br>
-        <br>
-        <span>
-          身份证号:{{ viewInfo.idNumber }}
-        </span>
-        <br>
-        <br>
-        <span>
-          性别:{{ viewInfo.gender }}
-        </span>
-        <br>
-        <br>
-        <span>
-            联系方式:{{ viewInfo.contactInfo }}
-          </span>
-        <br>
-        <br>
-        <span>
-          家庭住址:{{ viewInfo.address }}
-        </span>
-        <br>
-        <br>
-        <span>
-          居住地址:{{ viewInfo.address }}
-        </span>
-        <br>
-        <br>
-        <span>
-          房间号:{{ viewInfo.roomNumber }}
-        </span>
-        <br>
-        <br>
-        <span>
-          楼号:{{ viewInfo.floorNumber }}
-        </span>
-        <br>
-        <br>
-        <span>
-          床号:{{ viewInfo.bedNumber }}
-        </span>
-        <br>
-        <br>
-        <!--        展示数据所有老人的数据-->
-      </el-form>
+      <div>
+        <el-form :model="viewInfo" label-width="auto" style="max-width: 600px">
+          <el-form-item label="姓名" style="margin-top: 15px">
+            <el-input v-model="viewInfo.name" style="width: 300px;" disabled>
+              <template #prefix>
+                <i class="el-icon-user" style="font-size: 15px;margin-left: 3px"></i>
+              </template>
+            </el-input>
+          </el-form-item>
+          <el-form-item label="性别" style="margin-top: 15px">
+            <el-input v-model="viewInfo.gender" style="width: 300px;" disabled>
+              <template #prefix>
+                <i class="el-icon-news" style="font-size: 15px;margin-left: 3px"></i>
+              </template>
+            </el-input>
+          </el-form-item>
+          <el-form-item label="年龄" style="margin-top: 15px">
+            <el-input v-model="viewInfo.age" style="width: 300px;" disabled>
+              <template #prefix>
+                <i class="el-icon-coin" style="font-size: 15px;margin-left: 3px"></i>
+              </template>
+            </el-input>
+          </el-form-item>
+          <el-form-item label="省份证号" style="margin-top: 15px">
+            <el-input v-model="viewInfo.idNumber" style="width: 300px;" disabled>
+              <template #prefix>
+                <i class="el-icon-connection" style="font-size: 15px;margin-left: 3px"></i>
+              </template>
+            </el-input>
+          </el-form-item>
+          <el-form-item label="家庭住址" style="margin-top: 15px">
+            <el-input v-model="viewInfo.address" style="width: 300px;" disabled>
+              <template #prefix>
+                <i class="el-icon-place" style="font-size: 15px;margin-left: 3px"></i>
+              </template>
+            </el-input>
+          </el-form-item>
+          <el-form-item label="监护人联系方式" style="margin-top: 15px">
+            <el-input v-model="viewInfo.familyContactInfo" style="width: 300px;" disabled>
+              <template #prefix>
+                <i class="el-icon-phone" style="font-size: 15px;margin-left: 3px"></i>
+              </template>
+            </el-input>
+          </el-form-item>
+          <el-form-item label="自理能力" style="margin-top: 15px">
+            <el-input v-model="viewInfo.selfCareStatus" style="width: 300px;" disabled>
+              <template #prefix>
+                <i class="el-icon-wind-power" style="font-size: 15px;margin-left: 3px"></i>
+              </template>
+            </el-input>
+          </el-form-item>
+          <el-form-item style="margin-right: 20px;margin-top: 15px" label="入住日期">
+            <el-date-picker
+                v-model="viewInfo.checkInTime"
+                type="date"
+                clearable
+                style="width: 300px"
+                disabled="true"
+            />
+          </el-form-item>
+          <el-form-item label="楼号" style="margin-top: 15px">
+            <el-input v-model="viewInfo.floorNumber" style="width: 300px;" disabled>
+              <template #prefix>
+                <i class="el-icon-box" style="font-size: 15px;margin-left: 3px"></i>
+              </template>
+            </el-input>
+          </el-form-item>
+
+
+          <el-form-item label="房间号">
+            <el-input v-model="viewInfo.roomNumber" disabled style="width: 300px;">
+              <template #prefix>
+                <i class="el-icon-film" style="font-size: 15px;margin-left: 3px"></i>
+              </template>
+            </el-input>
+          </el-form-item>
+
+          <el-form-item style="margin-right: 20px;margin-top: 15px" label="床位号">
+            <el-input v-model="viewInfo.bedNumber" disabled clearable style="width: 300px">
+              <template #prefix>
+                <i class="el-icon-postcard" style="font-size: 15px;margin-left: 3px"></i>
+              </template>
+            </el-input>
+          </el-form-item>
+
+        </el-form>
+
+      </div>
       <template #footer>
         <div class="dialog-footer">
-          <el-button type="primary" @click="dialogFormVisible3 = false">
-            关闭
+          <el-button type="danger" @click="cancelDetail">
+            <span style="font-weight: bolder">退 出</span>
           </el-button>
         </div>
       </template>
@@ -411,7 +490,7 @@
       <template #footer>
         <div class="dialog-footer">
           <el-button @click="dialogFormVisible4 = false">取消</el-button>
-          <el-button type="primary" @click="dialogFormVisible4 = false">
+          <el-button type="primary" @click="saveUpdate()">
             保存修改
           </el-button>
         </div>
@@ -426,31 +505,46 @@ import Clock from "@/components/Clock.vue";
 export default {
   name: "入住登记",
   created() {
+    this.number = 4
     this.$request.get('/elderly-info/getAll').then(res => {
       this.elderlyList = res.data
     })
   },
   methods: {
-    // getRoomList() {
-    //   if (this.riseElderly.floorNumber === '') {
-    //     alert('请先选择楼号123')
-    //   } else {
-    //     this.$request.get('/bed-info/getAllRoomByFloorNumber/' + this.riseElderly.floorNumber).then(res => {
-    //       console.log(res.data)
-    //       this.roomList = res.data
-    //     })
-    //   }
-    // },
-    // getBedList() {
-    //   if (this.riseElderly.roomNumber === '') {
-    //     alert('请先选择房间号')
-    //   } else {
-    //     this.$request.get('/bed-info/getAllBedByRoom/'+this.riseElderly.roomNumber).then(res => {
-    //       console.log(res.data)
-    //       this.bedList = res.data
-    //     })
-    //   }
-    // },
+    getRoomList(sing) {
+      if (this.riseElderly.floorNumber === '') {
+        console.log('请先选择楼号')
+      } else {
+        this.$request.get('/bed-info/getAllRoomByFloorNumber/' + this.riseElderly.floorNumber+'/'+sing).then(res => {
+          console.log(res.data)
+          this.roomList = res.data
+        })
+      }
+      this.riseElderly.roomNumber = ''
+    },
+    getBedList(sing) {
+      if (this.riseElderly.roomNumber === '') {
+        alert('请先选择房间号')
+      } else {
+        this.$request.get('/bed-info/getAllBedByRoom/' + this.riseElderly.roomNumber+'/'+sing).then(res => {
+          console.log(res.data)
+          this.bedList = res.data
+        })
+        this.riseElderly.bedNumber = ''
+      }
+    },
+
+
+    getElderlyInfo() {
+      //   根据房间号床号查询老人信息
+      this.$request.get('/elderly-info/getElderlyInfoByRoomAndBed/' + this.checkOutRequests.floorNumber + '/' + this.checkOutRequests.roomNumber + '/' + this.checkOutRequests.bedNumber).then(res => {
+        console.log(res.data)
+        this.checkOutRequests.name = res.data.name
+        this.checkOutRequests.idNumber = res.data.idNumber
+        this.checkOutRequests.familyContactInfo = res.data.familyContactInfo
+      })
+    },
+
     openRise() {
       this.dialogFormVisible = true
       this.$request.get('/nurse-info/getAll').then(res => {
@@ -460,33 +554,41 @@ export default {
         console.log(res.data)
         this.floorList = res.data
       })
-      this.$request.get('/bed-info/getAllRoom').then(res => {
+    },
+    openRiseCheckOut() {
+      this.dialogFormVisible1 = true
+      this.$request.get('/bed-info/getBedByAllFloor').then(res => {
         console.log(res.data)
-        this.roomList = res.data
-      })
-      this.$request.get('/bed-info/getAllBed').then(res => {
-        console.log(res.data)
-        this.bedList = res.data
+        this.floorList = res.data
       })
     },
+
     add() {
-      if (this.riseElderly.name === ''||
-          this.riseElderly.idNumber === ''||
-          this.riseElderly.familyContactInfo === ''||
-          this.riseElderly.physicalCondition === ''||
-          this.riseElderly.gender === ''||
-          this.riseElderly.selfCareStatus === ''||
-          this.riseElderly.nurseLevel === ''||
-          this.riseElderly.nurseId === ''||
-          this.riseElderly.floorNumber === ''||
-          this.riseElderly.roomNumber === ''||
-          this.riseElderly.bedId === '')
-      this.$request.post('/elderly-info/add', this.riseElderly).then(res => {
-        if (res.code === 200) {
-          this.$message.success('添加成功')
-        }
-      })
-      this.dialogFormVisible = false
+      if (this.riseElderly.name === '' ||
+          this.riseElderly.age === '' ||
+          this.riseElderly.idNumber === '' ||
+          this.riseElderly.familyContactInfo === '' ||
+          this.riseElderly.physicalCondition === '' ||
+          this.riseElderly.gender === '' ||
+          this.riseElderly.selfCareStatus === '' ||
+          this.riseElderly.nurseLevel === '' ||
+          this.riseElderly.nurseId === '' ||
+          this.riseElderly.floorNumber === '' ||
+          this.riseElderly.roomNumber === '' ||
+          this.riseElderly.bedNumber === '') {
+        console.log(this.riseElderly)
+        this.$message.error('请填写完整信息')
+      } else {
+        this.$request.post('/elderly-info/add', this.riseElderly).then(res => {
+          if (res.data === 1) {
+            this.$message.success('添加成功')
+          } else {
+            this.$message.error(res.msg)
+          }
+        })
+        this.dialogFormVisible = false
+      }
+      location.reload()
     },
     select() {
       if (this.selectFrom.name === '' && this.selectFrom.bedNumber === '' && this.selectFrom.date === '') {
@@ -495,7 +597,7 @@ export default {
         this.$request.post('/elderly-info/selectByFrom', this.selectFrom).then(res => {
           console.log(res)
           if (res.data.length === 0) {
-            alert('没有查询到数据')
+            this.$message.error('未查询到结果')
           } else {
             this.elderlyList = res.data
           }
@@ -517,17 +619,40 @@ export default {
       })
     },
     update(index, row) {
+      this.updateInfo = row
       this.dialogFormVisible4 = true
     },
+    saveUpdate() {
+      this.dialogFormVisible4 = false
+      this.$request.post('/elderly-info/updateById', this.updateInfo).then(res => {
+        console.log(res.code)
+        if (res.code === 200) {
+          this.$message.success('修改成功')
+        } else {
+          this.$message.error("修改失败")
+        }
+      })
+    },
+
     handleSizeChange(val) {
       console.log(`每页 ${val} 条`);
     },
     handleCurrentChange(val) {
       console.log(`当前页: ${val}`);
     },
+    saveCheckOutRequests() {
+      this.$request.post('/check-out-requests/add', this.checkOutRequests).then(res => {
+        if (res.code === 200) {
+          this.$message.success('申请成功')
+        } else {
+          this.$message.error("申请失败")
+        }
+      })
+    }
   },
   data() {
     return {
+      number: 2,
       updateInfo: {
         nurseLevel: '',
         name: "",
@@ -572,12 +697,14 @@ export default {
         contactInfo: ''
       },
       checkOutRequests: {
+        floorNumber: '',
+        bedNumber: '',
+        roomNumber: '',
         familyContactInfo: '',
         name: '',
         idNumber: '',
         checkoutDate: '',
         elderlyId: '',
-        roomNumber: '',
         checkOutDate: '',
         checkoutReason: '',
         checkoutType: '',
@@ -623,7 +750,7 @@ export default {
       size: 'mini',
       disabled: false,
       background: false,
-    }
+    };
   },
   components: {
     Clock,
