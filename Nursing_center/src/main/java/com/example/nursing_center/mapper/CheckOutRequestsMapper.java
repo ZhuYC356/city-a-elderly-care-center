@@ -2,9 +2,9 @@ package com.example.nursing_center.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.example.nursing_center.controller.Result.BackForm;
-import com.example.nursing_center.controller.request.Info;
 import com.example.nursing_center.pojo.CheckOutRequests;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -22,10 +22,9 @@ public interface CheckOutRequestsMapper extends BaseMapper<CheckOutRequests> {
 
     int updateApprovalStatusToRevoke(BackForm approvalData);
 
-    List<BackForm> select(String name, Integer bedId, String checkInDate);
 
     Integer updateApprovalStatus(BackForm backForm);
 
 
-    Integer add(Info info);
+    List<BackForm> select(String name, Integer bedId, LocalDateTime checkInDate);
 }

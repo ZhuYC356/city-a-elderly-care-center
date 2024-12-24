@@ -2,6 +2,8 @@ package com.example.nursing_center.controller.Result;
 
 import lombok.Data;
 
+import java.util.Date;
+
 /**
  * @version 1.0
  * @Author: 张璇
@@ -14,5 +16,5 @@ public class Back {
      */
     String name;
     String bedId;
-    String checkInDate;
+    Date checkInDate;
 }

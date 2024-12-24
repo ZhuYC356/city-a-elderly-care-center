@@ -3,13 +3,13 @@ package com.example.nursing_center.service.impl;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.nursing_center.common.Result;
 import com.example.nursing_center.controller.Result.BackForm;
-import com.example.nursing_center.controller.request.Info;
 import com.example.nursing_center.mapper.CheckOutRequestsMapper;
 import com.example.nursing_center.pojo.CheckOutRequests;
 import com.example.nursing_center.service.ICheckOutRequestsService;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -43,8 +43,9 @@ public class CheckOutRequestsServiceImpl extends ServiceImpl<CheckOutRequestsMap
         return Result.failure("撤销失败");
     }
 
+
     @Override
-    public List<BackForm> select(String name, Integer bedId, String checkInDate) {
+    public List<BackForm> select(String name, Integer bedId, LocalDateTime checkInDate) {
         return checkOutRequestsMapper.select(name, bedId, checkInDate);
     }
 
@@ -53,10 +54,8 @@ public class CheckOutRequestsServiceImpl extends ServiceImpl<CheckOutRequestsMap
         return Result.success(checkOutRequestsMapper.updateApprovalStatus(backForm));
     }
 
-    @Override
-    public Result add(Info info) {
-        return Result.success(checkOutRequestsMapper.add(info));
-    }
+
+
 
 
 }

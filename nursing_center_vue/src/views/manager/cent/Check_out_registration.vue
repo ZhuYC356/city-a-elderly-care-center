@@ -2,6 +2,7 @@
 import {reactive, ref, onMounted} from 'vue';
 import request from '@/utils/request';
 import axios from "axios";
+import * as XLSX from 'xlsx';
 
 // 表单数据
 const form = reactive({
@@ -22,11 +23,18 @@ const addForm = reactive({
   adminId: '',
 });
 // 分页配置
-const currentPage = ref(1);
-const pageSize = ref(10);
+const currentPage4 = ref(5)
+const pageSize4 = ref(100)
+const size = ref('large')
+const background = ref(true)
+const disabled = ref(false)
+const handleSizeChange = () => {
+  console.log();
+}
+const handleCurrentChange = () => {
+  console.log();
+}
 
-const approvalPerson=ref('')
-const approvalTime=ref('')
 
 // 搜索按钮点击事件
 const onSubmit = () => {
@@ -71,20 +79,14 @@ onMounted(() => {
   getData();
 });
 
-// 同意申请弹窗控制
-const agreeDialogVisible = ref(false);
-// 撤销申请弹窗控制
-const revokeDialogVisible = ref(false);
 
 // 同意申请
 const handleAgree = (index,row) => {
   addForm.value=row
   addForm.value.adminId=1
-  console.log("111")
-  console.log(addForm.value)
   let flag = row.approvalStatus
   if (flag == 2) {
-    alert("审批状态为“1”或“3”才可以点击同意喔~")
+    alert("审批状态不为“2”才可以点击同意喔~")
     return
   }
   console.log("审批")
@@ -111,11 +113,9 @@ const handleAgree = (index,row) => {
 const handleRevoke = (index,row) => {
   addForm.value=row
   addForm.value.adminId=1
-  console.log("111")
-  console.log(addForm.value)
   let itemData = tableData.value[index];
   let flag = itemData.approvalStatus
-  if (flag == 1 || flag == 3) {
+  if (flag == 1 || flag == 3 ) {
     alert("审批状态为“2”才可以点击撤销喔~")
     return
   }
@@ -165,14 +165,56 @@ const submitReport = () => {
     审批人: ${data.approvalPerson || 'null'}<br>
     审批时间: ${data.approvalTime || 'null'}<br>
   `).join('<br>');
-
+  // 显示报告内容
   reportDialogContent.value = reportContent;
   reportDialogVisible.value = true;
+
 };
+
+
 
 // 弹窗显示报告
 const reportDialogVisible = ref(false);
 const reportDialogContent = ref('');
+
+
+// 导出为 TXT 文件
+const exportToTxt = () => {
+  if (!reportDialogContent.value) {
+    alert('没有可导出的报告内容！');
+    return;
+  }
+
+  const blob = new Blob([reportDialogContent.value], { type: 'text/plain;charset=utf-8' });
+  const link = document.createElement('a');
+  link.href = URL.createObjectURL(blob);
+  link.download = '审批报告.txt';
+  link.click();
+};
+
+// 导出为 Excel 文件
+const exportToExcel = () => {
+  if (selectedRows.value.length === 0) {
+    alert('请先选择要导出的条目');
+    return;
+  }
+
+  const data = selectedRows.value.map(row => ({
+    姓名: row.name || 'null',
+    床位号: row.bedId || 'null',
+    入住日期: row.checkInDate || 'null',
+    退住日期: row.checkOutDate || 'null',
+    退住类型: row.checkoutType || 'null',
+    审核状态: row.approvalStatus || 'null',
+    审批人: row.approvalPerson || 'null',
+    审批时间: row.approvalTime || 'null',
+  }));
+
+  const ws = XLSX.utils.json_to_sheet(data);
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, '审批报告');
+  XLSX.writeFile(wb, '审批报告.xlsx');
+};
 </script>
 
 <template>
@@ -206,12 +248,14 @@ const reportDialogContent = ref('');
             </el-input>
           </el-form-item>
           <el-form-item style="margin-right: 20px">
-            <el-date-picker
+<!--            <el-date-picker
                 v-model="form.checkInDate"
-                type="date"
+                type="datetime"
                 placeholder="请选择入住日期"
+                value-format="yyyy-MM-dd hh:mm:ss"
                 clearable
-            />
+            />-->
+
           </el-form-item>
           <el-form-item style="margin-right: 15px">
             <el-button type="primary" @click="onSubmit">
@@ -262,16 +306,42 @@ const reportDialogContent = ref('');
         <!--分页-->
         <div style="margin-top: 10px">
           <el-pagination
-              v-model:current-page="currentPage"
-              v-model:page-size="pageSize"
-              :page-sizes="[10, 20, 50, 100]"
+              v-model:current-page="currentPage4"
+              v-model:page-size="pageSize4"
+              :page-sizes="[100, 200, 300, 400]"
+              :size="size"
+              :disabled="disabled"
+              :background="background"
               layout="total, sizes, prev, pager, next, jumper"
-              :total="tableData.length"
+              :total="400"
+              @size-change="handleSizeChange"
+              @current-change="handleCurrentChange"
           />
         </div>
 
       </div>
     </el-card>
+
+
+    <el-dialog
+        title="审批报告"
+        :visible.sync="reportDialogVisible"
+        width="40%"
+        @close="reportDialogVisible = false"
+    >
+      <!-- 使用 v-html 渲染内容 -->
+      <div v-html="reportDialogContent"></div>
+
+      <!-- 添加导出按钮 -->
+      <div style="margin-top: 20px; text-align: center;">
+        <el-button type="primary" @click="exportToTxt">
+          导出为 TXT格式
+        </el-button>
+        <el-button type="success" @click="exportToExcel" style="margin-left: 40px;">
+          导出为 Excel格式
+        </el-button>
+      </div>
+    </el-dialog>
 
 <!--    &lt;!&ndash; 同意申请弹窗 &ndash;&gt;
     <el-dialog
@@ -316,15 +386,7 @@ const reportDialogContent = ref('');
     </el-dialog>-->
 
     <!-- 审批报告弹窗 -->
-    <el-dialog
-        title="审批报告"
-        :visible.sync="reportDialogVisible"
-        width="50%"
-        @close="reportDialogVisible = false"
-    >
-      <!-- 使用 v-html 渲染内容 -->
-      <div v-html="reportDialogContent"></div>
-    </el-dialog>
+
 
   </div>
 </template>

@@ -2,7 +2,8 @@ package com.example.nursing_center.controller.Result;
 
 import lombok.Data;
 
-import java.util.Date;
+import java.sql.Date;
+import java.time.LocalDateTime;
 
 /**
  * @version 1.0
@@ -16,8 +17,8 @@ public class BackForm {
      */
     String elderlyId;
     String name;
-    String checkInDate;
-    String checkOutDate;
+    LocalDateTime checkInDate;
+    LocalDateTime checkOutDate;
     Integer bedId;
     String checkoutType;
     String approvalStatus;

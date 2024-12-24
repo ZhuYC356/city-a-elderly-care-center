@@ -3,11 +3,11 @@ package com.example.nursing_center.controller;
 
 import com.example.nursing_center.common.Result;
 import com.example.nursing_center.controller.Result.BackForm;
-import com.example.nursing_center.controller.request.Info;
 import com.example.nursing_center.service.ICheckOutRequestsService;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -60,9 +60,13 @@ public class CheckOutRequestsController {
      */
 
     @GetMapping("/select")
-    public List<BackForm> select(@RequestParam(required = false) String name,@RequestParam(required = false) Integer bedId,@RequestParam(required = false) String checkInDate){
-        System.out.println(name);
+    public List<BackForm> select(@RequestParam(required = false) String name,
+                                 @RequestParam(required = false) Integer bedId,
+                                 @RequestParam(required = false) LocalDateTime checkInDate){
+
         return checkOutRequestsService.select(name, bedId, checkInDate);
+
+
     }
 
     /**
@@ -70,10 +74,6 @@ public class CheckOutRequestsController {
      * @param info
      * @return
      */
-    @PostMapping("/add")
-    public Result add(@RequestBody Info info){
-        System.out.println(info+"121222222222222222222222222222222222222");
-        return checkOutRequestsService.add(info);
-    }
+
 
 }
