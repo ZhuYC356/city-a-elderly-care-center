@@ -69,15 +69,6 @@ public class BedInfoServiceImpl extends ServiceImpl<BedInfoMapper, BedInfo> impl
         return Result.success(bedInfoMapper.getAllBedByRoom(roomNumber));
     }
 
-    @Override
-    public Result getAllRoom() {
-        return Result.success(bedInfoMapper.getAllRoom());
-    }
-
-    @Override
-    public Result getAllBed() {
-        return Result.success(bedInfoMapper.getAllBed());
-    }
 
     @Override
     public Result select(Form form) {

@@ -37,8 +37,4 @@ public interface IBedInfoService extends IService<BedInfo> {
     Result getAllRoomByFloor(Integer floorNumber,Integer sing);
 
     Result getAllBedByRoom(Integer roomNumber,Integer sing);
-
-    Result getAllRoom();
-
-    Result getAllBed();
 }
