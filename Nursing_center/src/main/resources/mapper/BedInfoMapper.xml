@@ -95,4 +95,12 @@
           and bed_status !='8'
           and status = '1'
     </select>
+    <select id="selectAllBedByRoomalready" resultType="java.lang.Integer">
+        select distinct bed_number
+        from bed_info
+        where room_number = #{roomNumber}
+          and bed_status != '1' # 该楼层已经使用的房间
+          and bed_status != '8'
+          and status = '1'
+    </select>
 </mapper>

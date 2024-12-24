@@ -111,6 +111,4 @@ public class BedInfoController {
     public Result getAllBedByRoom(@PathVariable("roomNumber") Integer roomNumber,@PathVariable("sing") Integer sing){
         return bedInfoService.getAllBedByRoom(roomNumber,sing);
     }
-
-
 }

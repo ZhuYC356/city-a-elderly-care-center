@@ -8,7 +8,6 @@
         </el-icon>
         <i class="el-icon-notebook-1" style="margin-left: 30px;font-size: 20px"></i>
         <span style="margin-left: 5px;font-size: 20px;font-weight: bolder">入住登记信息</span>
-        <!--        <Clock></Clock>-->
         <hr style="margin: 10px">
       </div>
       <div style="margin-top: 15px;margin-left: 10px">
@@ -197,7 +196,7 @@
     <el-dialog :visible.sync="dialogFormVisible1" title="退住登记申请" width="500">
       <el-form :model="checkOutRequests">
         <el-form-item label="选择楼号:" :label-width="formLabelWidth">
-          <el-select v-model="checkOutRequests.floorNumber" placeholder="选择楼号" @change="getRoomList()">
+          <el-select v-model="checkOutRequests.floorNumber" placeholder="选择楼号" @change="getRoomList(2)">
             <el-option
                 v-for="item in floorList"
                 :key="item"
@@ -210,7 +209,7 @@
         <el-form-item label="选择房间号:" :label-width="formLabelWidth">
           <el-select v-model="checkOutRequests.roomNumber" placeholder="选择房间号" @change="getBedList(2)">
             <el-option
-                v-for="item in roomList"
+                v-for="item in checkOutRequestsRoomList"
                 :key="item"
                 :label="item +'号房间'"
                 :value="item"
@@ -220,9 +219,9 @@
           </el-select>
         </el-form-item>
         <el-form-item label="选择床位:" :label-width="formLabelWidth">
-          <el-select v-model="checkOutRequests.bedId" placeholder="选择床位" @change="getElderlyInfo(2)">
+          <el-select v-model="checkOutRequests.bedNumber" placeholder="选择床位" @change="getElderlyInfo()">
             <el-option
-                v-for="item in bedList"
+                v-for="item in checkOutRequestsBedList"
                 :key="item"
                 :label="item+'号床'"
                 :value="item"
@@ -240,6 +239,8 @@
         <el-form-item label="家庭联系电话:" :label-width="formLabelWidth">
           <el-input v-model="checkOutRequests.familyContactInfo" autocomplete="off" disabled/>
         </el-form-item>
+
+
         <el-form-item label="原因描述:" :label-width="formLabelWidth">
           <el-input v-model="checkOutRequests.checkoutReason" autocomplete="off"/>
         </el-form-item>
@@ -512,31 +513,54 @@ export default {
   },
   methods: {
     getRoomList(sing) {
-      if (this.riseElderly.floorNumber === '') {
-        console.log('请先选择楼号')
+      if (sing === 1) {
+        if (this.riseElderly.floorNumber === '') {
+          this.$message.error('请先选择楼号')
+        } else {
+          this.$request.get('/bed-info/getAllRoomByFloorNumber/' + this.riseElderly.floorNumber + '/' + sing).then(res => {
+            console.log(res.data)
+            this.roomList = res.data
+          })
+        }
       } else {
-        this.$request.get('/bed-info/getAllRoomByFloorNumber/' + this.riseElderly.floorNumber+'/'+sing).then(res => {
-          console.log(res.data)
-          this.roomList = res.data
-        })
+        if (this.checkOutRequests.floorNumber === '') {
+          this.$message.error('请先选择楼号')
+        } else {
+          this.$request.get('/bed-info/getAllRoomByFloorNumber/' + this.checkOutRequests.floorNumber + '/' + sing).then(res => {
+            console.log(res.data)
+            this.checkOutRequestsRoomList = res.data
+          })
+        }
       }
       this.riseElderly.roomNumber = ''
+      this.checkOutRequests.roomNumber = ''
     },
     getBedList(sing) {
-      if (this.riseElderly.roomNumber === '') {
-        alert('请先选择房间号')
+      if (sing === 1) {
+        if (this.riseElderly.roomNumber === '') {
+          this.$message.error('请先选择房间号')
+        } else {
+          this.$request.get('/bed-info/getAllBedByRoom/' + this.riseElderly.roomNumber + '/' + sing).then(res => {
+            console.log(res.data)
+            this.bedList = res.data
+          })
+        }
       } else {
-        this.$request.get('/bed-info/getAllBedByRoom/' + this.riseElderly.roomNumber+'/'+sing).then(res => {
-          console.log(res.data)
-          this.bedList = res.data
-        })
-        this.riseElderly.bedNumber = ''
+        if (this.checkOutRequests.roomNumber === '') {
+          this.$message.error('请先选择房间号')
+        } else {
+          this.$request.get('/bed-info/getAllBedByRoom/' + this.checkOutRequests.roomNumber + '/' + sing).then(res => {
+            console.log(res.data)
+            this.checkOutRequestsBedList = res.data
+          })
+        }
       }
+      this.riseElderly.bedNumber = ''
+      this.checkOutRequests.bedNumber = ''
     },
-
-
     getElderlyInfo() {
       //   根据房间号床号查询老人信息
+      console.log("12121212121212")
       this.$request.get('/elderly-info/getElderlyInfoByRoomAndBed/' + this.checkOutRequests.floorNumber + '/' + this.checkOutRequests.roomNumber + '/' + this.checkOutRequests.bedNumber).then(res => {
         console.log(res.data)
         this.checkOutRequests.name = res.data.name
@@ -587,8 +611,8 @@ export default {
           }
         })
         this.dialogFormVisible = false
+        location.reload()
       }
-      location.reload()
     },
     select() {
       if (this.selectFrom.name === '' && this.selectFrom.bedNumber === '' && this.selectFrom.date === '') {
@@ -722,6 +746,8 @@ export default {
       floorList: [],
       nurseList: [],
       roomList: [],
+      checkOutRequestsRoomList: [],
+      checkOutRequestsBedList: [],
       bedList: [],
       riseElderly: {
         name: "",

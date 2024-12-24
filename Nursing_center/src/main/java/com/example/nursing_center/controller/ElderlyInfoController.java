@@ -44,6 +44,7 @@ public class ElderlyInfoController {
     }
     @GetMapping("/getElderlyInfoByRoomAndBed/{floorNumber}/{roomNumber}/{bedNumber}")
     public Result getElderlyInfoByRoomAndBed(@PathVariable Integer floorNumber,@PathVariable String roomNumber,@PathVariable String bedNumber){
+        System.out.println("________________"+roomNumber+"_______________");
         return elderlyInfoService.getElderlyInfoByRoomAndBed(roomNumber,bedNumber,floorNumber);
     }
 }
