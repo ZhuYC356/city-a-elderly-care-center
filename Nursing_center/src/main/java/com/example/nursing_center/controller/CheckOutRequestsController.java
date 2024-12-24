@@ -72,6 +72,7 @@ public class CheckOutRequestsController {
      */
     @PostMapping("/add")
     public Result add(@RequestBody Info info){
+        System.out.println(info+"121222222222222222222222222222222222222");
         return checkOutRequestsService.add(info);
     }
 

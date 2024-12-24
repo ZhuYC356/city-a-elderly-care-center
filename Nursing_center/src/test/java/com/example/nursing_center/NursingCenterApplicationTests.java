@@ -63,15 +63,14 @@ class NursingCenterApplicationTests {
     }
     @Test
     public void test2(){
-        ElderlyInfo elderlyInfo=new ElderlyInfo();
-//        elderlyInfo.setName("小");
-//        elderlyInfo.setIdNumber("1");
-//        elderlyInfo.setSelfCareStatus(1);
-        elderlyInfo.setBedId(1);
-//        elderlyInfo.setHomeAddress("Beijing");
-//        elderlyInfo.setContactInfo("123456789");
-        String str = JSONUtil.toJsonStr(elderlyInfo);
-//        Result str = elderlyInfoService.selectByFrom(elderlyInfo);
+        Info info=new Info();
+        info.setElderlyId(13);
+        info.setBedId(1);
+        info.setPhoneNumber("18337049186");
+        info.setCheckOutDate("2023-05-05");
+        info.setCheckoutReason("出去玩");
+        info.setCheckoutType(1);
+        String str = JSONUtil.toJsonStr(info);
         System.out.println(str);
     }
 

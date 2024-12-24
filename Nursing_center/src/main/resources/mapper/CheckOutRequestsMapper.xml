@@ -2,10 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.nursing_center.mapper.CheckOutRequestsMapper">
     <insert id="add">
-        INSERT INTO check_out_requests(elderly_id, bed_id, phone_number, check_in_date, check_out_date, checkout_reason,
+        INSERT INTO check_out_requests(elderly_id, bed_id, check_out_date, checkout_reason,
                                        checkout_type, approval_status)
-        VALUES (#{elderlyId}, #{bedId}, #{phoneNumber}, #{checkInDate}, #{checkOutDate}, #{checkoutReason},
-                #{checkoutType}, #{approvalStatus})
+        VALUES (#{elderlyId}, #{bedId}, #{checkOutDate}, #{checkoutReason},
+                #{checkoutType}, 1)
     </insert>
 
     <select id="gainAll" resultType="com.example.nursing_center.controller.Result.BackForm">

@@ -215,7 +215,6 @@
                 :value="item"
             >
             </el-option>
-
           </el-select>
         </el-form-item>
         <el-form-item label="选择床位:" :label-width="formLabelWidth">
@@ -563,9 +562,11 @@ export default {
       console.log("12121212121212")
       this.$request.get('/elderly-info/getElderlyInfoByRoomAndBed/' + this.checkOutRequests.floorNumber + '/' + this.checkOutRequests.roomNumber + '/' + this.checkOutRequests.bedNumber).then(res => {
         console.log(res.data)
+        this.checkOutRequests.elderlyId = res.data.elderlyId
+        this.checkOutRequests.bedId = res.data.bedId
         this.checkOutRequests.name = res.data.name
         this.checkOutRequests.idNumber = res.data.idNumber
-        this.checkOutRequests.familyContactInfo = res.data.familyContactInfo
+        this.checkOutRequests.phoneNumber = res.data.familyContactInfo
       })
     },
 
@@ -586,7 +587,6 @@ export default {
         this.floorList = res.data
       })
     },
-
     add() {
       if (this.riseElderly.name === '' ||
           this.riseElderly.age === '' ||
@@ -721,6 +721,7 @@ export default {
         contactInfo: ''
       },
       checkOutRequests: {
+        bedId: '',
         floorNumber: '',
         bedNumber: '',
         roomNumber: '',
@@ -732,6 +733,7 @@ export default {
         checkOutDate: '',
         checkoutReason: '',
         checkoutType: '',
+        approvalStatus: '',
       },
       selectFrom: {
         name: '',

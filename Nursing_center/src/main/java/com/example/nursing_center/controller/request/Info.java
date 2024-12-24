@@ -25,5 +25,9 @@ public class Info {
     private String gender;
     private String roomNumber;
     private int bedId;
+    private String checkOutDate;
+    private String checkoutReason;
+    private Integer checkoutType;
+    private String phoneNumber;
 }
 
