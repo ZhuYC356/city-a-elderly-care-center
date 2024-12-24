@@ -103,7 +103,7 @@ public class BedInfoController {
         return bedInfoService.getBedByAllFloor();
     }
     @GetMapping("/getAllRoomByFloorNumber/{floorNumber}/{sing}")
-    public Result getAllRoomByFloorNumber(@PathVariable("floorNumber") Integer floorNumber,@PathVariable("sing") Integer){
+    public Result getAllRoomByFloorNumber(@PathVariable("floorNumber") Integer floorNumber,@PathVariable("sing") Integer sing){
         System.out.println(floorNumber);
         return bedInfoService.getAllRoomByFloor(floorNumber,sing);
     }
