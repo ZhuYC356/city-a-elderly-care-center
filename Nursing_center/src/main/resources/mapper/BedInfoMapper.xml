@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.nursing_center.mapper.BedInfoMapper">
 
-    <insert id="add">
+     <insert id="add">
         insert into bed_info(bed_number,bed_type,bed_status,floor_number,room_number,floor)
         values(#{bedNumber},#{bedType},#{bedStatus},#{floorNumber},#{roomNumber},#{floor})
     </insert>
@@ -102,5 +102,15 @@
           and bed_status != '1' # 该楼层已经使用的房间
           and bed_status != '8'
           and status = '1'
+    </select>
+    <select id="myListPage" parameterType="com.example.nursing_center.controller.Result.Form" resultType="com.example.nursing_center.controller.Result.ManagerElder">
+        select * from bed_info,elderly_info where bed_info.bed_id=elderly_info.bed_id
+        <if test="name!=null">
+            and name like "%"#{name}"%"
+        </if>
+        <if test="bedNumber!=null">
+            and bed_number like "%"#{bedNumber}"%"
+        </if>
+        limit #{pageNum},#{pageSize}
     </select>
 </mapper>

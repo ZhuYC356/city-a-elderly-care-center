@@ -10,5 +10,7 @@ import lombok.Data;
 @Data
 public class Form {
     String name;
-    String bedNumber;
+    String  bedNumber;
+    int pageNum;
+    int pageSize;
 }

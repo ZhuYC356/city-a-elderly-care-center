@@ -17,6 +17,8 @@ bin-release/
 # should NOT be excluded as they contain compiler settings and other important
 # information for Eclipse / Flash Builder.
 /nursing_center_vue/node_modules/
+/Nursing_center/target/
+/nursing_center_vue/node_modules/
 /nursing_center_vue/node_modules/
 /Nursing_center/target/
 /nursing_center_vue/node_modules/

@@ -56,6 +56,11 @@ public class BedInfoController {
         System.out.println(bedInfo);
         return bedInfoService.addBed(bedInfo);
     }
+    @PostMapping("/myListPage")
+    public Result myListPage(@RequestBody Form form) {
+        System.out.println(form);
+        return Result.success(bedInfoService.myListPage(form));
+    }
 
     @PostMapping("/updateBed")
     public Result updateBed(@RequestBody ManagerElder managerElder) {

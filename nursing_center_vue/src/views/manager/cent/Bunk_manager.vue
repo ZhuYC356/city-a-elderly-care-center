@@ -10,7 +10,9 @@ import request from "@/utils/request";
 const form = reactive({
   name: '',
   bedNumber: '',
-  date: ''
+  date: '',
+  pageNum: 1,
+  pageSize:5
 })
 const addForm = reactive({
   bedNumber: '',
@@ -26,10 +28,11 @@ const clearAll = () => {
   form.date = ''
 }
 const tableData = ref("")
+const total=ref("")
 const getAll = () => {
   request.get("bed-info/getAll").then(res => {
     tableData.value=res.data
-    console.log("res")
+    total.value=res.data.length
     console.log(res.data)
   })
 }
@@ -84,17 +87,26 @@ const detail = (index,row) => {
 const cancelDetail = () => {
   dialogDetail.value=false
 }
-
-const currentPage4 = ref(5)
-const pageSize4 = ref(100)
 const size = ref('large')
 const background = ref(true)
 const disabled = ref(false)
-const handleSizeChange = () => {
-  console.log();
+const handleSizeChange = (val) => {
+  form.pageSize=val
+  console.log(form.pageSize)
+  request.post("bed-info/myListPage",form).then(res=>{
+    console.log(res.data)
+    // tableData.value=res.data
+  })
 }
-const handleCurrentChange = () => {
-  console.log();
+const handleCurrentChange = (val) => {
+  form.pageNum=val
+  console.log(form.pageNum)
+  request.post("bed-info/myListPage",form).then(res=>{
+    console.log(111)
+    console.log(res.data)
+    tableData.value=res.data
+    console.log(tableData)
+  })
 }
 const drawer = ref(false)
 const toggle = () => {
@@ -127,14 +139,22 @@ const update=(index,row)=>{
   updateForm.roomNumber=row.roomNumber
   dialogFormVisible.value=true
 }
+const ruleFormRef=ref(null)
 const updateBed=()=>{
-  request.post("bed-info/updateBed",updateForm).then(res=>{
-      if(res.status=200){
-        alert("修改成功")
-        getAll()
-      }
+  ruleFormRef.value.validate((valid) => {
+    if(valid){
+      request.post("bed-info/updateBed",updateForm).then(res=>{
+        if(res.status=200){
+          alert("修改成功")
+          getAll()
+          dialogFormVisible.value=false
+        }
+      })
+    }
+    else {
+      console.log("error submit!!");
+    }
   })
-  dialogFormVisible.value=false
   updateForm.floorNumber=''
   updateForm.newBedNumber=''
   updateForm.newRoomNumber=''
@@ -154,6 +174,21 @@ const updateForm = reactive({
   roomNumber: '',
   newRoomNumber: '',
   newBedNumber: ''
+})
+const rules = ({
+  floorNumber: [
+    { required: true, message: '请选择楼号', trigger: 'blur' },
+  ],
+  newBedNumber: [
+    {
+      required: true,
+      message: '请选择新的床位号',
+      trigger: 'change',
+    },
+  ],
+  newRoomNumber: [
+    { required: true, message: '请选择新的房间号', trigger: 'blur' },
+  ],
 })
 </script>
 
@@ -311,7 +346,7 @@ const updateForm = reactive({
               <el-dialog  width="50%" :visible.sync="dialogFormVisible" :append-to-body="true">
                 <div>
                   <span style="font-weight: bolder;font-size: 15px">床位调换</span>
-                  <el-form :model="updateForm" label-width="auto" style="max-width: 600px" >
+                  <el-form :model="updateForm" label-width="auto" style="max-width: 600px" :rules="rules"  ref="ruleFormRef">
                     <el-form-item label="姓名" style="margin-top: 15px">
                       <el-input v-model="updateForm.name" style="width: 300px;"  disabled>
                         <template #prefix>
@@ -323,7 +358,7 @@ const updateForm = reactive({
                       <el-select v-model="updateForm.gender" disabled style="width: 300px;" >
                       </el-select>
                     </el-form-item>
-                    <el-form-item label="楼号">
+                    <el-form-item label="楼号" prop="floorNumber">
                       <el-select v-model="updateForm.floorNumber" placeholder="请选择楼号" style="width: 300px;" >
                         <template #prefix>
                           <i class="el-icon-box" style="font-size: 15px;margin-left: 3px" ></i>
@@ -351,7 +386,7 @@ const updateForm = reactive({
                         </template>
                       </el-input>
                     </el-form-item>
-                    <el-form-item label="新房间号">
+                    <el-form-item label="新房间号" prop="newRoomNumber">
                       <el-select v-model="updateForm.newRoomNumber" placeholder="请选择新房间号" style="width: 300px;">
                         <template #prefix>
                           <i class="el-icon-film" style="font-size: 15px;margin-left: 3px" ></i>
@@ -370,7 +405,7 @@ const updateForm = reactive({
                         </template>
                       </el-input>
                     </el-form-item>
-                    <el-form-item label="新床位号">
+                    <el-form-item label="新床位号" prop="newBedNumber">
                       <el-select v-model="updateForm.newBedNumber" placeholder="请选择新的床位号" style="width: 300px">
                         <template #prefix>
                           <i class="el-icon-tickets" style="font-size: 15px;margin-left: 3px" ></i>
@@ -398,14 +433,14 @@ const updateForm = reactive({
         </el-table>
         <div style="margin-top: 10px">
           <el-pagination
-              v-model:current-page="currentPage4"
-              v-model:page-size="pageSize4"
-              :page-sizes="[100, 200, 300, 400]"
+              v-model:current-page="form.pageNum"
+              v-model:page-size="form.pageSize"
+              :page-sizes="[5, 10, 15, 20]"
               :size="size"
               :disabled="disabled"
               :background="background"
               layout="total, sizes, prev, pager, next, jumper"
-              :total="400"
+              :total="total"
               @size-change="handleSizeChange"
               @current-change="handleCurrentChange"
           />

@@ -76,6 +76,13 @@ public class BedInfoServiceImpl extends ServiceImpl<BedInfoMapper, BedInfo> impl
 
 
     @Override
+    public Result myListPage(Form form) {
+        System.out.println(form);
+        form.setPageNum((form.getPageNum()-1)* form.getPageSize());
+        return Result.success(bedInfoMapper.myListPage(form));
+    }
+
+    @Override
     public Result select(Form form) {
         if(form.getName()!=null&&form.getBedNumber()!=null){
             return Result.success(bedInfoMapper.selectAll(form));
