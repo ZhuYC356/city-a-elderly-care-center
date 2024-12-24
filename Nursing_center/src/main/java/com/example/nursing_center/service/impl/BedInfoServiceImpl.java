@@ -55,6 +55,11 @@ public class BedInfoServiceImpl extends ServiceImpl<BedInfoMapper, BedInfo> impl
     }
 
     @Override
+    public Result getAllRoomByFloor(Integer floorNumber) {
+        return Result.success(bedInfoMapper.getAllBedByRoom(floorNumber));
+    }
+
+    @Override
     public Result getAllRoomByFloor(Integer floorNumber,Integer sing) {
         if(sing==1){
             return Result.success(bedInfoMapper.selectAllRoomByFloor(floorNumber));
