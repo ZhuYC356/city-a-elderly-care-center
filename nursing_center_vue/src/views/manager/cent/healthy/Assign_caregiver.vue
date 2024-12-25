@@ -1,9 +1,11 @@
 <script>
 export default {
-  name: "（为老人分配护工）"
+  name: "（客户护理设置）"
 }
 </script>
-
+<div>
+客户护理设置
+</div>
 <template>
 
 </template>

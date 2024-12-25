@@ -1,11 +1,11 @@
 <script>
 export default {
-  name: "（关注项目的执行情况）"
+  name: "为老人设置护理项目"
 }
 </script>
 
 <template>
-
+  为老人设置护理项目
 </template>
 
 <style scoped>
