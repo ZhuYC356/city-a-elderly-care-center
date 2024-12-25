@@ -2,8 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.nursing_center.mapper.ElderlyInfoMapper">
     <insert id="add">
-        insert into elderly_info(name, id_number, age, gender, family_contact_info, bed_id,nurse_id)
-        values (#{name}, #{idNumber}, #{age}, #{gender}, #{familyContactInfo}, #{bedId},#{nurseId})
+        insert into elderly_info(name, id_number, age, gender, family_contact_info, bed_id,nurse_id,self_care_status,nurse_level)
+        values (#{name}, #{idNumber}, #{age}, #{gender}, #{familyContactInfo}, #{bedId},#{nurseId},#{selfCareStatus},#{nurseLevel})
     </insert>
 
     <select id="getAll" resultType="com.example.nursing_center.controller.request.Info">
@@ -61,5 +61,11 @@
         and room_number=#{roomNumber}
         and bed_number=#{bedNumber}
         and floor_number=#{floorNumber}
+    </select>
+    <select id="getElderlyInfoByIdNumber" resultType="com.example.nursing_center.pojo.ElderlyInfo">
+        select elderly_id,
+        name
+        from elderly_info
+        where id_number=#{idNumber}
     </select>
 </mapper>

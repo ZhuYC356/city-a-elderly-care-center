@@ -68,4 +68,9 @@ public class ElderlyInfoServiceImpl extends ServiceImpl<ElderlyInfoMapper, Elder
     public Result getElderlyInfoByRoomAndBed(String roomNumber, String bedNumber, Integer floorNumber) {
         return Result.success(elderlyInfoMapper.getElderlyInfoByRoomAndBed(roomNumber,bedNumber,floorNumber));
     }
+
+    @Override
+    public Result getElderlyInfoByIdNumber(String idNumber) {
+        return Result.success(elderlyInfoMapper.getElderlyInfoByIdNumber(idNumber));
+    }
 }

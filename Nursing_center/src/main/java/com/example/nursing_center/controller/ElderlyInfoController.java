@@ -47,4 +47,8 @@ public class ElderlyInfoController {
         System.out.println("________________"+roomNumber+"_______________");
         return elderlyInfoService.getElderlyInfoByRoomAndBed(roomNumber,bedNumber,floorNumber);
     }
+    @GetMapping("/getElderlyInfoByIdNumber/{idNumber}")
+    public Result getElderlyInfoByIdNumber(@PathVariable String idNumber){
+        return elderlyInfoService.getElderlyInfoByIdNumber(idNumber);
+    }
 }

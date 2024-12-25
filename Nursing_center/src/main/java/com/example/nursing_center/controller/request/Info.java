@@ -30,5 +30,12 @@ public class Info {
     private String checkoutReason;
     private Integer checkoutType;
     private String phoneNumber;
+    private String address;
+    private DateTime outDate;
+    private String description;
+    private String purpose;
+    private String accompanyingPerson;
+    private String contactInfo;
+    private String remarks;
 }
 

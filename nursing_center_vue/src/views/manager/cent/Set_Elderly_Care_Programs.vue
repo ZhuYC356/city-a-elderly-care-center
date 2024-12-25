@@ -1,6 +1,6 @@
 <script>
 export default {
-  name: "Set_elderly_care_programs"
+  name: "为老人设置护理项目"
 }
 </script>
 

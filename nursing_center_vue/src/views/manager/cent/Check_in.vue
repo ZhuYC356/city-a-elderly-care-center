@@ -250,7 +250,7 @@
             <el-option label="保留床位" value="3"/>
           </el-select>
         </el-form-item>
-        <el-form-item style="margin-right: 20px" label="退住时间:">
+        <el-form-item label="退住时间:" :label-width="formLabelWidth">
           <el-date-picker
               v-model="checkOutRequests.checkoutDate"
               type="date"
@@ -272,16 +272,15 @@
     <!--  外出申请-->
     <el-dialog :visible.sync="dialogFormVisible2" title="外出登记申请" width="500">
       <el-form :model="outingRegistration">
-        <el-form-item label="姓名:" :label-width="formLabelWidth">
-          <el-input v-model="outingRegistration.name" autocomplete="off"/>
-        </el-form-item>
-        <el-form-item label="身份证号:" :label-width="formLabelWidth">
+        <el-form-item label="身份证号:" :label-width="formLabelWidth" @blur="getElderlyInfoByIdNumber()">
           <el-input v-model="outingRegistration.idNumber" autocomplete="off"/>
+        </el-form-item>
+        <el-form-item label="姓名:" :label-width="formLabelWidth" disabled >
+          <el-input v-model="outingRegistration.name" autocomplete="off"/>
         </el-form-item>
         <el-form-item label="家庭联系电话:" :label-width="formLabelWidth">
           <el-input v-model="outingRegistration.familyContactInfo" autocomplete="off"/>
         </el-form-item>
-
         <el-form-item label="外出原因:" :label-width="formLabelWidth">
           <el-input v-model="outingRegistration.outingReason" autocomplete="off"/>
         </el-form-item>
@@ -294,25 +293,22 @@
         <el-form-item label="外出陪同人联系方式:" :label-width="formLabelWidth">
           <el-input v-model="outingRegistration.contactInfo" autocomplete="off"/>
         </el-form-item>
-        <el-form-item style="margin-right: 20px" label="外出时间:">
+        <el-form-item :label-width="formLabelWidth" label="外出时间:">
           <el-date-picker
-              v-model="selectFrom.date"
+              v-model="outingRegistration.date"
               type="date"
               placeholder="请选择外出时间:"
               clearable
           />
         </el-form-item>
-        <el-form-item label="外出陪同人联系方式:" :label-width="formLabelWidth">
-          <el-input v-model="outingRegistration.name" autocomplete="off"/>
-        </el-form-item>
-        <el-form-item label="紧急联系方式:" :label-width="formLabelWidth">
-          <el-input v-model="outingRegistration.name" autocomplete="off"/>
+        <el-form-item label="备注:" :label-width="formLabelWidth">
+          <el-input v-model="outingRegistration.remarks" autocomplete="off"/>
         </el-form-item>
       </el-form>
       <template #footer>
         <div class="dialog-footer">
           <el-button @click="dialogFormVisible2 = false">取消</el-button>
-          <el-button type="primary" @click="dialogFormVisible2 = false">
+          <el-button type="primary" @click="submitOutingRegistration()">
             保存
           </el-button>
         </div>
@@ -505,12 +501,28 @@ import Clock from "@/components/Clock.vue";
 export default {
   name: "入住登记",
   created() {
-    this.number = 4
     this.$request.get('/elderly-info/getAll').then(res => {
       this.elderlyList = res.data
     })
   },
   methods: {
+    getElderlyInfoByIdNumber(){
+      if (this.outingRegistration.idNumber === ''){
+        this.$message.error('请输入身份证号')
+      } else {
+        this.$request.get('/elderly-info/getElderlyInfoByIdNumber/' + this.outingRegistration.idNumber).then(res => {
+          if (res.data === null){
+            this.$message.error('该老人不存在')
+          } else {
+            this.$message.success('该老人存在')
+            console.log(res.data)
+            this.outingRegistration.name = res.data.name
+            this.outingRegistration.elderlyId = res.data.elderlyId
+          }
+        })
+      }
+    //   todo 获取老人时间
+    },
     getRoomList(sing) {
       if (sing === 1) {
         if (this.riseElderly.floorNumber === '') {
@@ -614,6 +626,10 @@ export default {
         location.reload()
       }
     },
+    submitOutingRegistration(){
+    //   todo 提交外出申请
+      console.log(this.outingRegistration)
+    },
     select() {
       if (this.selectFrom.name === '' && this.selectFrom.bedNumber === '' && this.selectFrom.date === '') {
         alert('请输入查询条件')
@@ -657,7 +673,6 @@ export default {
         }
       })
     },
-
     handleSizeChange(val) {
       console.log(`每页 ${val} 条`);
     },
@@ -719,7 +734,8 @@ export default {
         destruction: '',
         purpose: '',
         accompanyingPerson: '',
-        contactInfo: ''
+        contactInfo: '',
+        remarks:''
       },
       checkOutRequests: {
         bedId: '',

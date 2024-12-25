@@ -26,5 +26,7 @@ public interface ElderlyInfoMapper extends BaseMapper<ElderlyInfo> {
 
     Info getElderlyInfoByRoomAndBed(String roomNumber, String bedNumber, Integer floorNumber);
 
+    ElderlyInfo getElderlyInfoByIdNumber(String idNumber);
+
 //    Integer updateAllById(Info info);
 }

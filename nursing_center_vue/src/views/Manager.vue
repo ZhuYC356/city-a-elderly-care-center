@@ -62,11 +62,10 @@
             </template>
             <el-menu-item index="/Nursing_programs_Manager">护理项目</el-menu-item>
             <el-menu-item index="/nursing_programs_history">护理记录</el-menu-item>
-            <el-menu-item index="/Set_Elderly_Care_Programs">设置老人护理项目</el-menu-item>
           </el-submenu>
           <el-submenu index="inspection">
             <template slot="title">
-              <i class="el-icon-menu"></i><span>健康管家</span>
+              <i class="el-icon-menu"></i><span>健康管理</span>
             </template>
             <el-menu-item index="/setServiceObject">设置服务对象</el-menu-item>
             <el-menu-item index="/serviceConcern">服务关注</el-menu-item>
@@ -76,7 +75,7 @@
             <template slot="title">
               <i class="el-icon-menu"></i><span>财务管理</span>
             </template>
-            <el-menu-item index="/55">财务账单</el-menu-item>
+            <el-menu-item index="/Financial_management">财务账单</el-menu-item>
           </el-submenu>
           <el-submenu index="user">
             <template slot="title">
