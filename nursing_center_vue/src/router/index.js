@@ -36,6 +36,7 @@ const routes = [
       { path: 'nursing_programs_Manager', name: 'Nursing_programs_Manager', meta: { name: '护理项目管理' }, component: () => import('../views/manager/cent/Nursing_programs_Manager.vue') },
       { path: 'set_Elderly_Care_Programs', name: 'Set_Elderly_Care_Programs', meta: { name: '设置护理项目' }, component: () => import('../views/manager/cent/Set_Elderly_Care_Programs.vue') },
       { path: 'nursing_programs_history', name: 'Nursing_programs_history', meta: { name: '护理记录' }, component: () => import('../views/manager/cent/Nursing_programs_history.vue') },
+      { path: 'user_management', name: 'User_management', meta: { name: '用户管理' }, component: () => import('../views/manager/cent/User_management.vue') },
       {
         path: 'diagnosis',
         name: 'Diagnosis',

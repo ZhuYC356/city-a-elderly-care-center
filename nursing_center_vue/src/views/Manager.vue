@@ -34,7 +34,8 @@
     <div class="manager-main">
       <!--  侧边栏  -->
       <div class="manager-main-left">
-        <el-menu :default-openeds="['register', 'work','examine','inspection','pharmacy']" router style="border: none" :default-active="$route.path">
+<!--        :default-openeds="['register', 'work','examine','inspection','pharmacy']"-->
+        <el-menu  router style="border: none" :default-active="$route.path">
           <el-menu-item index="/home">
             <i class="el-icon-s-home"></i>
             <span slot="title">系统首页</span>
@@ -76,6 +77,12 @@
               <i class="el-icon-menu"></i><span>财务管理</span>
             </template>
             <el-menu-item index="/55">财务账单</el-menu-item>
+          </el-submenu>
+          <el-submenu index="user">
+            <template slot="title">
+              <i class="el-icon-menu"></i><span>护工管理</span>
+            </template>
+            <el-menu-item index="/User_management">护工信息</el-menu-item>
           </el-submenu>
         </el-menu>
       </div>
