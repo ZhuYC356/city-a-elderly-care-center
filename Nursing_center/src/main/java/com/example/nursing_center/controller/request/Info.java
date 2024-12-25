@@ -1,6 +1,7 @@
 package com.example.nursing_center.controller.request;
 
 
+import cn.hutool.core.date.DateTime;
 import lombok.Data;
 
 /**
@@ -25,7 +26,7 @@ public class Info {
     private String gender;
     private String roomNumber;
     private int bedId;
-    private String checkOutDate;
+    private DateTime checkOutDate;
     private String checkoutReason;
     private Integer checkoutType;
     private String phoneNumber;

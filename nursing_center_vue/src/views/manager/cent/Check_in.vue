@@ -666,12 +666,13 @@ export default {
     },
     saveCheckOutRequests() {
       this.$request.post('/check-out-requests/add', this.checkOutRequests).then(res => {
-        if (res.code === 200) {
+        if (res.data === 1) {
           this.$message.success('申请成功')
         } else {
           this.$message.error("申请失败")
         }
       })
+      this.dialogFormVisible2 = false
     }
   },
   data() {

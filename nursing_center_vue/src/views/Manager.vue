@@ -34,7 +34,7 @@
     <div class="manager-main">
       <!--  侧边栏  -->
       <div class="manager-main-left">
-        <el-menu :default-openeds="['register', 'work']" router style="border: none" :default-active="$route.path">
+        <el-menu :default-openeds="['register', 'work','examine','inspection','pharmacy']" router style="border: none" :default-active="$route.path">
           <el-menu-item index="/home">
             <i class="el-icon-s-home"></i>
             <span slot="title">系统首页</span>

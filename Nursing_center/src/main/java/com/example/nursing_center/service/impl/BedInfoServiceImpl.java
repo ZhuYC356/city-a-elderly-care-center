@@ -26,10 +26,12 @@ import java.util.List;
 public class BedInfoServiceImpl extends ServiceImpl<BedInfoMapper, BedInfo> implements IBedInfoService {
     @Resource
     private BedInfoMapper bedInfoMapper;
+
     @Override
     public Result addBed(BedInfo bedInfo) {
         return Result.success(bedInfoMapper.addBed(bedInfo));
     }
+
     @Override
     public Result add(BedInfo bedInfo) {
         return null;
@@ -39,6 +41,7 @@ public class BedInfoServiceImpl extends ServiceImpl<BedInfoMapper, BedInfo> impl
     public Result getAll() {
         return Result.success(bedInfoMapper.getAll());
     }
+
     @Override
     public Result updateBed(ManagerElder managerElder) {
         return Result.success(bedInfoMapper.updateBed(managerElder));
@@ -60,20 +63,20 @@ public class BedInfoServiceImpl extends ServiceImpl<BedInfoMapper, BedInfo> impl
     }
 
     @Override
-    public Result getAllRoomByFloor(Integer floorNumber,Integer sing) {
-        if(sing==1){
+    public Result getAllRoomByFloor(Integer floorNumber, Integer sing) {
+        if (sing == 1) {
             return Result.success(bedInfoMapper.selectAllRoomByFloor(floorNumber));
-        }else {
+        } else {
             return Result.success(bedInfoMapper.selectAllRoomByFlooralready(floorNumber));
         }
 
     }
 
     @Override
-    public Result getAllBedByRoom(Integer roomNumber,Integer sing) {
-        if (sing==1){
+    public Result getAllBedByRoom(Integer roomNumber, Integer sing) {
+        if (sing == 1) {
             return Result.success(bedInfoMapper.getAllBedByRoom(roomNumber));
-        }else {
+        } else {
             return Result.success(bedInfoMapper.selectAllBedByRoomalready(roomNumber));
         }
 
@@ -83,22 +86,19 @@ public class BedInfoServiceImpl extends ServiceImpl<BedInfoMapper, BedInfo> impl
     @Override
     public Result myListPage(Form form) {
         System.out.println(form);
-        form.setPageNum((form.getPageNum()-1)* form.getPageSize());
+        form.setPageNum((form.getPageNum() - 1) * form.getPageSize());
         return Result.success(bedInfoMapper.myListPage(form));
     }
 
     @Override
     public Result select(Form form) {
-        if(form.getName()!=null&&form.getBedNumber()!=null){
+        if (form.getName() != null && form.getBedNumber() != null) {
             return Result.success(bedInfoMapper.selectAll(form));
-        }
-        else if(form.getName()!=null&&form.getBedNumber()==null){
+        } else if (form.getName() != null && form.getBedNumber() == null) {
             return Result.success(bedInfoMapper.selectName(form));
-        }
-        else if(form.getName()==null&&form.getBedNumber()!=null){
+        } else if (form.getName() == null && form.getBedNumber() != null) {
             return Result.success(bedInfoMapper.selectNumber(form));
-        }
-        else {
+        } else {
             return Result.success(bedInfoMapper.getAll());
         }
     }
