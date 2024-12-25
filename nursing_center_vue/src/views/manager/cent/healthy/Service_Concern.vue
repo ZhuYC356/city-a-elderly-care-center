@@ -1,5 +1,7 @@
 <template>
-  服务关注
+  <div>
+    服务关注
+  </div>
 </template>
 
 <style>

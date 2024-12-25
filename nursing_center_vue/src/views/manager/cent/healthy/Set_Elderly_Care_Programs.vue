@@ -5,7 +5,9 @@ export default {
 </script>
 
 <template>
-  为老人设置护理项目
+  <div>
+    为老人设置护理项目
+  </div>
 </template>
 
 <style scoped>
