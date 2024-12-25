@@ -68,7 +68,6 @@
               <i class="el-icon-menu"></i><span>健康管理</span>
             </template>
             <el-menu-item index="/assign_caregiver">设置服务对象</el-menu-item>
-            <el-menu-item index="/set_Elderly_Care_Programs">客户护理设置</el-menu-item>
             <el-menu-item index="/service_Concern">服务关注</el-menu-item>
           </el-submenu>
           <el-submenu index="pharmacy">
