@@ -68,9 +68,9 @@
             <template slot="title">
               <i class="el-icon-menu"></i><span>健康管家</span>
             </template>
-            <el-menu-item index="/11">设置服务对象</el-menu-item>
-            <el-menu-item index="/22">服务关注</el-menu-item>
-            <el-menu-item index="/44">日常护理</el-menu-item>
+            <el-menu-item index="/setServiceObject">设置服务对象</el-menu-item>
+            <el-menu-item index="/serviceConcern">服务关注</el-menu-item>
+            <el-menu-item index="/dailyNurse">日常护理</el-menu-item>
           </el-submenu>
           <el-submenu index="pharmacy">
             <template slot="title">
