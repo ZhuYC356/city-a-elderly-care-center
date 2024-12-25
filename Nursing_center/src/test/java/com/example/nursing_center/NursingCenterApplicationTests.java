@@ -67,7 +67,6 @@ class NursingCenterApplicationTests {
         info.setElderlyId(13);
         info.setBedId(1);
         info.setPhoneNumber("18337049186");
-        info.setCheckOutDate("2023-05-05");
         info.setCheckoutReason("出去玩");
         info.setCheckoutType(1);
         String str = JSONUtil.toJsonStr(info);

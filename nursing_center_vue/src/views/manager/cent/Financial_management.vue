@@ -5,7 +5,9 @@ export default {
 </script>
 
 <template>
-  财务管理
+  <div>
+    <div>财务管理</div>
+  </div>
 </template>
 
 <style scoped>
