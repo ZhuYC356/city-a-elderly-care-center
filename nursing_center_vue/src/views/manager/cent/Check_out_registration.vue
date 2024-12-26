@@ -8,12 +8,10 @@ import * as XLSX from 'xlsx';
 const form = reactive({
   name: '',
   bedId: '',
-  checkInDate: '',
 });
 const addForm = reactive({
   elderlyId: '',
   name: '',
-  checkInDate: '',
   checkOutDate: '',
   bedId: '',
   checkoutType: '',
@@ -41,7 +39,6 @@ const onSubmit = () => {
   let selectLink = 'http://localhost:9090/check-out-requests/select?';
   selectLink += `name=${form.name}`
   selectLink += `&bedId=${form.bedId}`
-  selectLink += `&checkInTime=${form.checkInDate}`
 
   axios
       .get(selectLink)
@@ -248,13 +245,6 @@ const exportToExcel = () => {
             </el-input>
           </el-form-item>
           <el-form-item style="margin-right: 20px">
-<!--            <el-date-picker
-                v-model="form.checkInDate"
-                type="datetime"
-                placeholder="请选择入住日期"
-                value-format="yyyy-MM-dd hh:mm:ss"
-                clearable
-            />-->
 
           </el-form-item>
           <el-form-item style="margin-right: 15px">
@@ -284,13 +274,13 @@ const exportToExcel = () => {
           <el-table-column type="selection" width="55"/>
           <el-table-column property="elderlyId" label="ID" width="80"/>
           <el-table-column property="name" label="姓名" width="120"/>
-          <el-table-column property="checkInDate" label="入住日期" width="120"/>
-          <el-table-column property="checkOutDate" label="退住日期" width="120"/>
-          <el-table-column property="bedId" label="床位号" width="80"/>
-          <el-table-column property="checkoutType" label="退住类型" width="80"/>
-          <el-table-column property="approvalStatus" label="审核状态" width="80"/>
-          <el-table-column property="approvalPerson" label="审批人" width="80"/>
-          <el-table-column property="approvalTime" label="审批时间" width="120"/>
+<!--          <el-table-column property="checkInDate" label="入住日期" width="120"/>-->
+          <el-table-column property="checkOutDate" label="退住日期" width="150"/>
+          <el-table-column property="bedId" label="床位号" width="100"/>
+          <el-table-column property="checkoutType" label="退住类型" width="100"/>
+          <el-table-column property="approvalStatus" label="审核状态" width="100"/>
+          <el-table-column property="approvalPerson" label="审批人" width="120"/>
+          <el-table-column property="approvalTime" label="审批时间" width="150"/>
           <el-table-column fixed="right" label="操作" min-width="120">
             <template #default="scope">
               <el-button link type="success" size="small" @click="handleAgree(scope.$index, scope.row)">

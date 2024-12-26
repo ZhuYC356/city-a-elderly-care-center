@@ -19,19 +19,22 @@
         SELECT
         ei.elderly_id AS elderlyId,
         ei.name AS name,
-        ei.check_in_time AS checkInDate,
+        ei.check_in_time AS checkInTime,
         ei.bed_id AS bedId,
-        ei.check_out_time AS checkOutDate,
+        ei.check_out_time AS checkOutTime,
+        ci.check_in_date AS checkInDate,
+        ci.check_out_date As checkOutDate,
         ci.checkout_type AS checkoutType,
         ci.approval_status AS approvalStatus,
         ci.approval_person AS approvalPerson,
         ci.approval_time AS approvalTime
         FROM
-        elderly_info ei
-        LEFT JOIN
-        check_out_requests ci ON ei.elderly_id = ci.elderly_id
+        elderly_info ei,check_out_requests ci
+        /*LEFT JOIN*/
+        /*check_out_requests ci ON ei.elderly_id = ci.elderly_id
         WHERE
-        1 = 1
+        1 = 1*/
+        WHERE ei.elderly_id = ci.elderly_id
         <if test="name != null and name !='' ">
             AND ei.name LIKE CONCAT('%', #{name}, '%')
         </if>
@@ -39,7 +42,7 @@
             AND ei.bed_id = #{bedId}
         </if>
         <if test="checkInDate != null and checkInDate !=''">
-            AND ei.check_in_time = #{checkInDate}
+            AND ci.check_in_date = #{checkInDate}
         </if>
 
     </select>
@@ -56,7 +59,7 @@
         UPDATE check_out_requests
         SET approval_status = 3,
             approval_person = #{approvalPerson},  -- 撤销审批人
-            approval_time = #{approvalTime}       -- 撤销审批时间
+            approval_time = now()       -- 撤销审批时间
         WHERE elderly_id = #{elderlyId}  -- 根据老人的ID查找退住申请记录
           AND approval_status = 2;
     </update>

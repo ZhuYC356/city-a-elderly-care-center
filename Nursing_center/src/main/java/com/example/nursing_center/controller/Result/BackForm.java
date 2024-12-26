@@ -2,7 +2,6 @@ package com.example.nursing_center.controller.Result;
 
 import lombok.Data;
 
-import java.sql.Date;
 import java.time.LocalDateTime;
 
 /**
@@ -23,7 +22,7 @@ public class BackForm {
     String checkoutType;
     String approvalStatus;
     String approvalPerson;
-    Date approvalTime;
+    LocalDateTime approvalTime;
     Integer adminId;
 
 
