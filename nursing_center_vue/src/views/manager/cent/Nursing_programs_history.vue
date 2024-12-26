@@ -142,7 +142,7 @@ const updateTableRowStatus = (elderlyId, status) => {
 }
 
 const selectedRows = ref([]);
-// 生成审批报告
+// 生成护理记录
 const submitReport = () => {
   if (selectedRows.value.length === 0) {
     alert('请先选择要生成报告的条目');
@@ -176,14 +176,14 @@ const reportDialogContent = ref('');
 // 导出为 TXT 文件
 const exportToTxt = () => {
   if (!reportDialogContent.value) {
-    alert('没有可导出的报告内容！');
+    alert('没有可导出的记录内容！');
     return;
   }
 
   const blob = new Blob([reportDialogContent.value], { type: 'text/plain;charset=utf-8' });
   const link = document.createElement('a');
   link.href = URL.createObjectURL(blob);
-  link.download = '审批报告.txt';
+  link.download = '护理记录.txt';
   link.click();
 };
 
@@ -208,7 +208,7 @@ const exportToExcel = () => {
   const ws = XLSX.utils.json_to_sheet(data);
   const wb = XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(wb, ws, '审批报告');
-  XLSX.writeFile(wb, '审批报告.xlsx');
+  XLSX.writeFile(wb, '护理记录.xlsx');
 };
 </script>
 
@@ -260,7 +260,7 @@ const exportToExcel = () => {
       <!--生成审批报告-->
       <div>
         <el-button type="primary" style="margin-left: 10px" @click="submitReport">
-          <span style="font-weight: bolder">生成审批信息报告</span>
+          <span style="font-weight: bolder">生成护理记录报告</span>
         </el-button>
       </div>
 
@@ -273,17 +273,17 @@ const exportToExcel = () => {
           <el-table-column property="name" label="姓名" width="120"/>
           <el-table-column property="id_number" label="身份证号" width="120"/>
           <el-table-column property="project_name" label="护理项目名称" width="120"/>
-          <el-table-column property="service_duration" label="服务时长" width="80"/>
-          <el-table-column property="frequency" label="服务频率" width="80"/>
-          <el-table-column property="nurse_level" label="护理等级" width="80"/>
-          <el-table-column property="price" label="服务价格" width="80"/><!--
+          <el-table-column property="service_duration" label="服务时长" width="120"/>
+          <el-table-column property="frequency" label="服务频率" width="120"/>
+          <el-table-column property="nurse_level" label="护理等级" width="120"/>
+          <el-table-column property="price" label="服务价格" width="120"/><!--
           <el-table-column property="approvalTime" label="审批时间" width="120"/>-->
           <el-table-column fixed="right" label="操作" min-width="120">
             <template #default="scope">
               <el-button link type="success" size="small" @click="handleAgree(scope.$index, scope.row)">
-                <span style="font-weight: bolder">同意</span>
+                <span style="font-weight: bolder">详情</span>
               </el-button>
-              <el-button link type="primary" size="small" @click="handleRevoke(scope.$index, scope.row)">
+              <el-button link type="danger" size="small" @click="handleRevoke(scope.$index, scope.row)">
                 <span style="font-weight: bolder">移除</span>
               </el-button>
             </template>
@@ -311,7 +311,7 @@ const exportToExcel = () => {
 
 
     <el-dialog
-        title="审批报告"
+        title="护理记录"
         :visible.sync="reportDialogVisible"
         width="40%"
         @close="reportDialogVisible = false"
