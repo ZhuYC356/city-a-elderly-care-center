@@ -1,5 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.nursing_center.mapper.CareProjectMapper">
+    <select id="getData" resultType="com.example.nursing_center.pojo.CareProject">
+        SELECT * FROM care_project
+    </select>
+    <select id="myListPage" resultType="com.example.nursing_center.pojo.CareProject">
+        SELECT * FROM care_project
+        limit #{pageNum},#{pageSize}
+    </select>
+    <select id="select" resultType="com.example.nursing_center.pojo.CareProject">
+        SELECT * FROM care_project
+        <where>
+            <if test="projectName!=null">
+                AND project_name like "%"#{projectName}"%"
+            </if>
+            <if test="minPrice!=0">
+                AND price &gt;= #{minPrice}
+            </if>
+            <if test="maxPrice!=0">
+                AND price &lt;= #{maxPrice}
+            </if>
+        </where>
+        limit #{pageNum},#{pageSize}
+    </select>
 
 </mapper>

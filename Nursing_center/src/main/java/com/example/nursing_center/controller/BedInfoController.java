@@ -59,7 +59,7 @@ public class BedInfoController {
     @PostMapping("/myListPage")
     public Result myListPage(@RequestBody Form form) {
         System.out.println(form);
-        return Result.success(bedInfoService.myListPage(form));
+        return bedInfoService.myListPage(form);
     }
 
     @PostMapping("/updateBed")

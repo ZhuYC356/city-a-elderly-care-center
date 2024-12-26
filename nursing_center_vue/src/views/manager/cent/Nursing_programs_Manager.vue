@@ -1,11 +1,240 @@
-<script>
-export default {
-  name: "Nursing_programs_Manager"
+<script setup>
+import {ref,reactive,onMounted} from "vue";
+import request from "@/utils/request";
+const form=reactive({
+  projectName:"",
+  maxPrice:'',
+  minPrice:'',
+  pageSize:'5',
+  pageNum:'1'
+})
+let total=ref('');
+const handleCurrentChange=(val)=>{
+  form.pageNum=val
+  request.post('care-project/select',form).then(res=>{
+    console.log(res.data)
+    tableData.value=res.data
+  })
+}
+const handleSizeChange=(val)=>{
+  form.pageSize=val
+  request.post('care-project/select',form).then(res=>{
+    tableData.value=res.data
+  })
+}
+const background=ref('true')
+const tableData=ref('')
+const getData=()=>{
+      request.get('care-project/getData').then(res=>{
+        total.value=res.data.length
+      })
+}
+onMounted(()=>{
+    select()
+    getData()
+})
+const select=()=>{
+    request.post('care-project/select',form).then(res=>{
+      tableData.value=res.data
+    })
+
+}
+const clearAll=()=>{
+  form.projectName=''
+  form.maxPrice=''
+  form.minPrice=''
+}
+const rules = ({
+  minPrice: [
+    { min: form.maxPrice, max: 5, message: '最小值不能大于最大值', trigger: 'blur' },
+    // { type: 'number', message: '该内容需要填写数字', trigger: 'blur' },
+    { Range: true ,min:1,max: form.maxPrice, message: '大于最大值', trigger: 'blur' },
+  ],
+  maxPrice: [
+    { min: form.minPrice,  message: '最小值不能大于最大值', trigger: 'blur' },
+  ],
+})
+const selectable = (row, index) => {
+  return true
 }
 </script>
 
 <template>
+  <div>
+    <el-card style="height: 630px">
+      <div>
+        <hr style="margin: 10px">
+        <i class="el-icon-office-building" style="margin-left: 30px;font-size: 20px"></i>
+        <span style="margin-left: 5px;font-size: 20px;font-weight: bolder">护理项目</span>
+        <hr style="margin: 10px">
+      </div>
+      <div style="margin-top: 15px;margin-left: 10px">
+        <el-form :inline="true" :model="form" :rules="rules" ref="formRef">
+          <el-form-item style="margin-right: 20px" prop="projectName">
+            <el-input v-model="form.projectName" placeholder="请填写项目名称" clearable>
+              <template #prefix>
+                <i class="el-icon-box" style="font-size: 15px;margin-left: 3px" ></i>
+              </template>
+            </el-input>
+          </el-form-item>
+          <el-form-item style="margin-right: 20px" prop="minPrice">
+            <el-input v-model="form.minPrice" placeholder="请填写最低服务价格" clearable style="width: 190px">
+              <template #prefix>
+                <i class="el-icon-money" style="font-size: 15px;margin-left: 3px" ></i>
+              </template>
+            </el-input>
+          </el-form-item>
+          <el-form-item style="margin-right: 20px">
+            <el-input v-model="form.maxPrice" placeholder="请填写最高服务价格" clearable style="width: 190px">
+              <template #prefix>
+                <i class="el-icon-money" style="font-size: 15px;margin-left: 3px" ></i>
+              </template>
+            </el-input>
+          </el-form-item>
+          <el-form-item style="margin-right: 15px">
+            <el-button type="primary" @click="select"><span style="font-weight: bolder">搜 索</span></el-button>
+          </el-form-item>
+          <el-form-item>
+            <el-button type="danger" @click="clearAll"><span style="font-weight: bolder">清 空</span></el-button>
+          </el-form-item>
+        </el-form>
+      </div>
+      <div>
+        <el-button type="primary" style="margin-left: 10px" @click="toggle"><span
+            style="font-weight: bolder">添加新项目</span></el-button>
 
+
+      </div>
+
+      <div style="margin-top: 5px">
+        <el-table :data="tableData" style="width: 100%;" height="390" :stripe="true"
+                  :header-cell-style="{background:'#f3f6fd',color:'#555'}">
+          <el-table-column type="selection" width="55" :selectable="selectable"/>
+          <el-table-column property="projectName" label="项目名称" width="120"/>
+          <el-table-column property="description" label="项目描述" width="130"/>
+          <el-table-column property="serviceDuration" label="服务时长" width="130"/>
+          <el-table-column property="price" label="服务价格" width="120"/>
+          <el-table-column property="frequency" label="服务频率" width="120"/>
+          <el-table-column property="nurseLevel" label="护理等级" width="120"/>
+          <el-table-column fixed="right" label="状态" min-width="120">
+            <template #default="scope">
+              <el-button link type="success" size="small" @click="start(scope.$index,scope.row)"><span style="font-weight: bolder">启 用</span>
+              </el-button>
+              <el-button link type="danger" size="small" @click="stop(scope.$index,scope.row)"><span style="font-weight: bolder">停 用</span>
+              </el-button>
+            </template>
+          </el-table-column>
+          <el-table-column fixed="right" label="操作" min-width="120">
+            <template #default="scope">
+              <el-button link type="primary" size="small" @click="update(scope.$index,scope.row)"><span style="font-weight: bolder">修 改</span>
+              </el-button>
+              <el-button link type="danger" size="small" @click="update(scope.$index,scope.row)"><span style="font-weight: bolder">删 除</span>
+              </el-button>
+            </template>
+          </el-table-column>
+        </el-table>
+
+<!--        <el-dialog  width="50%" :visible.sync="dialogFormVisible" :append-to-body="true">-->
+<!--          <div>-->
+<!--            <span style="font-weight: bolder;font-size: 15px">床位调换</span>-->
+<!--            <el-form :model="updateForm" label-width="auto" style="max-width: 600px" :rules="rules"  ref="ruleFormRef">-->
+<!--              <el-form-item label="姓名" style="margin-top: 15px">-->
+<!--                <el-input v-model="updateForm.name" style="width: 300px;"  disabled>-->
+<!--                  <template #prefix>-->
+<!--                    <i class="el-icon-user" style="font-size: 15px;margin-left: 3px" ></i>-->
+<!--                  </template>-->
+<!--                </el-input>-->
+<!--              </el-form-item>-->
+<!--              <el-form-item label="性别">-->
+<!--                <el-select v-model="updateForm.gender" disabled style="width: 300px;" >-->
+<!--                </el-select>-->
+<!--              </el-form-item>-->
+<!--              <el-form-item label="楼号" prop="floorNumber">-->
+<!--                <el-select v-model="updateForm.floorNumber" placeholder="请选择楼号" style="width: 300px;" >-->
+<!--                  <template #prefix>-->
+<!--                    <i class="el-icon-box" style="font-size: 15px;margin-left: 3px" ></i>-->
+<!--                  </template>-->
+<!--                  <el-option label="5号楼" value="1"/>-->
+<!--                  <el-option label="6号楼" value="2"/>-->
+<!--                  <el-option label="7号楼" value="3"/>-->
+<!--                  <el-option label="8号楼" value="4"/>-->
+<!--                </el-select>-->
+<!--              </el-form-item>-->
+
+<!--              <el-form-item style="margin-right: 20px;margin-top: 15px" label="入住日期">-->
+<!--                <el-date-picker-->
+<!--                    v-model="updateForm.date"-->
+<!--                    type="date"-->
+<!--                    clearable-->
+<!--                    style="width: 300px"-->
+<!--                    disabled="true"-->
+<!--                />-->
+<!--              </el-form-item>-->
+<!--              <el-form-item label="现房间号">-->
+<!--                <el-input v-model="updateForm.roomNumber" disabled style="width: 300px;">-->
+<!--                  <template #prefix>-->
+<!--                    <i class="el-icon-film" style="font-size: 15px;margin-left: 3px" ></i>-->
+<!--                  </template>-->
+<!--                </el-input>-->
+<!--              </el-form-item>-->
+<!--              <el-form-item label="新房间号" prop="newRoomNumber">-->
+<!--                <el-select v-model="updateForm.newRoomNumber" placeholder="请选择新房间号" style="width: 300px;">-->
+<!--                  <template #prefix>-->
+<!--                    <i class="el-icon-film" style="font-size: 15px;margin-left: 3px" ></i>-->
+<!--                  </template>-->
+<!--                  <el-option label="101" value="101"/>-->
+<!--                  <el-option label="102" value="102"/>-->
+<!--                  <el-option label="103" value="103"/>-->
+<!--                  <el-option label="104" value="104"/>-->
+<!--                </el-select>-->
+<!--              </el-form-item>-->
+
+<!--              <el-form-item style="margin-right: 20px;margin-top: 15px" label="现床位号">-->
+<!--                <el-input v-model="updateForm.bedNumber" disabled clearable style="width: 300px">-->
+<!--                  <template #prefix>-->
+<!--                    <i class="el-icon-postcard" style="font-size: 15px;margin-left: 3px" ></i>-->
+<!--                  </template>-->
+<!--                </el-input>-->
+<!--              </el-form-item>-->
+<!--              <el-form-item label="新床位号" prop="newBedNumber">-->
+<!--                <el-select v-model="updateForm.newBedNumber" placeholder="请选择新的床位号" style="width: 300px">-->
+<!--                  <template #prefix>-->
+<!--                    <i class="el-icon-tickets" style="font-size: 15px;margin-left: 3px" ></i>-->
+<!--                  </template>-->
+<!--                  <el-option label="1" value="1"/>-->
+<!--                  <el-option label="2" value="2"/>-->
+<!--                  <el-option label="3" value="3"/>-->
+<!--                  <el-option label="4" value="4"/>-->
+<!--                </el-select>-->
+<!--              </el-form-item>-->
+<!--            </el-form>-->
+
+<!--          </div>-->
+<!--          <template #footer>-->
+<!--            <div class="dialog-footer">-->
+<!--              <el-button @click="updateBed" type="primary"><span style="font-weight: bolder">确 认</span></el-button>-->
+<!--              <el-button type="danger" @click="cancelUpdate">-->
+<!--                <span style="font-weight: bolder">取 消</span>-->
+<!--              </el-button>-->
+<!--            </div>-->
+<!--          </template>-->
+<!--        </el-dialog>-->
+
+        <div style="margin-top: 10px">
+          <el-pagination
+              v-model:current-page="form.pageNum"
+              :page-sizes="[5, 15, 20, 25]"
+              :background="background"
+              layout="total, sizes, prev, pager, next, jumper"
+              :total="total"
+              @size-change="handleSizeChange"
+              @current-change="handleCurrentChange"
+          />
+        </div>
+      </div>
+
+    </el-card>
+  </div>
 </template>
 
 <style scoped>

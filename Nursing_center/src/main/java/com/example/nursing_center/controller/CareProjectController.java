@@ -1,9 +1,11 @@
 package com.example.nursing_center.controller;
 
 
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.web.bind.annotation.RestController;
+import com.example.nursing_center.common.Result;
+import com.example.nursing_center.controller.Result.Form;
+import com.example.nursing_center.service.impl.CareProjectServiceImpl;
+import jakarta.annotation.Resource;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * <p>
@@ -16,5 +18,20 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/care-project")
 public class CareProjectController {
+    @Resource
+    private CareProjectServiceImpl careProjectService;
+    @GetMapping("/getData")
+    public Result getData(){
+        return careProjectService.getData();
+    }
+    @PostMapping("/myListPage")
+    public Result myListPage(@RequestBody Form form){
+        return careProjectService.myListPage(form);
+    }
+    @PostMapping("/select")
+    public Result select(@RequestBody Form form){
+        System.out.println(form);
+        return careProjectService.select(form);
+    }
 
 }

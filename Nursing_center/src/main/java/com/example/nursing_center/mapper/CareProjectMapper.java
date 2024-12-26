@@ -1,7 +1,10 @@
 package com.example.nursing_center.mapper;
 
+import com.example.nursing_center.controller.Result.Form;
 import com.example.nursing_center.pojo.CareProject;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +16,9 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface CareProjectMapper extends BaseMapper<CareProject> {
 
+    List<CareProject> getData();
+
+    List<CareProject> myListPage(Form form);
+
+    List<CareProject> select(Form form);
 }

@@ -28,18 +28,26 @@ const clearAll = () => {
   form.date = ''
 }
 const tableData = ref("")
-const total=ref("")
+let total=ref("")
 const getAll = () => {
   request.get("bed-info/getAll").then(res => {
-    tableData.value=res.data
     total.value=res.data.length
-    console.log(res.data)
+  })
+  console.log(form)
+  request.post("bed-info/myListPage",form).then(res=>{
+    tableData.value=res.data
+    console.log(tableData)
   })
 }
 const select=()=>{
   request.post("bed-info/select",form).then(res=>{
-    console.log(res)
-    tableData.value=res.data;
+    if(form.name==''&&form.bedNumber==''){
+      getAll()
+    }
+    else {
+      tableData.value=res.data;
+      total.value=res.data.length
+    }
   })
 }
 // 显示当前时间
@@ -90,12 +98,13 @@ const cancelDetail = () => {
 const size = ref('large')
 const background = ref(true)
 const disabled = ref(false)
+const pageSize4 = ref(5)
 const handleSizeChange = (val) => {
   form.pageSize=val
   console.log(form.pageSize)
   request.post("bed-info/myListPage",form).then(res=>{
-    console.log(res.data)
-    // tableData.value=res.data
+    tableData.value=res.data
+    console.log(tableData)
   })
 }
 const handleCurrentChange = (val) => {
@@ -103,7 +112,7 @@ const handleCurrentChange = (val) => {
   console.log(form.pageNum)
   request.post("bed-info/myListPage",form).then(res=>{
     console.log(111)
-    console.log(res.data)
+    // console.log(res.data)
     tableData.value=res.data
     console.log(tableData)
   })
@@ -336,7 +345,7 @@ const rules = ({
           <el-table-column property="floorNumber" label="楼号" width="120"/>
           <el-table-column property="roomNumber" label="房间号" width="120"/>
           <el-table-column property="bedNumber" label="床位号" width="120"/>
-          <el-table-column fixed="right" label="Operations" min-width="120">
+          <el-table-column fixed="right" label="操作" min-width="120">
             <template #default="scope">
               <el-button link type="success" size="small" @click="detail(scope.$index,scope.row)">
                 <span style="font-weight: bolder">详 情</span>
@@ -434,8 +443,8 @@ const rules = ({
         <div style="margin-top: 10px">
           <el-pagination
               v-model:current-page="form.pageNum"
-              v-model:page-size="form.pageSize"
-              :page-sizes="[5, 10, 15, 20]"
+              v-model:page-size="pageSize4"
+              :page-sizes="[5, 15, 20, 25]"
               :size="size"
               :disabled="disabled"
               :background="background"
@@ -550,5 +559,6 @@ const rules = ({
 </template>
 
 <style scoped>
+
 
 </style>

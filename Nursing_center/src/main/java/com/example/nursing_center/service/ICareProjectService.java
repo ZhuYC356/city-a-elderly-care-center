@@ -1,5 +1,7 @@
 package com.example.nursing_center.service;
 
+import com.example.nursing_center.common.Result;
+import com.example.nursing_center.controller.Result.Form;
 import com.example.nursing_center.pojo.CareProject;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -13,4 +15,9 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface ICareProjectService extends IService<CareProject> {
 
+    Result getData();
+
+    Result myListPage(Form form);
+
+    Result select(Form form);
 }
