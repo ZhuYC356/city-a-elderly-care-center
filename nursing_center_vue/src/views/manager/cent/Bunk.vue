@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="card" style="padding: 15px;padding-left: 30px">
+    <div class="card">
       <div>
         <hr style="margin: 10px">
         <el-icon>
