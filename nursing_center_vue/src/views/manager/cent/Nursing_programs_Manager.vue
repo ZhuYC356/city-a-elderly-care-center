@@ -1,7 +1,7 @@
 <script setup>
 import {ref,reactive,onMounted} from "vue";
 import request from "@/utils/request";
-import {success,fail} from "@/utils/success"
+import {success,error} from "@/utils/success"
 const form=reactive({
   projectName:"",
   maxPrice:'',
@@ -47,12 +47,27 @@ const clearAll=()=>{
 }
 const rules = ({
   minPrice: [
-    { min: form.maxPrice, max: 5, message: '最小值不能大于最大值', trigger: 'blur' },
+    { min: form.maxPrice, max: 5,required: true, message: '最小值不能大于最大值', trigger: 'blur' },
     // { type: 'number', message: '该内容需要填写数字', trigger: 'blur' },
     { Range: true ,min:1,max: form.maxPrice, message: '大于最大值', trigger: 'blur' },
   ],
   maxPrice: [
-    { min: form.minPrice,  message: '最小值不能大于最大值', trigger: 'blur' },
+    { min: form.minPrice,  message: '该值必须大于最低项目价格', trigger: 'blur' },
+  ],
+  projectName: [
+    { required: true,  message: '项目名称不能为空', trigger: 'blur' },
+  ],
+  price: [
+    { required: true,  message: '项目价格不能为空', trigger: 'blur' },
+  ],
+  serviceDuration: [
+    { required: true,  message: '项目服务时长不能为空', trigger: 'blur' },
+  ],
+  frequency: [
+    { required: true,  message: '项目频率不能为空', trigger: 'blur' },
+  ],
+  nurseLevel: [
+    { required: true,  message: '项目服务等级不能为空', trigger: 'blur' },
   ],
 })
 const selectable = (row, index) => {
@@ -76,13 +91,40 @@ const drawer=ref(false)
 const toggleDrawer=()=>{
     drawer.value=!drawer.value
 }
+const addFormRef=ref(null)
 const addForm=reactive({
   projectName:'',
-  projectPrice:'',
-  projectType:'',
-  projectDescribe:'',
-  projectStatus:''
+  description:'',
+  serviceDuration:'',
+  price:'',
+  frequency:'',
+  nurseLevel:''
 })
+const addProject=()=>{
+  addFormRef.value.validate((valid)=>{
+    if(valid){
+      console.log(addForm.serviceDuration)
+      request.post("care-project/addProject",addForm).then(res=>{
+        success()
+        drawer.value=false
+      }).catch(err=>{
+        error()
+      })
+    }
+    else {
+      error()
+    }
+  })
+
+}
+const clear=()=>{
+  addForm.description=''
+  addForm.serviceDuration=''
+  addForm.price=''
+  addForm.frequency=''
+  addForm.nurseLevel=''
+  addForm.projectName=''
+}
 </script>
 
 <template>
@@ -96,7 +138,7 @@ const addForm=reactive({
       </div>
       <div style="margin-top: 15px;margin-left: 10px">
         <el-form :inline="true" :model="form" :rules="rules" ref="formRef">
-          <el-form-item style="margin-right: 20px" prop="projectName">
+          <el-form-item style="margin-right: 20px">
             <el-input v-model="form.projectName" placeholder="请填写项目名称" clearable>
               <template #prefix>
                 <i class="el-icon-box" style="font-size: 15px;margin-left: 3px" ></i>
@@ -133,10 +175,39 @@ const addForm=reactive({
       <el-drawer title="I am the title" :with-header="false" :visible.sync="drawer">
         <div style="margin: 15px">
           <span style="font-weight: bolder;font-size: 15px">添加新项目</span>
-          <el-form :model="addForm" label-width="auto" style="max-width: 600px;margin-top: 15px">
-
-            <el-button link type="success" size="small" @click="addBed" style="margin-left: 20px">
+          <el-form :model="addForm" label-width="auto" style="max-width: 600px;margin-top: 15px" :rules="rules" ref="addFormRef">
+            <el-form-item label="项目名称" prop="projectName">
+              <el-input v-model="addForm.projectName" placeholder="请输入项目名称" class="myInput"/>
+            </el-form-item>
+            <el-form-item label="项目描述">
+              <el-input v-model="addForm.description" type="textarea" class="myInput" placeholder="请填写项目描述"/>
+            </el-form-item>
+            <el-form-item label="服务时长" prop="serviceDuration">
+            <el-time-picker v-model="addForm.serviceDuration"  placeholder="请填写项目持续时间"  class="myInput"/>
+            </el-form-item>
+            <el-form-item label="服务价格" prop="price" >
+              <el-input v-model="addForm.price" placeholder="请输入项目价格（元）" class="myInput"/>
+            </el-form-item>
+            <el-form-item label="服务频率" prop="frequency" >
+              <el-select v-model="addForm.frequency" placeholder="请选择服务频率">
+                <el-option label="每天" value="W" />
+                <el-option label="每月" value="D" />
+                <el-option label="每周" value="M" />
+              </el-select>
+            </el-form-item>
+            <el-form-item label="护理等级" style="margin-bottom: 25px" prop="nurseLevel">
+              <el-select v-model="addForm.nurseLevel" placeholder="请选择服务等级">
+                <el-option label="最高级" value="1" />
+                <el-option label="高级" value="2" />
+                <el-option label="中级" value="3" />
+                <el-option label="低级" value="4" />
+              </el-select>
+            </el-form-item>
+            <el-button link type="success" size="small" @click="addProject" style="margin-left: 5px">
               <span style="font-weight: bolder">提 交</span>
+            </el-button>
+            <el-button link type="danger" size="small" @click="clear" style="margin-left: 20px">
+              <span style="font-weight: bolder">清 空</span>
             </el-button>
           </el-form>
         </div>

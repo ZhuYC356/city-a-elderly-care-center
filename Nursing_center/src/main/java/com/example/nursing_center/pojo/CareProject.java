@@ -3,6 +3,8 @@ package com.example.nursing_center.pojo;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -40,6 +42,7 @@ public class CareProject implements Serializable {
     /**
      * 服务时长
      */
+//    @JsonFormat(timezone="GMT+8", pattern = "HH:mm:ss")
     private LocalTime serviceDuration;
 
     /**

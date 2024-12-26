@@ -3,6 +3,7 @@ package com.example.nursing_center.controller;
 
 import com.example.nursing_center.common.Result;
 import com.example.nursing_center.controller.Result.Form;
+import com.example.nursing_center.pojo.CareProject;
 import com.example.nursing_center.service.impl.CareProjectServiceImpl;
 import jakarta.annotation.Resource;
 import org.apache.ibatis.annotations.Param;
@@ -40,4 +41,11 @@ public class CareProjectController {
         System.out.println(projectId);
         return careProjectService.changeActive(isActive,projectId);
     }
+    @PostMapping("/addProject")
+    public Result addProject(@RequestBody CareProject careProject){
+        System.out.println(careProject);
+//        return careProjectService.save(careProject);
+        return Result.success();
+    }
+
 }
