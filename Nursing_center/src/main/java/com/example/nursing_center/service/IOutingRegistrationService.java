@@ -1,5 +1,7 @@
 package com.example.nursing_center.service;
 
+import com.example.nursing_center.common.Result;
+import com.example.nursing_center.controller.request.Info;
 import com.example.nursing_center.pojo.OutingRegistration;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -17,4 +19,6 @@ import java.util.List;
 public interface IOutingRegistrationService extends IService<OutingRegistration> {
 
     List<OutingRegistration> getByCondition(String name, Integer bedNumber, LocalDateTime checkInTime);
+
+    Result addInfo(Info info);
 }

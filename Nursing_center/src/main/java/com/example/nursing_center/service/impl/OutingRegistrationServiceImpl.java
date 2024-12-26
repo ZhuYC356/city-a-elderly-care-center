@@ -1,5 +1,8 @@
 package com.example.nursing_center.service.impl;
 
+import cn.hutool.core.date.DateTime;
+import com.example.nursing_center.common.Result;
+import com.example.nursing_center.controller.request.Info;
 import com.example.nursing_center.pojo.OutingRegistration;
 import com.example.nursing_center.mapper.OutingRegistrationMapper;
 import com.example.nursing_center.service.IOutingRegistrationService;
@@ -26,5 +29,13 @@ public class OutingRegistrationServiceImpl extends ServiceImpl<OutingRegistratio
     @Override
     public List<OutingRegistration> getByCondition(String name, Integer bedNumber, LocalDateTime checkInTime) {
         return outingRegistrationMapper.getByCondition(name, bedNumber, checkInTime);
+    }
+
+    @Override
+    public Result addInfo(Info info) {
+        info.setOutingTime(DateTime.now());
+//      todo 添加
+        return Result.success(outingRegistrationMapper.addInfo(info));
+//        return Result.success(1);
     }
 }

@@ -272,20 +272,20 @@
     <!--  外出申请-->
     <el-dialog :visible.sync="dialogFormVisible2" title="外出登记申请" width="500">
       <el-form :model="outingRegistration">
-        <el-form-item label="身份证号:" :label-width="formLabelWidth" @blur="getElderlyInfoByIdNumber()">
-          <el-input v-model="outingRegistration.idNumber" autocomplete="off"/>
+        <el-form-item label="身份证号:" :label-width="formLabelWidth">
+          <el-input v-model="outingRegistration.idNumber" autocomplete="off" @blur="getElderlyInfoByIdNumber()"/>
         </el-form-item>
-        <el-form-item label="姓名:" :label-width="formLabelWidth" disabled >
-          <el-input v-model="outingRegistration.name" autocomplete="off"/>
-        </el-form-item>
-        <el-form-item label="家庭联系电话:" :label-width="formLabelWidth">
-          <el-input v-model="outingRegistration.familyContactInfo" autocomplete="off"/>
+        <el-form-item label="姓名:" :label-width="formLabelWidth">
+          <el-input v-model="outingRegistration.name" autocomplete="off" disabled/>
         </el-form-item>
         <el-form-item label="外出原因:" :label-width="formLabelWidth">
           <el-input v-model="outingRegistration.outingReason" autocomplete="off"/>
         </el-form-item>
-        <el-form-item label="外出目的地:" :label-width="formLabelWidth">
+        <el-form-item label="外出目的:" :label-width="formLabelWidth">
           <el-input v-model="outingRegistration.purpose" autocomplete="off"/>
+        </el-form-item>
+        <el-form-item label="外出目的地:" :label-width="formLabelWidth">
+          <el-input v-model="outingRegistration.destination" autocomplete="off"/>
         </el-form-item>
         <el-form-item label="外出陪同人:" :label-width="formLabelWidth">
           <el-input v-model="outingRegistration.accompanyingPerson" autocomplete="off"/>
@@ -295,7 +295,7 @@
         </el-form-item>
         <el-form-item :label-width="formLabelWidth" label="外出时间:">
           <el-date-picker
-              v-model="outingRegistration.date"
+              v-model="outingRegistration.outingDate"
               type="date"
               placeholder="请选择外出时间:"
               clearable
@@ -506,12 +506,12 @@ export default {
     })
   },
   methods: {
-    getElderlyInfoByIdNumber(){
-      if (this.outingRegistration.idNumber === ''){
+    getElderlyInfoByIdNumber() {
+      if (this.outingRegistration.idNumber === '') {
         this.$message.error('请输入身份证号')
       } else {
         this.$request.get('/elderly-info/getElderlyInfoByIdNumber/' + this.outingRegistration.idNumber).then(res => {
-          if (res.data === null){
+          if (res.data === null) {
             this.$message.error('该老人不存在')
           } else {
             this.$message.success('该老人存在')
@@ -521,7 +521,6 @@ export default {
           }
         })
       }
-    //   todo 获取老人时间
     },
     getRoomList(sing) {
       if (sing === 1) {
@@ -626,13 +625,31 @@ export default {
         location.reload()
       }
     },
-    submitOutingRegistration(){
-    //   todo 提交外出申请
-      console.log(this.outingRegistration)
+    submitOutingRegistration() {
+      if (this.outingRegistration.outingReason === '' ||
+          this.outingRegistration.purpose === '' ||
+          this.outingRegistration.outingDate === '' ||
+          this.outingRegistration.accompanyingPerson === '' ||
+          this.outingRegistration.remarks === '' ||
+          this.outingRegistration.contactInfo === '' ||
+          this.outingRegistration.elderlyId === '' ||
+          this.outingRegistration.destination === ''
+      ) {
+        this.$message.error('请填写完整信息')
+      } else {
+        this.$request.post('/outing-registration/addInfo', this.outingRegistration).then(res => {
+          if (res.data === 1) {
+            this.$message.success('添加成功')
+          } else {
+            this.$message.error(res.msg)
+          }
+        })
+        this.dialogFormVisible2 = false
+      }
     },
     select() {
       if (this.selectFrom.name === '' && this.selectFrom.bedNumber === '' && this.selectFrom.date === '') {
-        alert('请输入查询条件')
+        this.$message.error('请填写搜索信息')
       } else {
         this.$request.post('/elderly-info/selectByFrom', this.selectFrom).then(res => {
           console.log(res)
@@ -729,13 +746,13 @@ export default {
         familyContactInfo: '',
         elderlyId: '',
         roomNumber: '',
-        outDate: '',
+        outingDate: '',
         outingReason: '',
-        destruction: '',
+        destination: '',
         purpose: '',
         accompanyingPerson: '',
         contactInfo: '',
-        remarks:''
+        remarks: ''
       },
       checkOutRequests: {
         bedId: '',

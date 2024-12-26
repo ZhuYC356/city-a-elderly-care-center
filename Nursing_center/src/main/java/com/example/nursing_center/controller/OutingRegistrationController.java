@@ -1,5 +1,7 @@
 package com.example.nursing_center.controller;
 
+import com.example.nursing_center.common.Result;
+import com.example.nursing_center.controller.request.Info;
 import com.example.nursing_center.pojo.OutingRegistration;
 import com.example.nursing_center.service.IOutingRegistrationService;
 import com.example.nursing_center.util.ExcelUtils;
@@ -86,5 +88,15 @@ public class OutingRegistrationController {
         return iOutingRegistrationService.getByCondition(name, bedNumber, checkInTime);
     }
 
+    /**
+     * 添加数据
+     * @param info
+     * @return
+     */
+    @PostMapping("/addInfo")
+    public Result addInfo(@RequestBody Info info) {
+        System.out.println(info);
+        return iOutingRegistrationService.addInfo(info);
+    }
 
 }

@@ -48,6 +48,7 @@
     <select id="getElderlyInfoByRoomAndBed" resultType="com.example.nursing_center.controller.request.Info">
         select elderly_info.elderly_id,
         name,
+        elderly_info.bed_id,
         id_number,
         age,
         gender,

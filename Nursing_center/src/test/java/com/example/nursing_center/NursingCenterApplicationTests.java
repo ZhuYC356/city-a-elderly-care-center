@@ -1,5 +1,6 @@
 package com.example.nursing_center;
 
+import cn.hutool.core.date.DateTime;
 import cn.hutool.json.JSONUtil;
 import com.example.nursing_center.common.Result;
 import com.example.nursing_center.controller.request.Info;
@@ -20,18 +21,18 @@ class NursingCenterApplicationTests {
 
     @Test
     void contextLoads() {
-        BedElderlyAssociation user=new BedElderlyAssociation();
+        BedElderlyAssociation user = new BedElderlyAssociation();
         user.setAssociationId(1);
         user.setBedId(1);
         user.setElderlyId(1);
-        String str= JSONUtil.toJsonStr(user);
+        String str = JSONUtil.toJsonStr(user);
         System.out.println(str);
     }
 
 
     @Test
     void back_add() {
-        ElderlyInfo user=new ElderlyInfo();
+        ElderlyInfo user = new ElderlyInfo();
         user.setElderlyId(1);
         user.setName("小明");
         user.setGender("男");
@@ -42,12 +43,13 @@ class NursingCenterApplicationTests {
         user.setContactInfo("123456789");
         user.setCheckInTime(LocalDateTime.now());
         user.setCheckOutTime(LocalDateTime.now());
-        String str= JSONUtil.toJsonStr(user);
+        String str = JSONUtil.toJsonStr(user);
         System.out.println(str);
     }
+
     @Test
-    public void test1(){
-        Info info=new Info();
+    public void test1() {
+        Info info = new Info();
         info.setName("小明");
         info.setGender("M");
         info.setAge(89);
@@ -61,14 +63,30 @@ class NursingCenterApplicationTests {
         String str = JSONUtil.toJsonStr(info);
         System.out.println(str);
     }
+
     @Test
-    public void test2(){
-        Info info=new Info();
+    public void test2() {
+        Info info = new Info();
         info.setElderlyId(13);
         info.setBedId(1);
         info.setPhoneNumber("18337049186");
         info.setCheckoutReason("出去玩");
         info.setCheckoutType(1);
+        String str = JSONUtil.toJsonStr(info);
+        System.out.println(str);
+    }
+
+    @Test
+    public void test3() {
+        Info info = new Info();
+        info.setElderlyId(13);
+        info.setOutingReason("1212");
+        info.setPurpose("1212");
+        info.setAccompanyingPerson("1212");
+        info.setContactInfo("1212");
+        info.setRemarks("1212");
+        info.setOutingDate(DateTime.now());
+        info.setDestination("12122");
         String str = JSONUtil.toJsonStr(info);
         System.out.println(str);
     }

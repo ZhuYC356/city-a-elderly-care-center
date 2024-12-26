@@ -75,8 +75,10 @@ public class BedInfoServiceImpl extends ServiceImpl<BedInfoMapper, BedInfo> impl
     @Override
     public Result getAllBedByRoom(Integer roomNumber, Integer sing) {
         if (sing == 1) {
+//            sing=1 代表的是查询未入住的
             return Result.success(bedInfoMapper.getAllBedByRoom(roomNumber));
         } else {
+//            sing =2 代表的是查询已经入住的
             return Result.success(bedInfoMapper.selectAllBedByRoomalready(roomNumber));
         }
 

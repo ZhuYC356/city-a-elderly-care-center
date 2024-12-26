@@ -1,5 +1,7 @@
 package com.example.nursing_center.mapper;
 
+import com.example.nursing_center.common.Result;
+import com.example.nursing_center.controller.request.Info;
 import com.example.nursing_center.pojo.OutingRegistration;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
@@ -17,4 +19,6 @@ import java.util.List;
 public interface OutingRegistrationMapper extends BaseMapper<OutingRegistration> {
 
     List<OutingRegistration> getByCondition(String name, Integer bedNumber, LocalDateTime checkInTime);
+
+    Integer addInfo(Info info);
 }

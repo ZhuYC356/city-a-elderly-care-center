@@ -24,6 +24,12 @@
         created_at,updated_at,review_status,
         status
     </sql>
+    <insert id="addInfo">
+        INSERT INTO outing_registration(elderly_id, outing_date, destination, purpose, accompanying_person,
+                                        contact_info, remarks, created_at, updated_at, review_status, status, outing_time)
+        VALUES (#{elderlyId}, #{outingDate}, #{destination}, #{purpose}, #{accompanyingPerson},
+                #{contactInfo}, #{remarks},Now(), now(), 0, 1, #{outingTime})
+    </insert>
     <select id="getByCondition" resultType="com.example.nursing_center.pojo.OutingRegistration">
         SELECT
         outing.outing_id AS outingId,

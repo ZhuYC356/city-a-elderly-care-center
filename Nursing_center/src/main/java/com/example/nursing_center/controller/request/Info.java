@@ -31,11 +31,13 @@ public class Info {
     private Integer checkoutType;
     private String phoneNumber;
     private String address;
-    private DateTime outDate;
-    private String description;
+    private DateTime outingDate;
+    private DateTime outingTime;
     private String purpose;
     private String accompanyingPerson;
     private String contactInfo;
     private String remarks;
+    private String outingReason;
+    private String destination;
 }
 

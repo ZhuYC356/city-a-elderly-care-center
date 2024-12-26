@@ -60,7 +60,7 @@ const selectable = (row, index) => {
 }
 const rowClass = ({row, index}) => {
   if (row.isActive === false) {
-    return { "background-color": 'rgb(245,151,148)'}
+    return { "background-color": 'rgb(241,241,241)',"color":'rgb(175,175,175)'}
   }
 }
 const changeSwitch=(index,row)=>{
