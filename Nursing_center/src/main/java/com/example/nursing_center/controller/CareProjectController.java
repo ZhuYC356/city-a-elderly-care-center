@@ -5,6 +5,7 @@ import com.example.nursing_center.common.Result;
 import com.example.nursing_center.controller.Result.Form;
 import com.example.nursing_center.service.impl.CareProjectServiceImpl;
 import jakarta.annotation.Resource;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -33,5 +34,10 @@ public class CareProjectController {
         System.out.println(form);
         return careProjectService.select(form);
     }
-
+    @GetMapping("/changeActive/{isActive}/{projectId}")
+    public Result changeActive(@PathVariable("isActive") Boolean isActive,@PathVariable("projectId") Integer projectId){
+        System.out.println(isActive);
+        System.out.println(projectId);
+        return careProjectService.changeActive(isActive,projectId);
+    }
 }

@@ -1,6 +1,7 @@
 <script setup>
 import {ref,reactive,onMounted} from "vue";
 import request from "@/utils/request";
+import {success,fail} from "@/utils/success"
 const form=reactive({
   projectName:"",
   maxPrice:'',
@@ -55,8 +56,33 @@ const rules = ({
   ],
 })
 const selectable = (row, index) => {
-  return true
+  return row.isActive
 }
+const rowClass = ({row, index}) => {
+  if (row.isActive === false) {
+    return { "background-color": 'rgb(245,151,148)'}
+  }
+}
+const changeSwitch=(index,row)=>{
+  console.log(row)
+  request.get("care-project/changeActive/"+row.isActive+"/"+row.projectId).then(res=>{
+    success()
+  }).catch(err=>{
+      fail()
+  })
+  rowClass({row, index})
+}
+const drawer=ref(false)
+const toggleDrawer=()=>{
+    drawer.value=!drawer.value
+}
+const addForm=reactive({
+  projectName:'',
+  projectPrice:'',
+  projectType:'',
+  projectDescribe:'',
+  projectStatus:''
+})
 </script>
 
 <template>
@@ -100,15 +126,28 @@ const selectable = (row, index) => {
         </el-form>
       </div>
       <div>
-        <el-button type="primary" style="margin-left: 10px" @click="toggle"><span
+        <el-button type="primary" style="margin-left: 10px" @click="toggleDrawer"><span
             style="font-weight: bolder">添加新项目</span></el-button>
-
-
       </div>
 
+      <el-drawer title="I am the title" :with-header="false" :visible.sync="drawer">
+        <div style="margin: 15px">
+          <span style="font-weight: bolder;font-size: 15px">添加新项目</span>
+          <el-form :model="addForm" label-width="auto" style="max-width: 600px;margin-top: 15px">
+
+            <el-button link type="success" size="small" @click="addBed" style="margin-left: 20px">
+              <span style="font-weight: bolder">提 交</span>
+            </el-button>
+          </el-form>
+        </div>
+        <div>
+        </div>
+      </el-drawer>
+
+
       <div style="margin-top: 5px">
-        <el-table :data="tableData" style="width: 100%;" height="390" :stripe="true"
-                  :header-cell-style="{background:'#f3f6fd',color:'#555'}">
+        <el-table :data="tableData" style="width: 100%;" height="390"
+                  :header-cell-style="{background:'#f3f6fd',color:'#555'}" :row-style="rowClass" >
           <el-table-column type="selection" width="55" :selectable="selectable"/>
           <el-table-column property="projectName" label="项目名称" width="120"/>
           <el-table-column property="description" label="项目描述" width="130"/>
@@ -116,12 +155,9 @@ const selectable = (row, index) => {
           <el-table-column property="price" label="服务价格" width="120"/>
           <el-table-column property="frequency" label="服务频率" width="120"/>
           <el-table-column property="nurseLevel" label="护理等级" width="120"/>
-          <el-table-column fixed="right" label="状态" min-width="120">
+          <el-table-column fixed="right" label="状态(启用/停用)" min-width="120">
             <template #default="scope">
-              <el-button link type="success" size="small" @click="start(scope.$index,scope.row)"><span style="font-weight: bolder">启 用</span>
-              </el-button>
-              <el-button link type="danger" size="small" @click="stop(scope.$index,scope.row)"><span style="font-weight: bolder">停 用</span>
-              </el-button>
+              <el-switch v-model="scope.row.isActive" @change="changeSwitch(scope.$index,scope.row)"/>
             </template>
           </el-table-column>
           <el-table-column fixed="right" label="操作" min-width="120">
@@ -133,6 +169,7 @@ const selectable = (row, index) => {
             </template>
           </el-table-column>
         </el-table>
+
 
 <!--        <el-dialog  width="50%" :visible.sync="dialogFormVisible" :append-to-body="true">-->
 <!--          <div>-->
@@ -238,5 +275,6 @@ const selectable = (row, index) => {
 </template>
 
 <style scoped>
+
 
 </style>

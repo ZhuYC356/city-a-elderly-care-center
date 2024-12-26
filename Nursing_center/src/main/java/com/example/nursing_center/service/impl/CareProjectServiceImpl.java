@@ -38,4 +38,16 @@ public class CareProjectServiceImpl extends ServiceImpl<CareProjectMapper, CareP
         form.setPageNum((form.getPageNum() - 1) * form.getPageSize());
         return Result.success(careProjectMapper.select(form));
     }
+    int active=0;
+    @Override
+    public Result changeActive(Boolean isActive, Integer projectId) {
+        if(isActive){
+            active=1;
+        }
+        else{
+            active=0;
+        }
+        System.out.println(active);
+        return Result.success(careProjectMapper.changeActive(active,projectId));
+    }
 }

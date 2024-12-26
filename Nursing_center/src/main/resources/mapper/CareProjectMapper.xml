@@ -23,5 +23,10 @@
         </where>
         limit #{pageNum},#{pageSize}
     </select>
+    <update id="changeActive">
+        UPDATE care_project
+        SET is_active = #{active}
+        WHERE project_id = #{projectId}
+    </update>
 
 </mapper>

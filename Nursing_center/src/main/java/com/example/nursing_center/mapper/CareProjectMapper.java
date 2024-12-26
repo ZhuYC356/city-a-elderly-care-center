@@ -21,4 +21,6 @@ public interface CareProjectMapper extends BaseMapper<CareProject> {
     List<CareProject> myListPage(Form form);
 
     List<CareProject> select(Form form);
+
+    int changeActive(int active, Integer projectId);
 }

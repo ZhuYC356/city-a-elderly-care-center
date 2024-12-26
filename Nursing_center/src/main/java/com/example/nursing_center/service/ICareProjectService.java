@@ -20,4 +20,6 @@ public interface ICareProjectService extends IService<CareProject> {
     Result myListPage(Form form);
 
     Result select(Form form);
+
+    Result changeActive(Boolean isActive, Integer projectId);
 }
