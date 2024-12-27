@@ -10,18 +10,20 @@
       <hr style="margin: 10px">
     </div>
 
-    <el-table :data="tableData" stripe :border="false" style="width: 100%">
+    <el-table :data="tableData" stripe :border="false" style="width: 100%"
+              max-height="650">
       <el-table-column type="expand">
         <template #default="props">
           <div m="4" style="width: 90%;margin: auto;">
             <h2>护理服务项目</h2>
             <el-table :data="props.row.family" :border="true"
-                      :row-class-name="tableRowClassName">
+                      :row-class-name="tableRowClassName"
+                      highlight-current-row>
               <el-table-column label="项目名称" prop="projectName" />
               <el-table-column label="护理项目描述" prop="description" />
               <el-table-column label="项目服务状态" prop="careStatus" />
-              <el-table-column label="服务到期时间" prop="careEndTime" />
-              <el-table-column label="价格" prop="price" />
+              <el-table-column sortable label="服务到期时间" prop="careEndTime" />
+              <el-table-column sortable label="价格" prop="price" />
               <el-table-column label="操作">
                 <el-button style="color: #3f9dfd">续费</el-button>
                 <el-button type="danger" plain>移除</el-button>
