@@ -9,3 +9,6 @@ body {
 a {
     text-decoration: none;
 }
+.myInput {
+    width: 250px !important;
+}

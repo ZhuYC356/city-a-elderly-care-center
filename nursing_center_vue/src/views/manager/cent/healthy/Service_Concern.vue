@@ -8,13 +8,9 @@
       <i class="el-icon-notebook-1" style="margin-left: 30px;font-size: 20px"></i>
       <span style="margin-left: 5px;font-size: 20px;font-weight: bolder">服务关注</span>
       <hr style="margin: 10px">
-
-
-
       <el-table :data="tableData" :border="false" style="width: 100%">
 
         <el-table-column type="expand">
-
           <template #default="props">
             <div >
               <p >State: {{ props.row.state }}</p>

@@ -275,18 +275,18 @@ const exportToExcel = () => {
           <el-table-column property="elderlyId" label="ID" width="80"/>
           <el-table-column property="name" label="姓名" width="120"/>
 <!--          <el-table-column property="checkInDate" label="入住日期" width="120"/>-->
-          <el-table-column property="checkOutDate" label="退住日期" width="150"/>
+          <el-table-column property="checkOutDate" label="退住日期" width="180"/>
           <el-table-column property="bedId" label="床位号" width="100"/>
           <el-table-column property="checkoutType" label="退住类型" width="100"/>
           <el-table-column property="approvalStatus" label="审核状态" width="100"/>
           <el-table-column property="approvalPerson" label="审批人" width="120"/>
-          <el-table-column property="approvalTime" label="审批时间" width="150"/>
+          <el-table-column property="approvalTime" label="审批时间" width="180"/>
           <el-table-column fixed="right" label="操作" min-width="120">
             <template #default="scope">
-              <el-button link type="success" size="small" @click="handleAgree(scope.$index, scope.row)">
+              <el-button link type="success" size="small" plain @click="handleAgree(scope.$index, scope.row)">
                 <span style="font-weight: bolder">同意</span>
               </el-button>
-              <el-button link type="primary" size="small" @click="handleRevoke(scope.$index, scope.row)">
+              <el-button link type="primary" size="small" plain @click="handleRevoke(scope.$index, scope.row)">
                 <span style="font-weight: bolder">撤销</span>
               </el-button>
             </template>
@@ -294,7 +294,8 @@ const exportToExcel = () => {
         </el-table>
 
         <!--分页-->
-        <div style="margin-top: 10px">
+        <div >
+<!--          style="margin-top: 10px"-->
           <el-pagination
               v-model:current-page="currentPage4"
               v-model:page-size="pageSize4"

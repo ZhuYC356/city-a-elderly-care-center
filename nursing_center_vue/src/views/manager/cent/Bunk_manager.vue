@@ -347,10 +347,10 @@ const rules = ({
           <el-table-column property="bedNumber" label="床位号" width="120"/>
           <el-table-column fixed="right" label="操作" min-width="120">
             <template #default="scope">
-              <el-button link type="success" size="small" @click="detail(scope.$index,scope.row)">
+              <el-button link type="success" plain size="small" @click="detail(scope.$index,scope.row)">
                 <span style="font-weight: bolder">详 情</span>
               </el-button>
-              <el-button link type="primary" size="small" @click="update(scope.$index,scope.row)"><span style="font-weight: bolder">修 改</span>
+              <el-button link type="primary" plain size="small" @click="update(scope.$index,scope.row)"><span style="font-weight: bolder">修 改</span>
               </el-button>
               <el-dialog  width="50%" :visible.sync="dialogFormVisible" :append-to-body="true">
                 <div>
