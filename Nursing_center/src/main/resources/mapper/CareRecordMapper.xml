@@ -58,6 +58,7 @@
             ei.name AS elderlyName,
             ei.id_number AS idNumber,
             cp.project_name AS projectName,
+            cp.nurse_level AS nurseLevel,
             ni.name AS nurseName,
             cr.care_status AS careStatus
         FROM

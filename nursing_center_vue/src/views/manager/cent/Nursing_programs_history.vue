@@ -93,10 +93,6 @@ const viewDetails = (index, row) => {
             <strong>护理等级:</strong> ${record.nurseLevel || '未提供'}<br>
             <strong>护理人:</strong> ${record.nurseName || '未提供'}<br>
             <strong>护理状态:</strong> ${record.careStatus || '未提供'}<br>
-            <strong>护理开始时间:</strong> ${record.careStartTime || '未提供'}<br>
-            <strong>护理结束时间:</strong> ${record.careEndTime || '未提供'}<br>
-            <strong>护理内容:</strong> ${record.careContent || '未提供'}<br>
-            <strong>备注:</strong> ${record.remarks || '未提供'}<br>
           </p>
         `).join('<hr>');  // 拼接每一条记录的详细信息，分隔使用 <hr> 标签
           detailDialogVisible.value = true;  // 显示详情弹窗
