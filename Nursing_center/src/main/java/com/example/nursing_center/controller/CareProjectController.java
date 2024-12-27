@@ -22,29 +22,33 @@ import org.springframework.web.bind.annotation.*;
 public class CareProjectController {
     @Resource
     private CareProjectServiceImpl careProjectService;
+
     @GetMapping("/getData")
-    public Result getData(){
+    public Result getData() {
         return careProjectService.getData();
     }
+
     @PostMapping("/myListPage")
-    public Result myListPage(@RequestBody Form form){
+    public Result myListPage(@RequestBody Form form) {
         return careProjectService.myListPage(form);
     }
+
     @PostMapping("/select")
-    public Result select(@RequestBody Form form){
+    public Result select(@RequestBody Form form) {
         System.out.println(form);
         return careProjectService.select(form);
     }
+
     @GetMapping("/changeActive/{isActive}/{projectId}")
-    public Result changeActive(@PathVariable("isActive") Boolean isActive,@PathVariable("projectId") Integer projectId){
+    public Result changeActive(@PathVariable("isActive") Boolean isActive, @PathVariable("projectId") Integer projectId) {
         System.out.println(isActive);
         System.out.println(projectId);
-        return careProjectService.changeActive(isActive,projectId);
+        return careProjectService.changeActive(isActive, projectId);
     }
+
     @PostMapping("/addProject")
-    public Result addProject(@RequestBody CareProject careProject){
+    public Result addProject(@RequestBody CareProject careProject) {
         System.out.println(careProject);
-//        return careProjectService.save(careProject);
         return Result.success();
     }
 

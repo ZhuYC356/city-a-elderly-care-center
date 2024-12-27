@@ -39,6 +39,7 @@ const routes = [
       { path: 'service_Concern', name: 'Service_Concern', meta: { name: '服务关注' }, component: () => import('../views/manager/cent/healthy/Service_Concern.vue') },
       { path: 'assign_caregiver', name: 'Assign_caregiver', meta: { name: '为老人分配护工' }, component: () => import('../views/manager/cent/healthy/Assign_caregiver.vue') },
       { path: 'financial_management', name: 'Financial_management', meta: { name: '财务管理' }, component: () => import('../views/manager/cent/Financial_management.vue') },
+      { path: 'administrator_information', name: 'Administrator_information', meta: { name: '管理员信息' }, component: () => import('../views/manager/cent/Administrator_information.vue') },
       {
         path: 'diagnosis',
         name: 'Diagnosis',

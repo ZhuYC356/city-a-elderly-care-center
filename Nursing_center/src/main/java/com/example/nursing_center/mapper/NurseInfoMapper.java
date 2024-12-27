@@ -19,6 +19,10 @@ import java.util.List;
 public interface NurseInfoMapper extends BaseMapper<NurseInfo> {
 
     List<NurseInfo> getAll();
+
+    Integer addInfo(NurseInfo nurseInfo);
+
+    NurseInfo getAllById(Integer nurseId);
     // 获取所有护工信息，支持模糊查询
     List<AssignNurse> findAllNurses(@Param("nurseName") String nurseName);
 

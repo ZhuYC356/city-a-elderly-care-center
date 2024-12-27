@@ -1,7 +1,11 @@
 package com.example.nursing_center.service;
 
+import com.example.nursing_center.common.Result;
+import com.example.nursing_center.controller.Result.Money;
 import com.example.nursing_center.pojo.Financial;
 import com.baomidou.mybatisplus.extension.service.IService;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +17,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IFinancialService extends IService<Financial> {
 
+    List<Money> getAll();
 }

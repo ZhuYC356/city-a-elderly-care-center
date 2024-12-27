@@ -17,8 +17,15 @@
         INSERT INTO admin (username, password, name,avatar,role,email)
         VALUES (#{username}, #{password},#{name},#{avatar},#{role},#{email})
     </insert>
+    <insert id="add">
+        INSERT INTO admin (username, password, name,role,email,phone)
+        VALUES (#{username}, #{password},#{name},#{role},#{email},#{phone})
+    </insert>
     <select id="Login" resultType="com.example.nursing_center.pojo.Admin">
         select * from admin where username=#{username} and password=#{password}
+    </select>
+    <select id="selectByIdCount" resultType="java.lang.Integer">
+        select count(*) from admin where username=#{username}
     </select>
 </mapper>
 

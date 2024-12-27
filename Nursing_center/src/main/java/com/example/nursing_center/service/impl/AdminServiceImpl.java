@@ -1,10 +1,13 @@
 package com.example.nursing_center.service.impl;
 
+import com.example.nursing_center.common.Result;
+import com.example.nursing_center.common.enums.ResultCodeEnum;
 import com.example.nursing_center.controller.Result.Login;
 import com.example.nursing_center.pojo.Admin;
 import com.example.nursing_center.mapper.AdminMapper;
 import com.example.nursing_center.service.IAdminService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.example.nursing_center.util.MD5Util;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
@@ -30,5 +33,15 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
     @Override
     public List<Admin> Login(Login login) {
         return adminMapper.Login(login);
+    }
+
+    @Override
+    public Result add(Admin admin) {
+        if (adminMapper.selectByIdCount(admin.getUsername())!=0){
+            return Result.error(ResultCodeEnum.USER_EXIST_ERROR);
+        }
+        admin.setPassword(MD5Util.encrypt(admin.getPassword()));
+        admin.setRole("ADMIN");
+        return Result.success(adminMapper.add(admin));
     }
 }

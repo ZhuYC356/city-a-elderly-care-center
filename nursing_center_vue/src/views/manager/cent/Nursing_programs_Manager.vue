@@ -47,7 +47,7 @@ const clearAll=()=>{
 }
 const rules = ({
   minPrice: [
-    { min: form.maxPrice, max: 5,required: true, message: '最小值不能大于最大值', trigger: 'blur' },
+    // { min: form.maxPrice, max: 5,required: true, message: '最小值不能大于最大值', trigger: 'blur' },
     // { type: 'number', message: '该内容需要填写数字', trigger: 'blur' },
     { Range: true ,min:1,max: form.maxPrice, message: '大于最大值', trigger: 'blur' },
   ],

@@ -38,7 +38,10 @@ public class NurseInfo implements Serializable {
      * 护工年龄
      */
     private Integer age;
-
+    /**
+     * 护工身份证号
+     */
+    private String idNumber;
     /**
      * 护工联系方式
      */
@@ -73,6 +76,14 @@ public class NurseInfo implements Serializable {
      * 状态,用于删除,1 可用，0 不可用
      */
     private String status;
+
+    public String getIdNumber() {
+        return idNumber;
+    }
+
+    public void setIdNumber(String idNumber) {
+        this.idNumber = idNumber;
+    }
 
     public Integer getNurseId() {
         return nurseId;
@@ -155,17 +166,18 @@ public class NurseInfo implements Serializable {
     @Override
     public String toString() {
         return "NurseInfo{" +
-            "nurseId=" + nurseId +
-            ", name=" + name +
-            ", gender=" + gender +
-            ", age=" + age +
-            ", contactInfo=" + contactInfo +
-            ", photo=" + photo +
-            ", workExperience=" + workExperience +
-            ", professionalCertificate=" + professionalCertificate +
-            ", nurseLevel=" + nurseLevel +
-            ", serviceEvaluation=" + serviceEvaluation +
-            ", status=" + status +
-        "}";
+                "nurseId=" + nurseId +
+                ", name='" + name + '\'' +
+                ", gender='" + gender + '\'' +
+                ", age=" + age +
+                ", idNumber='" + idNumber + '\'' +
+                ", contactInfo='" + contactInfo + '\'' +
+                ", photo='" + photo + '\'' +
+                ", workExperience='" + workExperience + '\'' +
+                ", professionalCertificate='" + professionalCertificate + '\'' +
+                ", nurseLevel=" + nurseLevel +
+                ", serviceEvaluation='" + serviceEvaluation + '\'' +
+                ", status='" + status + '\'' +
+                '}';
     }
 }

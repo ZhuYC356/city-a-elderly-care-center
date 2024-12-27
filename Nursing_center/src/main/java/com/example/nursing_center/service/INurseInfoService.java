@@ -19,5 +19,11 @@ import java.util.List;
 public interface INurseInfoService extends IService<NurseInfo> {
 
     Result getAll();
+
+    Result addInfo(NurseInfo nurseInfo);
+
+    Result getAllById(Integer nurseId);
     ResultGeneric<List<AssignNurse>> getAllNurses(String nurseName);
+
+    Result updateInfo(NurseInfo nurseInfo);
 }

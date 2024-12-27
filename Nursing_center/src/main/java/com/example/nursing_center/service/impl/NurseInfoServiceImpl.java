@@ -24,6 +24,7 @@ import java.util.List;
 public class NurseInfoServiceImpl extends ServiceImpl<NurseInfoMapper, NurseInfo> implements INurseInfoService {
     @Resource
     NurseInfoMapper nurseInfoMapper;
+
     @Override
     public Result getAll() {
         return Result.success(nurseInfoMapper.getAll());
@@ -34,5 +35,21 @@ public class NurseInfoServiceImpl extends ServiceImpl<NurseInfoMapper, NurseInfo
     public ResultGeneric<List<AssignNurse>> getAllNurses(String nurseName) {
         List<AssignNurse> nurses = nurseInfoMapper.findAllNurses(nurseName);
         return new ResultGeneric<>(nurses);
+    }
+
+    @Override
+    public Result updateInfo(NurseInfo nurseInfo) {
+        nurseInfo.setStatus("1");
+        return Result.success(nurseInfoMapper.updateById(nurseInfo));
+    }
+
+    @Override
+    public Result addInfo(NurseInfo nurseInfo) {
+        return Result.success(nurseInfoMapper.addInfo(nurseInfo));
+    }
+
+    @Override
+    public Result getAllById(Integer nurseId) {
+        return Result.success(nurseInfoMapper.getAllById(nurseId));
     }
 }
