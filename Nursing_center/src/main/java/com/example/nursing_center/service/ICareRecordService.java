@@ -1,7 +1,10 @@
 package com.example.nursing_center.service;
 
-import com.example.nursing_center.pojo.CareRecord;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.example.nursing_center.controller.Result.RecordForm;
+import com.example.nursing_center.pojo.CareRecord;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +16,11 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface ICareRecordService extends IService<CareRecord> {
 
+    List<RecordForm> getRecord();
+
+    List<RecordForm> select(String elderlyName, String projectName);
+
+    List<RecordForm> getRecordById(Integer elderlyId);
+
+    String removeRecord(Integer elderlyId);
 }

@@ -1,7 +1,10 @@
 package com.example.nursing_center.mapper;
 
-import com.example.nursing_center.pojo.CareRecord;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.example.nursing_center.controller.Result.RecordForm;
+import com.example.nursing_center.pojo.CareRecord;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +16,13 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface CareRecordMapper extends BaseMapper<CareRecord> {
 
+    List<RecordForm> getRecord();
+
+    List<RecordForm> select(String elderlyName, String projectName);
+
+    List<RecordForm> getRecordById();
+
+    String getCareStatus(Integer elderlyId);
+
+    void deleteByElderlyId(Integer elderlyId);
 }

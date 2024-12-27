@@ -153,6 +153,7 @@ const submitReport = () => {
 
   let reportContent = selectedRows.value.map((data, index) => `
     第${index + 1}条:<br>
+    老人编号: ${data.elderlyId || 'null'}<br>
     姓名: ${data.name || 'null'}<br>
     床位号: ${data.bedId || 'null'}<br>
     入住日期: ${data.checkInDate || 'null'}<br>
@@ -197,6 +198,7 @@ const exportToExcel = () => {
   }
 
   const data = selectedRows.value.map(row => ({
+    老人编号: row.elderlyId || 'null',
     姓名: row.name || 'null',
     床位号: row.bedId || 'null',
     入住日期: row.checkInDate || 'null',
@@ -274,11 +276,10 @@ const exportToExcel = () => {
           <el-table-column type="selection" width="55"/>
           <el-table-column property="elderlyId" label="ID" width="80"/>
           <el-table-column property="name" label="姓名" width="120"/>
-<!--          <el-table-column property="checkInDate" label="入住日期" width="120"/>-->
           <el-table-column property="checkOutDate" label="退住日期" width="180"/>
           <el-table-column property="bedId" label="床位号" width="100"/>
-          <el-table-column property="checkoutType" label="退住类型" width="100"/>
-          <el-table-column property="approvalStatus" label="审核状态" width="100"/>
+          <el-table-column property="checkoutType" label="退住类型" width="80"/>
+          <el-table-column property="approvalStatus" label="审核状态" width="80"/>
           <el-table-column property="approvalPerson" label="审批人" width="120"/>
           <el-table-column property="approvalTime" label="审批时间" width="180"/>
           <el-table-column fixed="right" label="操作" min-width="120">

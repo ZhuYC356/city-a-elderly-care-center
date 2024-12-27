@@ -1,9 +1,12 @@
 package com.example.nursing_center.controller;
 
 
-import org.springframework.web.bind.annotation.RequestMapping;
+import com.example.nursing_center.controller.Result.RecordForm;
+import com.example.nursing_center.service.ICareRecordService;
+import jakarta.annotation.Resource;
+import org.springframework.web.bind.annotation.*;
 
-import org.springframework.web.bind.annotation.RestController;
+import java.util.List;
 
 /**
  * <p>
@@ -16,5 +19,49 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/care-record")
 public class CareRecordController {
+    @Resource
+    private ICareRecordService careRecordService;
+
+    /**
+     * 获取所有老人的护理记录
+     *
+     * @return
+     */
+    @GetMapping("/getRecord")
+    public List<RecordForm> getRecord() {
+        return careRecordService.getRecord();
+    }
+
+    /**
+     * 根据姓名和护理项目搜索老人护理记录
+     * @param elderlyName
+     * @param projectName
+     * @return
+     */
+    @GetMapping("/select")
+    public List<RecordForm> select(@RequestParam(required = false) String elderlyName,
+                                   @RequestParam(required = false) String projectName) {
+        return careRecordService.select(elderlyName, projectName);
+    }
+
+    /**
+     * 根据老人id获取老人护理记录
+     * @param elderlyId
+     * @return
+     */
+    @GetMapping("/getRecordById")
+    public List<RecordForm> getRecordById(@RequestParam Integer elderlyId) {
+        return careRecordService.getRecordById(elderlyId);
+    }
+
+    /**
+     * 根据护理记录ID删除护理记录，仅当护理状态为1时删除
+     * @param
+     * @return
+     */
+    @DeleteMapping("/remove")
+    public String removeRecord(@RequestParam Integer elderlyId) {
+        return careRecordService.removeRecord(elderlyId);
+    }
 
 }

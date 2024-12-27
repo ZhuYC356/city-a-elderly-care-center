@@ -113,22 +113,19 @@ CREATE TABLE check_out_requests
 # 护理记录表
 CREATE TABLE care_record
 (
-    care_record_id  INT PRIMARY KEY AUTO_INCREMENT COMMENT '护理记录的唯一标识符',
-    elderly_id      INT           NOT NULL COMMENT '与该护理记录关联的老人ID，外键关联到老人表',
-    care_project_id INT           NOT NULL COMMENT '与该护理记录关联的护理项目ID，外键关联到护理项目表',
-    care_date       DATE          NOT NULL COMMENT '护理发生的日期',
-    care_type       VARCHAR(100)  NOT NULL COMMENT '护理的类型或名称',
-    care_duration   TIME          NOT NULL COMMENT '护理的持续时间',
-    caregiver_id    INT           NOT NULL COMMENT '执行护理的护理人员的ID，外键关联到护理人员表',
-    temperature     DECIMAL(5, 2) NULL COMMENT '老人护理时的体温记录',
-    blood_pressure  VARCHAR(10)   NULL COMMENT '老人护理时的血压记录',
-    blood_sugar     DECIMAL(5, 2) NULL COMMENT '老人护理时的血糖记录',
-    other_signs     TEXT          NULL COMMENT '其他需要记录的生命体征信息',
-    remarks         TEXT          NULL COMMENT '护理过程中的备注信息或特殊事件记录',
-    created_at      TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT '记录被添加到表中的时间',
-    updated_at      TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '记录最后一次被修改的时间',
-    status          int       default 1 COMMENT '状态,用于删除,1 可用，0 不可用'
-) COMMENT ='存储老人的护理记录信息';
+    record_id        INT PRIMARY KEY AUTO_INCREMENT COMMENT '护理记录的唯一标识符',
+    elderly_id       INT NOT NULL COMMENT '老人唯一标识符，外键指向elderly_info表',
+    nurse_id         INT NOT NULL COMMENT '护工唯一标识符，外键指向nurse_info表',
+    project_id       INT NOT NULL COMMENT '护理项目唯一标识符，外键指向care_project表',
+    care_start_time  DATETIME NOT NULL COMMENT '护理开始时间',
+    care_end_time    DATETIME NOT NULL COMMENT '护理结束时间',
+    care_content     TEXT COMMENT '护理内容或描述',
+    care_status      VARCHAR(50) COMMENT '护理状态（1:到期，0: 欠费，2:数量正常，3: 未到期）',
+    remarks          TEXT COMMENT '备注信息（如老人特殊情况等）',
+    created_at       TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT '记录创建时间',
+    updated_at       TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '记录最后更新时间',
+    status           VARCHAR(50) DEFAULT '1' COMMENT '状态,用于删除,1 可用，0 不可用'
+) COMMENT='存储老人护理记录信息';
 -- 创建老人项目关联表
 CREATE TABLE elderly_care_project
 (
