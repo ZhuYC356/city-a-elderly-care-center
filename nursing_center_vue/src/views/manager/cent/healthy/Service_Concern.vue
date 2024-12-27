@@ -15,12 +15,13 @@
         <template #default="props">
           <div m="4" style="width: 90%;margin: auto;">
             <h2>护理服务项目</h2>
-            <el-table :data="props.row.family" :border="true">
-              <el-table-column label="项目名称" prop="name" />
-              <el-table-column label="护理项目描述" prop="state" />
-              <el-table-column label="项目服务状态" prop="city" />
-              <el-table-column label="服务到期时间" prop="address" />
-              <el-table-column label="价格" prop="zip" />
+            <el-table :data="props.row.family" :border="true"
+                      :row-class-name="tableRowClassName">
+              <el-table-column label="项目名称" prop="projectName" />
+              <el-table-column label="护理项目描述" prop="description" />
+              <el-table-column label="项目服务状态" prop="careStatus" />
+              <el-table-column label="服务到期时间" prop="careEndTime" />
+              <el-table-column label="价格" prop="price" />
               <el-table-column label="操作">
                 <el-button style="color: #3f9dfd">续费</el-button>
                 <el-button type="danger" plain>移除</el-button>
@@ -30,10 +31,10 @@
         </template>
       </el-table-column>
       <el-table-column label="姓名" prop="name" />
-      <el-table-column label="性别" prop="date" />
-      <el-table-column label="年龄" prop="date" />
-      <el-table-column label="身份证号" prop="date" />
-      <el-table-column label="护工" prop="name" />
+      <el-table-column label="性别" prop="gender" />
+      <el-table-column label="年龄" prop="age" />
+      <el-table-column label="身份证号" prop="idNumber" />
+      <el-table-column label="护工名" prop="nurseName" />
       <el-table-column label="操作">
         <el-button type="success" plain>购买护理项目</el-button>
       </el-table-column>
@@ -52,219 +53,122 @@ import { ref } from 'vue'
 
 const tableData = [
   {
-    date: '2016-05-03',
     name: '张三',
-    state: '中国',
-    city: '河南',
-    address: '洛阳',
-    zip: 'CA 94114',
+    gender: '男',
+    age: '67',
+    idNumber: '410303197201104081',
+    nurseName: 'CA 94114',
     family: [
       {
-        name: 'Jerry',
-        state: 'California',
-        city: 'San Francisco',
-        address: '3650 21st St, San Francisco',
-        zip: 'CA 94114',
+        projectName: '全套按摩马萨基',
+        description: '从头给你按到脚',
+        careStatus: '到期',
+        careEndTime: '2024-12-26',
+        price: '998.00',
       },
       {
-        name: 'Spike',
-        state: 'California',
-        city: 'San Francisco',
-        address: '3650 21st St, San Francisco',
-        zip: 'CA 94114',
+        projectName: '尼哥同款鞭策套餐',
+        description: '给你原汁原味的尼哥体验',
+        careStatus: '欠费',
+        careEndTime: '2025-01-01',
+        price: '198.00',
       },
       {
-        name: 'Tyke',
-        state: 'California',
-        city: 'San Francisco',
-        address: '3650 21st St, San Francisco',
-        zip: 'CA 94114',
+        projectName: '麦小鼠电疗服务',
+        description: '猛攻！',
+        careStatus: '未到期',
+        careEndTime: '2024-12-28',
+        price: '648.00',
       },
     ],
   },
   {
-    date: '2016-05-02',
-    name: 'Tom',
-    state: 'California',
-    city: 'San Francisco',
-    address: '3650 21st St, San Francisco',
-    zip: 'CA 94114',
+    name: '张三',
+    gender: '男',
+    age: '67',
+    idNumber: '410303197201104081',
+    nurseName: 'CA 94114',
     family: [
       {
-        name: 'Jerry',
-        state: 'California',
-        city: 'San Francisco',
-        address: '3650 21st St, San Francisco',
-        zip: 'CA 94114',
+        projectName: '全套按摩马萨基',
+        description: '从头给你按到脚',
+        careStatus: '到期',
+        careEndTime: '2024-12-26',
+        price: '998.00',
       },
       {
-        name: 'Spike',
-        state: 'California',
-        city: 'San Francisco',
-        address: '3650 21st St, San Francisco',
-        zip: 'CA 94114',
+        projectName: '尼哥同款鞭策套餐',
+        description: '给你原汁原味的尼哥体验',
+        careStatus: '欠费',
+        careEndTime: '2025-01-01',
+        price: '198.00',
       },
       {
-        name: 'Tyke',
-        state: 'California',
-        city: 'San Francisco',
-        address: '3650 21st St, San Francisco',
-        zip: 'CA 94114',
+        projectName: '麦小鼠电疗服务',
+        description: '猛攻！',
+        careStatus: '未到期',
+        careEndTime: '2024-12-28',
+        price: '648.00',
       },
     ],
   },
   {
-    date: '2016-05-04',
-    name: 'Tom',
-    state: 'California',
-    city: 'San Francisco',
-    address: '3650 21st St, San Francisco',
-    zip: 'CA 94114',
+    name: '张三',
+    gender: '男',
+    age: '67',
+    idNumber: '410303197201104081',
+    nurseName: 'CA 94114',
     family: [
       {
-        name: 'Jerry',
-        state: 'California',
-        city: 'San Francisco',
-        address: '3650 21st St, San Francisco',
-        zip: 'CA 94114',
+        projectName: '全套按摩马萨基',
+        description: '从头给你按到脚',
+        careStatus: '到期',
+        careEndTime: '2024-12-26',
+        price: '998.00',
       },
       {
-        name: 'Spike',
-        state: 'California',
-        city: 'San Francisco',
-        address: '3650 21st St, San Francisco',
-        zip: 'CA 94114',
+        projectName: '尼哥同款鞭策套餐',
+        description: '给你原汁原味的尼哥体验',
+        careStatus: '欠费',
+        careEndTime: '2025-01-01',
+        price: '198.00',
       },
       {
-        name: 'Tyke',
-        state: 'California',
-        city: 'San Francisco',
-        address: '3650 21st St, San Francisco',
-        zip: 'CA 94114',
+        projectName: '麦小鼠电疗服务',
+        description: '猛攻！',
+        careStatus: '未到期',
+        careEndTime: '2024-12-28',
+        price: '648.00',
       },
     ],
   },
   {
-    date: '2016-05-01',
-    name: 'Tom',
-    state: 'California',
-    city: 'San Francisco',
-    address: '3650 21st St, San Francisco',
-    zip: 'CA 94114',
+    name: '张三',
+    gender: '男',
+    age: '67',
+    idNumber: '410303197201104081',
+    nurseName: 'CA 94114',
     family: [
       {
-        name: 'Jerry',
-        state: 'California',
-        city: 'San Francisco',
-        address: '3650 21st St, San Francisco',
-        zip: 'CA 94114',
+        projectName: '全套按摩马萨基',
+        description: '从头给你按到脚',
+        careStatus: '到期',
+        careEndTime: '2024-12-26',
+        price: '998.00',
       },
       {
-        name: 'Spike',
-        state: 'California',
-        city: 'San Francisco',
-        address: '3650 21st St, San Francisco',
-        zip: 'CA 94114',
+        projectName: '尼哥同款鞭策套餐',
+        description: '给你原汁原味的尼哥体验',
+        careStatus: '欠费',
+        careEndTime: '2025-01-01',
+        price: '198.00',
       },
       {
-        name: 'Tyke',
-        state: 'California',
-        city: 'San Francisco',
-        address: '3650 21st St, San Francisco',
-        zip: 'CA 94114',
-      },
-    ],
-  },
-  {
-    date: '2016-05-08',
-    name: 'Tom',
-    state: 'California',
-    city: 'San Francisco',
-    address: '3650 21st St, San Francisco',
-    zip: 'CA 94114',
-    family: [
-      {
-        name: 'Jerry',
-        state: 'California',
-        city: 'San Francisco',
-        address: '3650 21st St, San Francisco',
-        zip: 'CA 94114',
-      },
-      {
-        name: 'Spike',
-        state: 'California',
-        city: 'San Francisco',
-        address: '3650 21st St, San Francisco',
-        zip: 'CA 94114',
-      },
-      {
-        name: 'Tyke',
-        state: 'California',
-        city: 'San Francisco',
-        address: '3650 21st St, San Francisco',
-        zip: 'CA 94114',
-      },
-    ],
-  },
-  {
-    date: '2016-05-06',
-    name: 'Tom',
-    state: 'California',
-    city: 'San Francisco',
-    address: '3650 21st St, San Francisco',
-    zip: 'CA 94114',
-    family: [
-      {
-        name: 'Jerry',
-        state: 'California',
-        city: 'San Francisco',
-        address: '3650 21st St, San Francisco',
-        zip: 'CA 94114',
-      },
-      {
-        name: 'Spike',
-        state: 'California',
-        city: 'San Francisco',
-        address: '3650 21st St, San Francisco',
-        zip: 'CA 94114',
-      },
-      {
-        name: 'Tyke',
-        state: 'California',
-        city: 'San Francisco',
-        address: '3650 21st St, San Francisco',
-        zip: 'CA 94114',
-      },
-    ],
-  },
-  {
-    date: '2016-05-07',
-    name: 'Tom',
-    state: 'California',
-    city: 'San Francisco',
-    address: '3650 21st St, San Francisco',
-    zip: 'CA 94114',
-    family: [
-      {
-        name: 'Jerry',
-        state: 'California',
-        city: 'San Francisco',
-        address: '3650 21st St, San Francisco',
-        zip: 'CA 94114',
-      },
-      {
-        name: 'Spike',
-        state: 'California',
-        city: 'San Francisco',
-        address: '3650 21st St, San Francisco',
-        zip: 'CA 94114',
-      },
-      {
-        name: 'Tyke',
-        state: 'California',
-        city: 'San Francisco',
-        address: '3650 21st St, San Francisco',
-        zip: 'CA 94114',
+        projectName: '麦小鼠电疗服务',
+        description: '猛攻！',
+        careStatus: '未到期',
+        careEndTime: '2024-12-28',
+        price: '648.00',
       },
     ],
   },
