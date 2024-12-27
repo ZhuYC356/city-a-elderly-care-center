@@ -37,12 +37,31 @@ public class OutingRegistrationController {
     }
 
     /*
+     * 根据outingID数组返回对应数据
+     */
+    @GetMapping("/getByIds")
+    public List<OutingRegistration> getByIds(@RequestParam List<Integer> outingIds) {
+        return iOutingRegistrationService.listByIds(outingIds);
+    }
+
+
+    /*
      * 导出所有数据为Excel
      */
     @GetMapping("/export")
     @ApiOperation(value = "按对象导出（基础）", produces = "application/octet-stream")
     public void export(HttpServletResponse response) throws IOException {
         List<OutingRegistration> list = iOutingRegistrationService.list();
+        ExcelUtils.export(response, "outings registration", list, OutingRegistration.class);
+    }
+
+    /*
+     * 导出根据outingID数组对应数据为Excel
+     */
+    @GetMapping("/exportSelected")
+    @ApiOperation(value = "按对象导出（基础）", produces = "application/octet-stream")
+    public void exportSelected(HttpServletResponse response, @RequestParam List<Integer> outingIds) throws IOException {
+        List<OutingRegistration> list = iOutingRegistrationService.listByIds(outingIds);
         ExcelUtils.export(response, "outings registration", list, OutingRegistration.class);
     }
 

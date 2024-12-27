@@ -57,11 +57,9 @@
         </el-form>
       </div>
       <div>
-        <a href="http://localhost:9090/outing-registration/export" style="float: right;margin-right: 30px">
-          <el-button type="primary" style="margin-left: 10px">
+          <el-button type="primary" style="margin-left: 10px" @click="exportHandle()">
             <span style="font-weight: bolder">外出登记导出Excel表</span>
           </el-button>
-        </a>
       </div>
       <div style="margin-top: 5px">
         <el-table
@@ -71,6 +69,7 @@
             height="395"
             :stripe="true"
             :header-cell-style="{ background: '#f3f6fd', color: '#555' ,textAlign: 'center'}"
+            @selection-change="selectedRows = $event"
         >
           <el-table-column type="selection" width="55"/>
           <el-table-column property="outingId" label="外出登记号" width="120"/>
@@ -90,16 +89,16 @@
             </template>
           </el-table-column>
         </el-table>
-        <div style="margin-top: 10px">
+        <div style="margin-top: 10px; text-align: center;">
           <el-pagination
               v-model:current-page="currentPage"
               v-model:page-size="pageSize"
-              :page-sizes="[100, 200, 300, 400]"
+              :page-sizes="[5, 10, 20, 50]"
               :size="size"
               :disabled="disabled"
               :background="background"
               layout="total, sizes, prev, pager, next, jumper"
-              :total="400"
+              :total="tableData.length"
           />
         </div>
 
@@ -174,6 +173,8 @@ export default {
   data() {
     return {
       tableData: [],
+      selectedRows:[],
+      selectedElderId:[],
       form: {
         name: "",
         bedNumber: "",
@@ -259,6 +260,33 @@ export default {
             });
             console.log(error);
           });
+    },
+    exportHandle(){
+      if(this.selectedRows.length==0){
+        window.location.href='http://localhost:9090/outing-registration/export'
+        this.$message({
+          showClose: true,
+          message: '恭喜你，导出全部数据成功',
+          type: 'success'
+        });
+      }else{
+        for(let i=0;i<this.selectedRows.length;i++){
+          this.selectedElderId.push(this.selectedRows[i].outingId)
+          console.log("被选中的老人id：")
+          console.log(this.selectedElderId)
+          if(i==this.selectedRows.length-1){
+            window.location.href='http://localhost:9090/outing-registration/exportSelected?outingIds='+this.selectedElderId
+            // alert('http://localhost:9090/outing-registration/exportSelected?outingIds='+this.selectedElderId)
+            this.$message({
+              showClose: true,
+              message: '恭喜你，导出选中数据成功',
+              type: 'success'
+            });
+            this.selectedElderId=[]
+          }
+        }
+      }
+
     }
   },
 };
