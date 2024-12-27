@@ -68,7 +68,7 @@
             :data="tableData"
             style="width: 100%; margin:auto;text-align: center;"
             cell-style="text-align: center;"
-            height="270"
+            height="395"
             :stripe="true"
             :header-cell-style="{ background: '#f3f6fd', color: '#555' ,textAlign: 'center'}"
         >
@@ -79,7 +79,7 @@
           <el-table-column property="outingTime" label="具体时间" width="120"/>
           <el-table-column property="destination" label="详细描述" width="120"/>
           <el-table-column property="purpose" label="外出目的" width="120"/>
-          <el-table-column fixed="right" label="Operations" min-width="120">
+          <el-table-column fixed="right" label="操作" min-width="120">
             <template #default="scope">
               <el-button link type="success" size="small" plain @click="handleClick(scope.$index)">
                 <span style="font-weight: bolder">详 情</span>
@@ -180,6 +180,7 @@ export default {
         bedNumber: "",
         checkInTime: "",
       },
+      background: true,
       currentPage: 0,
       pageSize: 0,
       dialogTableVisible: false,

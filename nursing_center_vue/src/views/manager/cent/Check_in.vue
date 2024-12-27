@@ -62,10 +62,10 @@
         <el-table :data="elderlyList" style="width: 100%;" height="365" :stripe="true"
                   :header-cell-style="{background:'#f3f6fd',color:'#555'}">
           <el-table-column type="selection" width="55"/>
-          <el-table-column property="name" label="姓名" width="120"/>
-          <el-table-column property="gender" label="性别" width="120"/>
-          <el-table-column property="age" label="年龄" width="120"/>
-          <el-table-column property="familyContactInfo" label="家庭联系人电话" width="120"/>
+          <el-table-column property="name" label="姓名" width="100"/>
+          <el-table-column property="gender" label="性别" width="80"/>
+          <el-table-column property="age" label="年龄" width="80"/>
+          <el-table-column property="familyContactInfo" label="家庭联系人电话" width="180"/>
           <el-table-column property="floorNumber" label="楼号" width="120"/>
           <el-table-column property="roomNumber" label="房间号" width="120"/>
           <el-table-column property="bedNumber" label="床位号" width="120"/>
@@ -807,11 +807,11 @@ export default {
       dialogFormVisible3: false,
       dialogFormVisible4: false,
       formLabelWidth: '120px',
-      currentPage4: 4,
-      pageSize4: 100,
+      currentPage: 0,
+      pageSize: 0,
       size: 'mini',
       disabled: false,
-      background: false,
+      background: true,
     };
   },
   components: {
