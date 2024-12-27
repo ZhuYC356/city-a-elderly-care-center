@@ -2,6 +2,7 @@ package com.example.nursing_center.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.nursing_center.common.Result;
+import com.example.nursing_center.common.enums.ResultCodeEnum;
 import com.example.nursing_center.controller.Result.BackForm;
 import com.example.nursing_center.controller.request.Info;
 import com.example.nursing_center.mapper.CheckOutRequestsMapper;
@@ -57,8 +58,9 @@ public class CheckOutRequestsServiceImpl extends ServiceImpl<CheckOutRequestsMap
 
     @Override
     public Result add(Info info) {
+        if (checkOutRequestsMapper.selectByIdCount(info.getElderlyId())!=0){
+            return Result.error(ResultCodeEnum.APPLY_OUT_SIGN_ERROR);
+        }
         return Result.success(checkOutRequestsMapper.add(info));
     }
-
-
 }

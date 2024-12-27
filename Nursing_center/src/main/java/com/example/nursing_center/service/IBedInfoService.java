@@ -39,5 +39,5 @@ public interface IBedInfoService extends IService<BedInfo> {
     Result myListPage(Form form);
     Result getAllRoomByFloor(Integer floorNumber,Integer sing);
 
-    Result getAllBedByRoom(Integer roomNumber,Integer sing);
+    Result getAllBedByRoom(Integer roomNumber,Integer sing,Integer floorNumber);
 }

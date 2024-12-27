@@ -74,21 +74,48 @@
     <select id="getAllFloor" resultType="java.lang.Integer">
         select distinct floor_number from bed_info
     </select>
-    <select id="selectAllRoomByFloor" resultType="java.lang.Integer">
-        select distinct room_number
-        from bed_info
-        where floor_number = #{floorNumber}
-          and bed_status = '1' # 该楼层有空的房间
-        and status = '1'
-    </select>
+
 
     <select id="getAllBedByRoom" resultType="java.lang.Integer">
         select distinct bed_number
         from bed_info
         where room_number = #{roomNumber}
+          and floor_number = #{floorNumber}
           and bed_status = '1' # 该房间有空的床位
     </select>
 
+
+    <select id="myListPage" parameterType="com.example.nursing_center.controller.Result.Form" resultType="com.example.nursing_center.controller.Result.ManagerElder">
+        select * from bed_info,elderly_info where bed_info.bed_id=elderly_info.bed_id
+        <if test="name!=null">
+            and name like "%"#{name}"%"
+        </if>
+        <if test="bedNumber!=null">
+            and bed_number like "%"#{bedNumber}"%"
+        </if>
+        limit #{pageNum},#{pageSize}
+    </select>
+
+<!--    查询房间根据楼-->
+    <select id="selectAllRoomByFloor" resultType="java.lang.Integer">
+        select distinct room_number
+        from bed_info
+        where floor_number = #{floorNumber}
+          and bed_status = '1' # 该楼有空床的房间
+          and status = '1'
+    </select>
+<!--    查询未用床位根据房间-->
+    <select id="getAllBedByRoomNot" resultType="java.lang.Integer">
+        select distinct bed_number
+        from bed_info
+        where room_number = #{roomNumber}
+          and floor_number = #{floorNumber}
+          and bed_status = '1' # 该楼层已经使用的房间
+          and bed_status !='8'
+          and status = '1'
+    </select>
+
+<!--    查询已经使用的房间-->
     <select id="selectAllRoomByFlooralready" resultType="java.lang.Integer">
         select distinct room_number
         from bed_info
@@ -101,18 +128,9 @@
         select distinct bed_number
         from bed_info
         where room_number = #{roomNumber}
+          and floor_number = #{floorNumber}
           and bed_status != '1' # 该楼层已经使用的房间
           and bed_status != '8'
           and status = '1'
-    </select>
-    <select id="myListPage" parameterType="com.example.nursing_center.controller.Result.Form" resultType="com.example.nursing_center.controller.Result.ManagerElder">
-        select * from bed_info,elderly_info where bed_info.bed_id=elderly_info.bed_id
-        <if test="name!=null">
-            and name like "%"#{name}"%"
-        </if>
-        <if test="bedNumber!=null">
-            and bed_number like "%"#{bedNumber}"%"
-        </if>
-        limit #{pageNum},#{pageSize}
     </select>
 </mapper>

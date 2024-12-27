@@ -4,6 +4,7 @@ import cn.hutool.core.date.DateTime;
 import cn.hutool.json.JSONUtil;
 import com.example.nursing_center.common.Result;
 import com.example.nursing_center.controller.request.Info;
+import com.example.nursing_center.mapper.BedInfoMapper;
 import com.example.nursing_center.pojo.BedElderlyAssociation;
 import com.example.nursing_center.pojo.ElderlyInfo;
 import com.example.nursing_center.service.IElderlyInfoService;
@@ -18,6 +19,8 @@ import java.util.List;
 class NursingCenterApplicationTests {
     @Resource
     private IElderlyInfoService elderlyInfoService;
+    @Resource
+    private BedInfoMapper bedInfoMapper;
 
     @Test
     void contextLoads() {
@@ -89,6 +92,10 @@ class NursingCenterApplicationTests {
         info.setDestination("12122");
         String str = JSONUtil.toJsonStr(info);
         System.out.println(str);
+    }
+    @Test
+    public void test4() {
+
     }
 
 }

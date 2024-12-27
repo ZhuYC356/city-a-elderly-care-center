@@ -73,4 +73,9 @@ public class ElderlyInfoServiceImpl extends ServiceImpl<ElderlyInfoMapper, Elder
     public Result getElderlyInfoByIdNumber(String idNumber) {
         return Result.success(elderlyInfoMapper.getElderlyInfoByIdNumber(idNumber));
     }
+
+    @Override
+    public Result getAllById(Integer id) {
+        return Result.success(elderlyInfoMapper.getAllById(id));
+    }
 }

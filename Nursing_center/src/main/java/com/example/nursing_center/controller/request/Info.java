@@ -39,5 +39,9 @@ public class Info {
     private String remarks;
     private String outingReason;
     private String destination;
+
+    private String homeAddress;
+    private String medicalHistory;
+    private String allergyHistory;
 }
 
