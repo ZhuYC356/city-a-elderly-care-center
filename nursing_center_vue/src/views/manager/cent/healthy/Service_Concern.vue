@@ -8,34 +8,40 @@
       <i class="el-icon-notebook-1" style="margin-left: 30px;font-size: 20px"></i>
       <span style="margin-left: 5px;font-size: 20px;font-weight: bolder">服务关注</span>
       <hr style="margin: 10px">
-      <el-table :data="tableData" :border="false" style="width: 100%">
-
-        <el-table-column type="expand">
-          <template #default="props">
-            <div >
-              <p >State: {{ props.row.state }}</p>
-              <p >City: {{ props.row.city }}</p>
-              <p >Address: {{ props.row.address }}</p>
-              <p >Zip: {{ props.row.zip }}</p>
-              <h2>护理服务项目</h2>
-              <el-table :data="props.row.family" :border="false">
-                <el-table-column label="Name" prop="name" />
-                <el-table-column label="State" prop="state" />
-                <el-table-column label="City" prop="city" />
-                <el-table-column label="Address" prop="address" />
-                <el-table-column label="Zip" prop="zip" />
-              </el-table>
-            </div>
-          </template>
-
-        </el-table-column>
-
-        <el-table-column label="Name" prop="name" />
-        <el-table-column label="Date" prop="date" />
-
-      </el-table>
-
     </div>
+
+    <el-table :data="tableData" stripe :border="false" style="width: 100%">
+      <el-table-column type="expand">
+        <template #default="props">
+          <div m="4" style="width: 90%;margin: auto;">
+            <p m="t-0 b-2">State: {{ props.row.state }}</p>
+            <p m="t-0 b-2">City: {{ props.row.city }}</p>
+            <p m="t-0 b-2">Address: {{ props.row.address }}</p>
+            <p m="t-0 b-2">Zip: {{ props.row.zip }}</p>
+            <h2>护理服务项目</h2>
+            <el-table :data="props.row.family" :border="true">
+              <el-table-column label="项目名称" prop="name" />
+              <el-table-column label="护理项目描述" prop="state" />
+              <el-table-column label="项目服务状态" prop="city" />
+              <el-table-column label="服务到期时间" prop="address" />
+              <el-table-column label="价格" prop="zip" />
+              <el-table-column label="操作">
+                <el-button style="color: #3f9dfd">续费</el-button>
+                <el-button type="danger" plain>移除</el-button>
+              </el-table-column>
+            </el-table>
+          </div>
+        </template>
+      </el-table-column>
+      <el-table-column label="姓名" prop="name" />
+      <el-table-column label="性别" prop="date" />
+      <el-table-column label="年龄" prop="date" />
+      <el-table-column label="身份证号" prop="date" />
+      <el-table-column label="护工" prop="name" />
+      <el-table-column label="操作">
+        <el-button type="success" plain>购买护理项目</el-button>
+      </el-table-column>
+    </el-table>
 
   </div>
 
@@ -51,10 +57,10 @@ import { ref } from 'vue'
 const tableData = [
   {
     date: '2016-05-03',
-    name: 'Tom',
-    state: 'California',
-    city: 'San Francisco',
-    address: '3650 21st St, San Francisco',
+    name: '张三',
+    state: '中国',
+    city: '河南',
+    address: '洛阳',
     zip: 'CA 94114',
     family: [
       {
@@ -267,4 +273,5 @@ const tableData = [
     ],
   },
 ]
+
 </script>
