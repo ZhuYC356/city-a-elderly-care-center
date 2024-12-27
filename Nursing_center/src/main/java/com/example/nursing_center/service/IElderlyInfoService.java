@@ -2,8 +2,12 @@ package com.example.nursing_center.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.example.nursing_center.common.Result;
+import com.example.nursing_center.common.ResultGeneric;
+import com.example.nursing_center.controller.Result.AssignElderly;
 import com.example.nursing_center.controller.request.Info;
 import com.example.nursing_center.pojo.ElderlyInfo;
+
+import java.util.List;
 
 /**
  * <p>
@@ -29,4 +33,7 @@ public interface IElderlyInfoService extends IService<ElderlyInfo> {
     Result getElderlyInfoByIdNumber(String idNumber);
 
     Result getAllById(Integer id);
+
+    ResultGeneric<List<AssignElderly>> getAllElderly();
+    ResultGeneric<List<AssignElderly>> getElderlyWithoutNurse(String elderlyName);
 }

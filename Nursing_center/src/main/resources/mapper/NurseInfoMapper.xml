@@ -5,4 +5,71 @@
     <select id="getAll" resultType="com.example.nursing_center.pojo.NurseInfo">
         select * from nurse_info
     </select>
+
+    <!-- 查询所有护工信息及其服务的老人列表 -->
+    <select id="findAllNurses" resultMap="nurseResultMap">
+        SELECT
+        n.nurse_id AS nurseId,
+        n.name AS nurseName,
+        n.gender,
+        n.age,
+        n.contact_info AS contactInfo,
+        n.work_experience AS workExperience,
+        n.nurse_level AS nurseLevel,
+        n.service_evaluation AS serviceEvaluation,
+        e.elderly_id AS elderlyId,
+        e.name AS elderlyName,
+        e.age AS elderlyAge,
+        e.gender AS elderlyGender,
+        e.contact_info AS elderlyContactInfo,
+        e.medical_history AS elderlyMedicalHistory,
+        e.physical_condition AS elderlyPhysicalCondition,
+        e.check_in_time AS elderlyCheckInTime,
+        e.check_out_time AS elderlyCheckOutTime
+        FROM nurse_info n
+        LEFT JOIN elderly_info e ON n.nurse_id = e.nurse_id
+        <if test="nurseName != null and nurseName != ''">
+            WHERE n.name LIKE CONCAT('%', #{nurseName}, '%')
+        </if>
+    </select>
+
+    <!-- 查询护工信息和对应的老人的关联 -->
+    <resultMap id="nurseResultMap" type="com.example.nursing_center.controller.Result.AssignNurse">
+        <id property="nurseId" column="nurseId"/>
+        <result property="nurseName" column="nurseName"/>
+        <result property="gender" column="gender"/>
+        <result property="age" column="age"/>
+        <result property="contactInfo" column="contactInfo"/>
+        <result property="workExperience" column="workExperience"/>
+        <result property="nurseLevel" column="nurseLevel"/>
+        <result property="serviceEvaluation" column="serviceEvaluation"/>
+
+        <!-- 使用嵌套查询的方式获取老人列表 -->
+        <collection property="elderlyList" ofType="com.example.nursing_center.controller.Result.AssignElderly">
+            <id property="elderlyId" column="elderlyId"/>
+            <result property="elderlyName" column="elderlyName"/>
+            <result property="age" column="elderlyAge"/>
+            <result property="gender" column="elderlyGender"/>
+            <result property="contactInfo" column="elderlyContactInfo"/>
+            <result property="medicalHistory" column="elderlyMedicalHistory"/>
+            <result property="physicalCondition" column="elderlyPhysicalCondition"/>
+            <result property="checkInTime" column="elderlyCheckInTime"/>
+            <result property="checkOutTime" column="elderlyCheckOutTime"/>
+        </collection>
+    </resultMap>
+
+    <!-- 根据护工id查询护工信息 -->
+    <select id="findNurseById" resultType="com.example.nursing_center.controller.Result.AssignNurse">
+        SELECT
+            n.nurse_id AS nurseId,
+            n.name AS nurseName,
+            n.gender,
+            n.age,
+            n.contact_info AS contactInfo,
+            n.work_experience AS workExperience,
+            n.nurse_level AS nurseLevel,
+            n.service_evaluation AS serviceEvaluation
+        FROM nurse_info n
+        WHERE n.nurse_id = #{nurseId};
+    </select>
 </mapper>

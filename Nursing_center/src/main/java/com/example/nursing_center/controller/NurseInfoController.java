@@ -2,12 +2,17 @@ package com.example.nursing_center.controller;
 
 
 import com.example.nursing_center.common.Result;
+import com.example.nursing_center.common.ResultGeneric;
+import com.example.nursing_center.controller.Result.AssignNurse;
 import com.example.nursing_center.service.INurseInfoService;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  * <p>
@@ -26,6 +31,11 @@ public class NurseInfoController {
     @GetMapping("/getAll")
     public Result getAll() {
         return nurseInfoService.getAll();
+    }
+
+    @GetMapping("/getAllNurses")
+    public ResultGeneric<List<AssignNurse>> getAllNurses(@RequestParam(value = "nurseName", required = false) String nurseName) {
+        return nurseInfoService.getAllNurses(nurseName);
     }
 
 }

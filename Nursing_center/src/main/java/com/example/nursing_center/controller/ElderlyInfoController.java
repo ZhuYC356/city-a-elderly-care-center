@@ -2,10 +2,14 @@ package com.example.nursing_center.controller;
 
 
 import com.example.nursing_center.common.Result;
+import com.example.nursing_center.common.ResultGeneric;
+import com.example.nursing_center.controller.Result.AssignElderly;
 import com.example.nursing_center.controller.request.Info;
 import com.example.nursing_center.pojo.ElderlyInfo;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * <p>
@@ -51,5 +55,15 @@ public class ElderlyInfoController {
     @GetMapping("/getElderlyInfoByIdNumber/{idNumber}")
     public Result getElderlyInfoByIdNumber(@PathVariable String idNumber){
         return elderlyInfoService.getElderlyInfoByIdNumber(idNumber);
+    }
+
+
+    @GetMapping("/getAllElderly")
+    public ResultGeneric<List<AssignElderly>> getAllElderly() {
+        return elderlyInfoService.getAllElderly();
+    }
+    @GetMapping("/getElderlyWithoutNurse")
+    public ResultGeneric<List<AssignElderly>> getElderlyWithoutNurse(@RequestParam(value = "elderlyName", required = false) String elderlyName) {
+        return elderlyInfoService.getElderlyWithoutNurse(elderlyName);
     }
 }

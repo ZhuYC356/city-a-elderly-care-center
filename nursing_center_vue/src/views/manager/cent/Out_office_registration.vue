@@ -1,4 +1,4 @@
-<template>
+<template xmlns="">
   <div>
     <el-card style="height: 630px">
       <div>
@@ -103,67 +103,66 @@
           />
         </div>
 
-
-        <el-dialog v-model="dialogFormVisible" :visible.sync="dialogTableVisible" title="Shipping address" width="500">
-          <el-form>
-            <el-form-item label="外出记录ID" :label-width="formLabelWidth">
-              <el-input v-model="elderForm.outingId" autocomplete="off" :disabled="true"/>
-            </el-form-item>
-            <el-form-item label="老人ID" :label-width="formLabelWidth">
-              <el-input v-model="elderForm.elderlyId" autocomplete="off" :disabled="true"/>
-            </el-form-item>
-            <el-form-item label="外出日期" :label-width="formLabelWidth">
-              <el-date-picker v-model="elderForm.outingDate" type="date" placeholder="选择日期"/>
-            </el-form-item>
-            <el-form-item label="外出时间" :label-width="formLabelWidth">
-              <el-time-picker v-model="elderForm.outingTime" placeholder="选择时间"/>
-            </el-form-item>
-            <el-form-item label="目的地" :label-width="formLabelWidth">
-              <el-input v-model="elderForm.destination" autocomplete="off"/>
-            </el-form-item>
-            <el-form-item label="外出目的" :label-width="formLabelWidth">
-              <el-input v-model="elderForm.purpose" type="textarea" autocomplete="off"/>
-            </el-form-item>
-            <el-form-item label="陪同人员" :label-width="formLabelWidth">
-              <el-input v-model="elderForm.accompanyingPerson" autocomplete="off"/>
-            </el-form-item>
-            <el-form-item label="联系方式" :label-width="formLabelWidth">
-              <el-input v-model="elderForm.contactInfo" autocomplete="off"/>
-            </el-form-item>
-            <el-form-item label="备注" :label-width="formLabelWidth">
-              <el-input v-model="elderForm.remarks" type="textarea" autocomplete="off"/>
-            </el-form-item>
-            <el-form-item label="创建时间" :label-width="formLabelWidth">
-              <el-date-picker v-model="elderForm.createdAt" type="datetime" placeholder="选择创建时间" :disabled="true"/>
-            </el-form-item>
-            <el-form-item label="更新时间" :label-width="formLabelWidth">
-              <el-date-picker v-model="elderForm.updatedAt" type="datetime" placeholder="选择更新时间"/>
-            </el-form-item>
-            <el-form-item label="审核状态" :label-width="formLabelWidth">
-              <el-select v-model="elderForm.reviewStatus" placeholder="请选择">
-                <el-option label="未审核" value="0"/>
-                <el-option label="已审核" value="1"/>
-                <el-option label="审核未通过" value="-1"/>
-              </el-select>
-            </el-form-item>
-            <el-form-item label="状态" :label-width="formLabelWidth">
-              <el-select v-model="elderForm.status" placeholder="请选择">
-                <el-option label="可用" value="1"/>
-                <el-option label="不可用" value="0"/>
-              </el-select>
-            </el-form-item>
-          </el-form>
-
-          <template #footer>
-            <div class="dialog-footer">
-              <el-button @click="dialogTableVisible = false">取消</el-button>
-              <el-button type="primary" @click="dialogFormSubmit">
-                确认
-              </el-button>
-            </div>
-          </template>
-        </el-dialog>
       </div>
+      <el-dialog v-model="dialogFormVisible" :visible.sync="dialogTableVisible" title="外出登记详情" width="500">
+        <el-form>
+          <el-form-item label="外出记录ID" :label-width="formLabelWidth">
+            <el-input v-model="elderForm.outingId" autocomplete="off" :disabled="true"/>
+          </el-form-item>
+          <el-form-item label="老人ID" :label-width="formLabelWidth">
+            <el-input v-model="elderForm.elderlyId" autocomplete="off" :disabled="true"/>
+          </el-form-item>
+          <el-form-item label="外出日期" :label-width="formLabelWidth">
+            <el-date-picker v-model="elderForm.outingDate" type="date" placeholder="选择日期"/>
+          </el-form-item>
+          <el-form-item label="外出时间" :label-width="formLabelWidth">
+            <el-time-picker v-model="elderForm.outingTime" placeholder="选择时间"/>
+          </el-form-item>
+          <el-form-item label="目的地" :label-width="formLabelWidth">
+            <el-input v-model="elderForm.destination" autocomplete="off"/>
+          </el-form-item>
+          <el-form-item label="外出目的" :label-width="formLabelWidth">
+            <el-input v-model="elderForm.purpose" type="textarea" autocomplete="off"/>
+          </el-form-item>
+          <el-form-item label="陪同人员" :label-width="formLabelWidth">
+            <el-input v-model="elderForm.accompanyingPerson" autocomplete="off"/>
+          </el-form-item>
+          <el-form-item label="联系方式" :label-width="formLabelWidth">
+            <el-input v-model="elderForm.contactInfo" autocomplete="off"/>
+          </el-form-item>
+          <el-form-item label="备注" :label-width="formLabelWidth">
+            <el-input v-model="elderForm.remarks" type="textarea" autocomplete="off"/>
+          </el-form-item>
+          <el-form-item label="创建时间" :label-width="formLabelWidth">
+            <el-date-picker v-model="elderForm.createdAt" type="datetime" placeholder="选择创建时间" :disabled="true"/>
+          </el-form-item>
+          <el-form-item label="更新时间" :label-width="formLabelWidth">
+            <el-date-picker v-model="elderForm.updatedAt" type="datetime" placeholder="选择更新时间"/>
+          </el-form-item>
+          <el-form-item label="审核状态" :label-width="formLabelWidth">
+            <el-select v-model="elderForm.reviewStatus" placeholder="请选择">
+              <el-option label="未审核" value="0"/>
+              <el-option label="已审核" value="1"/>
+              <el-option label="审核未通过" value="-1"/>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="状态" :label-width="formLabelWidth">
+            <el-select v-model="elderForm.status" placeholder="请选择">
+              <el-option label="可用" value="1"/>
+              <el-option label="不可用" value="0"/>
+            </el-select>
+          </el-form-item>
+        </el-form>
+
+        <template #footer>
+          <div class="dialog-footer">
+            <el-button @click="dialogTableVisible = false">取消</el-button>
+            <el-button type="primary" @click="dialogFormSubmit">
+              确认
+            </el-button>
+          </div>
+        </template>
+      </el-dialog>
     </el-card>
   </div>
 </template>
