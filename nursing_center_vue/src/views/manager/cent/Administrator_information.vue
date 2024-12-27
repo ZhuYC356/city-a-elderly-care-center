@@ -39,6 +39,7 @@
                   :header-cell-style="{background:'#f3f6fd',color:'#555'}">
           <el-table-column type="selection" width="55"/>
           <el-table-column property="username" label="用户名" width="100"/>
+          <el-table-column property="name" label="姓名" width="100"/>
           <el-table-column property="phone" label="电话" width="150"/>
           <el-table-column property="email" label="邮箱" width="150"/>
           <el-table-column fixed="right" label="操作" min-width="120">
@@ -71,6 +72,9 @@
     <!--      新增管理员-->
     <el-dialog :visible.sync="dialogFormVisible" title="新增管理员" width="500">
       <el-form :model="riseAdmin" style="margin-top: 2px">
+        <el-form-item label="用户名:" :label-width="formLabelWidth">
+          <el-input v-model="riseAdmin.username" autocomplete="off"/>
+        </el-form-item>
         <el-form-item label="姓名:" :label-width="formLabelWidth">
           <el-input v-model="riseAdmin.name" autocomplete="off"/>
         </el-form-item>
@@ -79,6 +83,9 @@
         </el-form-item>
         <el-form-item label="邮箱:" :label-width="formLabelWidth">
           <el-input v-model="riseAdmin.email" autocomplete="off"/>
+        </el-form-item>
+        <el-form-item label="密码:" :label-width="formLabelWidth">
+          <el-input v-model="riseAdmin.password" autocomplete="off"/>
         </el-form-item>
       </el-form>
       <template #footer>
@@ -173,9 +180,10 @@ export default {
         this.$message.error("请填写完整信息")
       } else {
         this.$request.post('/admin/add', this.riseAdmin).then(res => {
-          if (res.code === 200) {
+          if (res.code === "200") {
             this.$message.success("添加成功")
             this.dialogFormVisible = false
+            location.reload()
           } else {
             this.$message.error("添加失败")
           }
@@ -195,13 +203,21 @@ export default {
     select() {
 
     },
-    deleteById(){
-
+    deleteById(index, row) {
+      if (!confirm("您确定删除吗？")) {
+        return
+      }
+      this.$request.get('/admin/deleteById/' + row.id).then(res => {
+        if (res.code === "200") {
+          this.$message.success("删除成功")
+        } else {
+          this.$message.error("删除失败")
+        }
+      })
+      location.reload()
     },
     clearAll() {
-      this.selectFrom = {
-
-      }
+      this.selectFrom = {}
     }
   },
   data() {
@@ -209,17 +225,19 @@ export default {
       updateInfo: {
         name: '',
         phone: '',
-        email:'',
+        email: '',
       },
       viewInfo: {
         name: '',
+        username: '',
         phone: '',
-        email:'',
+        email: '',
       },
       riseAdmin: {
         name: '',
+        password: '',
         phone: '',
-        email:'',
+        email: '',
       },
       dialogFormVisible: false,
       dialogFormVisibleView: false,

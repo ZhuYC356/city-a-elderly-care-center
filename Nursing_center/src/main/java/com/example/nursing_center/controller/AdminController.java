@@ -42,11 +42,17 @@ public class AdminController {
 
     @GetMapping("/getAll")
     public Result getAll() {
+        System.out.println("______________________________________________"+adminService.list());
         return Result.success(adminService.list());
     }
 
     @PostMapping("/add")
     public Result add(@RequestBody Admin admin) {
+        System.out.println(admin+"___________________________________-");
         return adminService.add(admin);
+    }
+    @GetMapping("/deleteById/{id}")
+    public Result deleteById(@PathVariable("id") Integer id) {
+        return adminService.removeById(id) ? Result.success() : Result.error();
     }
 }
