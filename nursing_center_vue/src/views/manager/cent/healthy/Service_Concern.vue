@@ -25,7 +25,7 @@
 
 
     <el-table :data="filterTableData" stripe :border="false" style="width: 100%"
-              max-height="650">
+              max-height="600">
       <el-table-column type="expand">
         <template #default="props">
           <div m="4" style="width: 90%;margin: auto;">
