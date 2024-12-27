@@ -65,21 +65,23 @@ public class BedInfoServiceImpl extends ServiceImpl<BedInfoMapper, BedInfo> impl
     @Override
     public Result getAllRoomByFloor(Integer floorNumber, Integer sing) {
         if (sing == 1) {
+            System.out.println("查询还有没住床位的房间号");
             return Result.success(bedInfoMapper.selectAllRoomByFloor(floorNumber));
         } else {
+//            查询已经住的人的房间号
             return Result.success(bedInfoMapper.selectAllRoomByFlooralready(floorNumber));
         }
 
     }
 
     @Override
-    public Result getAllBedByRoom(Integer roomNumber, Integer sing) {
+    public Result getAllBedByRoom(Integer roomNumber, Integer sing, Integer floorNumber) {
         if (sing == 1) {
-//            sing=1 代表的是查询未入住的
-            return Result.success(bedInfoMapper.getAllBedByRoom(roomNumber));
+//            sing=1 代表的是查询未住的床位
+            return Result.success(bedInfoMapper.getAllBedByRoomNot(roomNumber,floorNumber));
         } else {
-//            sing =2 代表的是查询已经入住的
-            return Result.success(bedInfoMapper.selectAllBedByRoomalready(roomNumber));
+//            sing =2 代表的是查询已经住的
+            return Result.success(bedInfoMapper.selectAllBedByRoomalready(roomNumber,floorNumber));
         }
 
     }

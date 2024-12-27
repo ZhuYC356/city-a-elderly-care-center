@@ -27,4 +27,6 @@ public interface IElderlyInfoService extends IService<ElderlyInfo> {
     Result getElderlyInfoByRoomAndBed(String roomNumber, String bedNumber, Integer floorNumber);
 
     Result getElderlyInfoByIdNumber(String idNumber);
+
+    Result getAllById(Integer id);
 }

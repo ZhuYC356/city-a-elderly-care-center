@@ -1,5 +1,6 @@
 package com.example.nursing_center.pojo;
 
+import cn.hutool.core.date.DateTime;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -43,7 +44,7 @@ public class CareProject implements Serializable {
      * 服务时长
      */
 //    @JsonFormat(timezone="GMT+8", pattern = "HH:mm:ss")
-    private LocalTime serviceDuration;
+    private DateTime serviceDuration;
 
     /**
      * 服务价格
@@ -101,13 +102,7 @@ public class CareProject implements Serializable {
     public void setDescription(String description) {
         this.description = description;
     }
-    public LocalTime getServiceDuration() {
-        return serviceDuration;
-    }
 
-    public void setServiceDuration(LocalTime serviceDuration) {
-        this.serviceDuration = serviceDuration;
-    }
     public BigDecimal getPrice() {
         return price;
     }
@@ -152,6 +147,22 @@ public class CareProject implements Serializable {
     }
     public String getStatus() {
         return status;
+    }
+
+    public DateTime getServiceDuration() {
+        return serviceDuration;
+    }
+
+    public void setServiceDuration(DateTime serviceDuration) {
+        this.serviceDuration = serviceDuration;
+    }
+
+    public Boolean getActive() {
+        return isActive;
+    }
+
+    public void setActive(Boolean active) {
+        isActive = active;
     }
 
     public void setStatus(String status) {

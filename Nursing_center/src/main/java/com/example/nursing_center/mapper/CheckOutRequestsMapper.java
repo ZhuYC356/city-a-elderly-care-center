@@ -30,4 +30,6 @@ public interface CheckOutRequestsMapper extends BaseMapper<CheckOutRequests> {
     List<BackForm> select(String name, Integer bedId, LocalDateTime checkInDate);
 
     Integer add(Info info);
+
+    int selectByIdCount(int elderlyId);
 }

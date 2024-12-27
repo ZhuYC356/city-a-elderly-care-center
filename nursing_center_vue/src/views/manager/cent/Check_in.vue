@@ -112,6 +112,9 @@
         <el-form-item label="家庭联系电话:" :label-width="formLabelWidth">
           <el-input v-model="riseElderly.familyContactInfo" autocomplete="off"/>
         </el-form-item>
+        <el-form-item label="家庭住址:" :label-width="formLabelWidth">
+          <el-input v-model="riseElderly.homeAddress" autocomplete="off"/>
+        </el-form-item>
         <el-form-item label="身体状况描述:" :label-width="formLabelWidth">
           <el-input v-model="riseElderly.physicalCondition" autocomplete="off"/>
         </el-form-item>
@@ -550,7 +553,7 @@ export default {
         if (this.riseElderly.roomNumber === '') {
           this.$message.error('请先选择房间号')
         } else {
-          this.$request.get('/bed-info/getAllBedByRoom/' + this.riseElderly.roomNumber + '/' + sing).then(res => {
+          this.$request.get('/bed-info/getAllBedByRoom/' + this.riseElderly.roomNumber + '/' + sing + '/' + this.riseElderly.floorNumber).then(res => {
             console.log(res.data)
             this.bedList = res.data
           })
@@ -559,7 +562,7 @@ export default {
         if (this.checkOutRequests.roomNumber === '') {
           this.$message.error('请先选择房间号')
         } else {
-          this.$request.get('/bed-info/getAllBedByRoom/' + this.checkOutRequests.roomNumber + '/' + sing).then(res => {
+          this.$request.get('/bed-info/getAllBedByRoom/' + this.checkOutRequests.roomNumber + '/' + sing + '/' + this.checkOutRequests.floorNumber).then(res => {
             console.log(res.data)
             this.checkOutRequestsBedList = res.data
           })
@@ -577,6 +580,7 @@ export default {
         this.checkOutRequests.bedId = res.data.bedId
         this.checkOutRequests.name = res.data.name
         this.checkOutRequests.idNumber = res.data.idNumber
+        this.checkOutRequests.familyContactInfo = res.data.familyContactInfo
         this.checkOutRequests.phoneNumber = res.data.familyContactInfo
       })
     },
@@ -670,6 +674,7 @@ export default {
     },
     handleClick(index, row) {
       this.dialogFormVisible3 = true
+      // console.log("老人Id:"+row.elderlyId)
       this.$request.get('/elderly-info/getById/' + row.elderlyId).then(res => {
         console.log(res.data)
         this.viewInfo = res.data
@@ -697,14 +702,22 @@ export default {
       console.log(`当前页: ${val}`);
     },
     saveCheckOutRequests() {
+      if (
+          this.checkOutRequests.checkoutDate === '' ||
+          this.checkOutRequests.checkoutType === '' ||
+          this.checkOutRequests.elderlyId === ''
+      ) {
+        this.$message.error('请填写完整信息')
+        return
+      }
       this.$request.post('/check-out-requests/add', this.checkOutRequests).then(res => {
-        if (res.data === 1) {
+        if (res.msg === "成功") {
           this.$message.success('申请成功')
         } else {
-          this.$message.error("申请失败")
+          this.$message.error(res.msg)
+          this.dialogFormVisible1 = false
         }
       })
-      this.dialogFormVisible2 = false
     }
   },
   data() {
@@ -764,7 +777,6 @@ export default {
         idNumber: '',
         checkoutDate: '',
         elderlyId: '',
-        checkOutDate: '',
         checkoutReason: '',
         checkoutType: '',
         approvalStatus: '',
@@ -799,6 +811,10 @@ export default {
         bedNumber: "",
         physicalCondition: "",
         nurseLevel: '',
+
+        homeAddress: '',
+        medicalHistory: '',
+        allergyHistory: ''
       },
       elderlyList: [],
       dialogFormVisible: false,

@@ -49,5 +49,7 @@ public interface BedInfoMapper extends BaseMapper<BedInfo> {
 
     List<Integer> selectAllRoomByFlooralready(Integer floorNumber);
 
-    List<Integer> selectAllBedByRoomalready(Integer roomNumber);
+    List<Integer> selectAllBedByRoomalready(Integer roomNumber, Integer floorNumber);
+
+    List<Integer> getAllBedByRoomNot(Integer roomNumber, Integer floorNumber);
 }

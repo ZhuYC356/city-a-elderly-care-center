@@ -46,6 +46,11 @@
         </if>
 
     </select>
+    <select id="selectByIdCount" resultType="java.lang.Integer">
+        SELECT COUNT(*)
+        FROM check_out_requests
+        WHERE elderly_id = #{elderlyId}
+    </select>
 
     <update id="updateApprovalStatus" >
         update check_out_requests

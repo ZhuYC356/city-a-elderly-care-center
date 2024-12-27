@@ -31,7 +31,8 @@ public class ElderlyInfoController {
     }
     @GetMapping("/getById/{id}")
     public Result getById(@PathVariable Integer id){
-        return Result.success(elderlyInfoService.getById(id));
+        System.out.println("++++++++++++++++++++++++++++"+id+"__________________________");
+        return elderlyInfoService.getAllById(id);
     }
     @PostMapping("/selectByFrom")
     public Result selectByFrom(@RequestBody ElderlyInfo elderlyInfo){
