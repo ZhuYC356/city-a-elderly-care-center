@@ -14,10 +14,6 @@
       <el-table-column type="expand">
         <template #default="props">
           <div m="4" style="width: 90%;margin: auto;">
-            <p m="t-0 b-2">State: {{ props.row.state }}</p>
-            <p m="t-0 b-2">City: {{ props.row.city }}</p>
-            <p m="t-0 b-2">Address: {{ props.row.address }}</p>
-            <p m="t-0 b-2">Zip: {{ props.row.zip }}</p>
             <h2>护理服务项目</h2>
             <el-table :data="props.row.family" :border="true">
               <el-table-column label="项目名称" prop="name" />
