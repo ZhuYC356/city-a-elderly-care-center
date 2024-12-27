@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.Data;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -20,6 +21,7 @@ import java.time.LocalTime;
  * @since 2024-12-19
  */
 @TableName("care_project")
+@Data
 public class CareProject implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -44,7 +46,7 @@ public class CareProject implements Serializable {
      * 服务时长
      */
 //    @JsonFormat(timezone="GMT+8", pattern = "HH:mm:ss")
-    private DateTime serviceDuration;
+    private LocalTime serviceDuration;
 
     /**
      * 服务价格
@@ -149,13 +151,13 @@ public class CareProject implements Serializable {
         return status;
     }
 
-    public DateTime getServiceDuration() {
-        return serviceDuration;
-    }
-
-    public void setServiceDuration(DateTime serviceDuration) {
-        this.serviceDuration = serviceDuration;
-    }
+//    public DateTime getServiceDuration() {
+//        return serviceDuration;
+//    }
+//
+//    public void setServiceDuration(DateTime serviceDuration) {
+//        this.serviceDuration = serviceDuration;
+//    }
 
     public Boolean getActive() {
         return isActive;

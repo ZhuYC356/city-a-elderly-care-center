@@ -1,7 +1,10 @@
 package com.example.nursing_center.mapper;
 
+import com.example.nursing_center.common.Result;
 import com.example.nursing_center.pojo.Financial;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +16,5 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface FinancialMapper extends BaseMapper<Financial> {
 
+    List<Financial> getAll();
 }
