@@ -1,8 +1,12 @@
 package com.example.nursing_center.service;
 
 import com.example.nursing_center.common.Result;
+import com.example.nursing_center.common.ResultGeneric;
+import com.example.nursing_center.controller.Result.AssignNurse;
 import com.example.nursing_center.pojo.NurseInfo;
 import com.baomidou.mybatisplus.extension.service.IService;
+
+import java.util.List;
 
 /**
  * <p>
@@ -15,4 +19,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
 public interface INurseInfoService extends IService<NurseInfo> {
 
     Result getAll();
+    ResultGeneric<List<AssignNurse>> getAllNurses(String nurseName);
 }

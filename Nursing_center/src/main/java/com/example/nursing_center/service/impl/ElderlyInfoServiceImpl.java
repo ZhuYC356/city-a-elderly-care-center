@@ -2,6 +2,8 @@ package com.example.nursing_center.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.nursing_center.common.Result;
+import com.example.nursing_center.common.ResultGeneric;
+import com.example.nursing_center.controller.Result.AssignElderly;
 import com.example.nursing_center.controller.request.Info;
 import com.example.nursing_center.mapper.BedInfoMapper;
 import com.example.nursing_center.mapper.ElderlyInfoMapper;
@@ -10,6 +12,8 @@ import com.example.nursing_center.pojo.ElderlyInfo;
 import com.example.nursing_center.service.IElderlyInfoService;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * <p>
@@ -77,5 +81,18 @@ public class ElderlyInfoServiceImpl extends ServiceImpl<ElderlyInfoMapper, Elder
     @Override
     public Result getAllById(Integer id) {
         return Result.success(elderlyInfoMapper.getAllById(id));
+    }
+
+
+    @Override
+    public ResultGeneric<List<AssignElderly>> getAllElderly() {
+        List<AssignElderly> elderlyList = elderlyInfoMapper.findAllElderly();
+        return new ResultGeneric<>(elderlyList);
+    }
+
+    @Override
+    public ResultGeneric<List<AssignElderly>> getElderlyWithoutNurse(String elderlyName) {
+        List<AssignElderly> elderlyList = elderlyInfoMapper.findElderlyWithoutNurse(elderlyName);
+        return new ResultGeneric<>(elderlyList);
     }
 }

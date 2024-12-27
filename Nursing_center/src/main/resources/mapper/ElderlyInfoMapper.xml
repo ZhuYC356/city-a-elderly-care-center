@@ -87,4 +87,62 @@
         where elderly_info.bed_id = bed_info.bed_id
         and elderly_info.elderly_id=#{id}
     </select>
+
+
+    <select id="findAllElderly" resultType="com.example.nursing_center.controller.Result.AssignElderly">
+        SELECT
+            e.elderly_id AS elderlyId,
+            e.name AS elderlyName,
+            e.age,
+            e.gender,
+            e.contact_info AS contactInfo,
+            e.medical_history AS medicalHistory,
+            e.nurse_id AS nurseId,
+            n.name AS nurseName,
+            e.nurse_level AS nurseLevel,
+            e.check_in_time AS checkInTime,
+            e.check_out_time AS checkOutTime,
+            e.physical_condition AS physicalCondition
+        FROM elderly_info e
+                 LEFT JOIN nurse_info n ON e.nurse_id = n.nurse_id;
+    </select>
+
+    <!-- 查询没有护工的老人信息 -->
+    <select id="findElderlyWithoutNurse" resultType="com.example.nursing_center.controller.Result.AssignElderly">
+        SELECT
+        e.elderly_id AS elderlyId,
+        e.name AS elderlyName,
+        e.age,
+        e.gender,
+        e.contact_info AS contactInfo,
+        e.medical_history AS medicalHistory,
+        e.nurse_id AS nurseId,
+        NULL AS nurseName,  <!-- 因为没有护工，所以为NULL -->
+        NULL AS nurseLevel,
+        e.check_in_time AS checkInTime,
+        e.check_out_time AS checkOutTime,
+        e.physical_condition AS physicalCondition
+        FROM elderly_info e
+        LEFT JOIN nurse_info n ON e.nurse_id = n.nurse_id
+        WHERE e.nurse_id IS NULL
+        <if test="elderlyName != null and elderlyName != ''">
+            AND e.name LIKE CONCAT('%', #{elderlyName}, '%')
+        </if>
+    </select>
+
+    <!-- 更新老人的护工信息 -->
+    <update id="updateNurseForElderly">
+        UPDATE elderly_info
+        SET nurse_id = #{nurseId}
+        WHERE elderly_id = #{elderlyId};
+    </update>
+
+    <!-- 移除老人的护工信息 -->
+    <update id="removeNurseFromElderly">
+        UPDATE elderly_info
+        SET nurse_id = NULL
+        WHERE elderly_id = #{elderlyId};
+    </update>
+
+
 </mapper>
