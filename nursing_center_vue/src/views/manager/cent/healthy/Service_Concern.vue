@@ -10,7 +10,21 @@
       <hr style="margin: 10px">
     </div>
 
-    <el-table :data="tableData" stripe :border="false" style="width: 100%"
+
+
+    <el-row :gutter="20" style="margin: 20px">
+      <el-col :span="6">
+        <el-input v-model="search" size="large" clearable placeholder="请输入客户姓名" prefix-icon="el-icon-search">
+          <template #prepend>
+            <h3 style="color: #409EFF">查询客户信息</h3>
+          </template>
+        </el-input>
+      </el-col>
+    </el-row>
+
+
+
+    <el-table :data="filterTableData" stripe :border="false" style="width: 100%"
               max-height="650">
       <el-table-column type="expand">
         <template #default="props">
@@ -51,7 +65,7 @@
 </style>
 
 <script setup>
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 
 const tableData = [
   {
@@ -85,7 +99,7 @@ const tableData = [
     ],
   },
   {
-    name: '张三',
+    name: '李四',
     gender: '男',
     age: '67',
     idNumber: '410303197201104081',
@@ -115,7 +129,7 @@ const tableData = [
     ],
   },
   {
-    name: '张三',
+    name: '威龙',
     gender: '男',
     age: '67',
     idNumber: '410303197201104081',
@@ -145,7 +159,37 @@ const tableData = [
     ],
   },
   {
-    name: '张三',
+    name: '阿巴阿巴',
+    gender: '男',
+    age: '67',
+    idNumber: '410303197201104081',
+    nurseName: 'CA 94114',
+    family: [
+      {
+        projectName: '全套按摩马萨基',
+        description: '从头给你按到脚',
+        careStatus: '到期',
+        careEndTime: '2024-12-26',
+        price: '998.00',
+      },
+      {
+        projectName: '尼哥同款鞭策套餐',
+        description: '给你原汁原味的尼哥体验',
+        careStatus: '欠费',
+        careEndTime: '2025-01-01',
+        price: '198.00',
+      },
+      {
+        projectName: '麦小鼠电疗服务',
+        description: '猛攻！',
+        careStatus: '未到期',
+        careEndTime: '2024-12-28',
+        price: '648.00',
+      },
+    ],
+  },
+  {
+    name: '印度阿三',
     gender: '男',
     age: '67',
     idNumber: '410303197201104081',
@@ -175,5 +219,15 @@ const tableData = [
     ],
   },
 ]
+
+
+const search = ref('')
+const filterTableData = computed(() =>
+    tableData.filter(
+        (data) =>
+            !search.value ||
+            data.name.toLowerCase().includes(search.value.toLowerCase())
+    )
+)
 
 </script>
