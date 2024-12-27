@@ -1,5 +1,6 @@
 package com.example.nursing_center.service;
 
+import com.example.nursing_center.common.Result;
 import com.example.nursing_center.controller.Result.Login;
 import com.example.nursing_center.pojo.Admin;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -19,4 +20,5 @@ public interface IAdminService extends IService<Admin> {
 
     List<Admin> Login(Login login);
 
+    Result add(Admin admin);
 }

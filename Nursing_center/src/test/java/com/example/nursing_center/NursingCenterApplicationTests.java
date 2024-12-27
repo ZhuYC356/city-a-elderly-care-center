@@ -3,10 +3,12 @@ package com.example.nursing_center;
 import cn.hutool.core.date.DateTime;
 import cn.hutool.json.JSONUtil;
 import com.example.nursing_center.common.Result;
+import com.example.nursing_center.controller.Result.Login;
 import com.example.nursing_center.controller.request.Info;
 import com.example.nursing_center.mapper.BedInfoMapper;
 import com.example.nursing_center.pojo.BedElderlyAssociation;
 import com.example.nursing_center.pojo.ElderlyInfo;
+import com.example.nursing_center.pojo.NurseInfo;
 import com.example.nursing_center.service.IElderlyInfoService;
 import jakarta.annotation.Resource;
 import org.junit.jupiter.api.Test;
@@ -95,7 +97,25 @@ class NursingCenterApplicationTests {
     }
     @Test
     public void test4() {
-
+        NurseInfo nurseInfo = new NurseInfo();
+        nurseInfo.setNurseId(1);
+        nurseInfo.setName("小明");
+        nurseInfo.setGender("M");
+        nurseInfo.setAge(10);
+        nurseInfo.setContactInfo("123456789");
+        nurseInfo.setWorkExperience("123456789");
+        nurseInfo.setProfessionalCertificate("123456789");
+        nurseInfo.setIdNumber("123456789");
+        nurseInfo.setServiceEvaluation("123456789");
+        nurseInfo.setNurseLevel(1);
+        System.out.println(JSONUtil.toJsonStr(nurseInfo));
+    }
+    @Test
+    public void test5() {
+        Login  login = new Login();
+        login.setUsername("admin");
+        login.setPassword("123456");
+        System.out.println(JSONUtil.toJsonStr(login));
     }
 
 }

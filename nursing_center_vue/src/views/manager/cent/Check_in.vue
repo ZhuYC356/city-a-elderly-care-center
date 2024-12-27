@@ -453,44 +453,12 @@
             <el-option label="低级" value="4"/>
           </el-select>
         </el-form-item>
-        <el-form-item label="更改护工:" :label-width="formLabelWidth">
-          <el-select v-model="updateInfo.nurseId" placeholder="更改护工">
-            <el-option label="张三" value="1"/>
-            <el-option label="李四" value="2"/>
-            <el-option label="王五" value="3"/>
-            <el-option label="赵六" value="4"/>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="选择楼号:" :label-width="formLabelWidth">
-          <el-select v-model="updateInfo.floorNumber" placeholder="选择楼号">
-            <el-option label="5号楼" value="1"/>
-            <el-option label="6号楼" value="2"/>
-            <el-option label="7号楼" value="3"/>
-            <el-option label="8号楼" value="4"/>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="选择房间号:" :label-width="formLabelWidth">
-          <el-select v-model="updateInfo.roomNumber" placeholder="选择房间号">
-            <el-option label="101" value="1"/>
-            <el-option label="102" value="2"/>
-            <el-option label="103" value="3"/>
-            <el-option label="104" value="4"/>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="选择床位:" :label-width="formLabelWidth">
-          <el-select v-model="updateInfo.bedId" placeholder="选择床位">
-            <el-option label="1" value="1"/>
-            <el-option label="2" value="2"/>
-            <el-option label="3" value="3"/>
-            <el-option label="4" value="4"/>
-          </el-select>
-        </el-form-item>
       </el-form>
       <template #footer>
         <div class="dialog-footer">
           <el-button @click="dialogFormVisible4 = false">取消</el-button>
           <el-button type="primary" @click="saveUpdate()">
-            保存修改
+            修改
           </el-button>
         </div>
       </template>

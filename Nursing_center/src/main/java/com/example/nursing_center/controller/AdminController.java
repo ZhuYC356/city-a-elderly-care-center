@@ -6,11 +6,7 @@ import com.example.nursing_center.util.MD5Util;
 import com.example.nursing_center.common.Result;
 import com.example.nursing_center.pojo.Admin;
 import jakarta.annotation.Resource;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -27,19 +23,30 @@ import java.util.List;
 public class AdminController {
     @Resource
     private IAdminService adminService;
+
     @PostMapping("/register")
-    public Result register(@RequestBody Admin admin){
-        String encry= MD5Util.encrypt(admin.getPassword());
+    public Result register(@RequestBody Admin admin) {
+        String encry = MD5Util.encrypt(admin.getPassword());
         admin.setPassword(encry);
-        Integer result =adminService.register(admin);
-        return result==1? Result.success():Result.error();
-    }
-    @PostMapping("/login")
-    public Result login(@RequestBody Login login){
-        login.setPassword(MD5Util.encrypt(login.getPassword()));
-        System.out.println(login.getPassword());
-        List<Admin> list=adminService.Login(login);
-        return list.isEmpty()==false? Result.success():Result.error();
+        Integer result = adminService.register(admin);
+        return result == 1 ? Result.success() : Result.error();
     }
 
+    @PostMapping("/login")
+    public Result login(@RequestBody Login login) {
+        login.setPassword(MD5Util.encrypt(login.getPassword()));
+        System.out.println(login.getPassword());
+        List<Admin> list = adminService.Login(login);
+        return !list.isEmpty() ? Result.success() : Result.error();
+    }
+
+    @GetMapping("/getAll")
+    public Result getAll() {
+        return Result.success(adminService.list());
+    }
+
+    @PostMapping("/add")
+    public Result add(@RequestBody Admin admin) {
+        return adminService.add(admin);
+    }
 }

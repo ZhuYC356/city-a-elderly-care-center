@@ -1,5 +1,6 @@
 package com.example.nursing_center.mapper;
 
+import com.example.nursing_center.common.Result;
 import com.example.nursing_center.controller.Result.Login;
 import com.example.nursing_center.pojo.Admin;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
@@ -18,4 +19,9 @@ public interface AdminMapper extends BaseMapper<Admin> {
     Integer register(Admin admin);
 
     List<Admin> Login(Login login);
+
+
+    Integer add(Admin admin);
+
+    int selectByIdCount(String username);
 }
