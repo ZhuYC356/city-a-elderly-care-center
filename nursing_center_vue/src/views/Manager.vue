@@ -106,7 +106,7 @@ export default {
     }
   },
   created() {
-    this.user = JSON.parse(localStorage.getItem('user'))
+    this.user = JSON.parse(localStorage.getItem('nursing_center_user'))
   },
   methods: {
     updateUser() {

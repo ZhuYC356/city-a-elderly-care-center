@@ -103,7 +103,7 @@ export default {
           this.$message.success('登录成功,正在跳转')
           this.$router.push('/')  // 跳转主页
           console.log(res.data)
-          localStorage.setItem('user', JSON.stringify(res.data));
+          localStorage.setItem('nursing_center_user', JSON.stringify(res.data));
         } else {
           this.$message.error(res.msg)
         }
