@@ -40,6 +40,14 @@
           <el-table-column type="selection" width="55"/>
           <el-table-column property="username" label="用户名" width="100"/>
           <el-table-column property="name" label="姓名" width="100"/>
+          <el-table-column label="头像" width="70">
+            <template v-slot="scope">
+              <div style="display: flex; align-items: center">
+                <el-image style=" height: 40px; border-radius: 50%" v-if="scope.row.avatar"
+                          :src="scope.row.avatar" :preview-src-list="[scope.row.avatar]"></el-image>
+              </div>
+            </template>
+          </el-table-column>
           <el-table-column property="phone" label="电话" width="150"/>
           <el-table-column property="email" label="邮箱" width="150"/>
           <el-table-column fixed="right" label="操作" min-width="120">
@@ -86,6 +94,15 @@
         </el-form-item>
         <el-form-item label="密码:" :label-width="formLabelWidth">
           <el-input v-model="riseAdmin.password" autocomplete="off"/>
+        </el-form-item>
+        <el-form-item :label-width="formLabelWidth" label="照片" prop="avatar">
+          <el-upload
+              :action="$baseUrl + '/files/upload'"
+              list-type="picture"
+              :on-success="handleCoverSuccess"
+          >
+            <el-button type="primary">上传照片</el-button>
+          </el-upload>
         </el-form-item>
       </el-form>
       <template #footer>
@@ -169,11 +186,14 @@
 export default {
   name: "管理员信息",
   mounted() {
-    this.$request.get('/admin/getAll').then(res => {
-      this.tableData = res.data
-    })
+    this.gayAll()
   },
   methods: {
+    gayAll(){
+      this.$request.get('/admin/getAll').then(res => {
+        this.tableData = res.data
+      })
+    },
     submit() {
       if (this.riseAdmin.name === '' ||
           this.riseAdmin.phone === '') {
@@ -183,7 +203,7 @@ export default {
           if (res.code === "200") {
             this.$message.success("添加成功")
             this.dialogFormVisible = false
-            location.reload()
+            this.gayAll()
           } else {
             this.$message.error("添加失败")
           }
@@ -214,11 +234,14 @@ export default {
           this.$message.error("删除失败")
         }
       })
-      location.reload()
+      this.gayAll()
     },
     clearAll() {
       this.selectFrom = {}
-    }
+    },
+    handleCoverSuccess(res) {
+      this.riseAdmin.avatar = res.data
+    },
   },
   data() {
     return {
@@ -238,6 +261,7 @@ export default {
         password: '',
         phone: '',
         email: '',
+        avatar:'',
       },
       dialogFormVisible: false,
       dialogFormVisibleView: false,

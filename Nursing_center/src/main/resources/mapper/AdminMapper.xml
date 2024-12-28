@@ -18,8 +18,8 @@
         VALUES (#{username}, #{password},#{name},#{avatar},#{role},#{email})
     </insert>
     <insert id="add">
-        INSERT INTO admin (username, password, name,role,email,phone)
-        VALUES (#{username}, #{password},#{name},#{role},#{email},#{phone})
+        INSERT INTO admin (username, password, name,role,email,phone,avatar)
+        VALUES (#{username}, #{password},#{name},#{role},#{email},#{phone},#{avatar})
     </insert>
     <select id="Login" resultType="com.example.nursing_center.pojo.Admin">
         select * from admin where username=#{username} and password=#{password}

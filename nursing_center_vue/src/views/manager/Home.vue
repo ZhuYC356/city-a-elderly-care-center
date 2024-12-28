@@ -3,6 +3,7 @@
     <div class="card" style="padding: 15px">
       您好，{{ user?.name }}！欢迎使用本系统
     </div>
+
     <div style="display: flex; margin: 10px 0">
       <div style="width: 100%;" class="card">
         <div style="margin-bottom: 30px; font-size: 20px; font-weight: bold">公告列表</div>
@@ -86,17 +87,34 @@ export default {
         sumNurse: 20,
         sumService: 49
       },
-      user: JSON.parse(localStorage.getItem('user')),
+      form: {
+        title: '',
+        content: '',
+        username:'',
+      },
+      user:{},
       notices: []
     }
   },
   created() {
+    this.user = JSON.parse(localStorage.getItem('nursing_center_user'))
+    this.form.username = this.user.username
     this.getNotice()
   },
   methods: {
     getNotice() {
       this.$request.get('/notice/list').then(res => {
         this.notices = res.data
+      })
+    },
+    addNotice(){
+      this.$request.post('/notice/add', this.form).then(res => {
+        if (res.code === "200") {
+          this.$message.success('添加成功')
+          this.getNotice()
+        } else {
+          this.$message.error('添加失败')
+        }
       })
     }
   },

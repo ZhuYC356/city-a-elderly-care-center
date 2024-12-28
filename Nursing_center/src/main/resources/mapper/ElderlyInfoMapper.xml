@@ -2,8 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.nursing_center.mapper.ElderlyInfoMapper">
     <insert id="add">
-        insert into elderly_info(name, id_number, age, gender, family_contact_info, bed_id,nurse_id,self_care_status,nurse_level,check_in_time,home_address)
-        values (#{name}, #{idNumber}, #{age}, #{gender}, #{familyContactInfo}, #{bedId},#{nurseId},#{selfCareStatus},#{nurseLevel},now(),#{homeAddress})
+        insert into elderly_info(name, id_number, age, gender, family_contact_info, bed_id, nurse_id, self_care_status,
+                                 nurse_level, check_in_time, home_address,avatar)
+        values (#{name}, #{idNumber}, #{age}, #{gender}, #{familyContactInfo}, #{bedId}, #{nurseId}, #{selfCareStatus},
+                #{nurseLevel}, now(), #{homeAddress}, #{avatar})
     </insert>
 
     <select id="getAll" resultType="com.example.nursing_center.controller.request.Info">
@@ -15,7 +17,8 @@
                family_contact_info,
                bed_number,
                floor_number,
-               room_number
+               room_number,
+               avatar
         from elderly_info,
              bed_info,
              bed_elderly_association
@@ -81,7 +84,8 @@
                room_number,
                home_address,
                medical_history,
-               allergy_history
+               allergy_history,
+               avatar
         from elderly_info,
              bed_info
         where elderly_info.bed_id = bed_info.bed_id
