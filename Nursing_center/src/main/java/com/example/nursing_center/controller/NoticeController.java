@@ -2,12 +2,10 @@ package com.example.nursing_center.controller;
 
 
 import com.example.nursing_center.common.Result;
+import com.example.nursing_center.pojo.Notice;
 import com.example.nursing_center.service.INoticeService;
 import jakarta.annotation.Resource;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * <p>
@@ -25,5 +23,9 @@ public class NoticeController {
     @GetMapping("/list")
     public Result list(){
         return noticeService.gatAll();
+    }
+    @PostMapping("/add")
+    public Result add(@RequestBody Notice notice){
+        return noticeService.add(notice);
     }
 }

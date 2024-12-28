@@ -16,4 +16,6 @@ import java.util.List;
 public interface NoticeMapper extends BaseMapper<Notice> {
 
     List<Notice> gatAll();
+
+    Integer add(Notice notice);
 }

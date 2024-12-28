@@ -15,4 +15,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
 public interface INoticeService extends IService<Notice> {
 
     Result gatAll();
+
+    Result add(Notice notice);
 }
