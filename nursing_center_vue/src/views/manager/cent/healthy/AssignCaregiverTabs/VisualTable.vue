@@ -72,8 +72,8 @@ export default {
       axios
           .get("http://127.0.0.1:9090/elderly-info/countNurseId")
           .then((res) => {
-            console.log("统计 nurseId 为空和不为空的个数");
-            console.log(res.data);
+            // console.log("统计 nurseId 为空和不为空的个数");
+            // console.log(res.data);
             this.withoutAssigned = res.data.nurseIdIsNull;
             this.hasAssigned = res.data.nurseIdIsNotNull;
             let myChartElderly = echarts.init(document.getElementById('echarsElderly'));

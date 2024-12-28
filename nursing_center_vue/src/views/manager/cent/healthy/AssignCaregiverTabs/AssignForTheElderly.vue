@@ -36,7 +36,7 @@
         <el-table-column property="physicalCondition" label="身体状况描述"/>
         <el-table-column fixed="right" label="更换/添加护工">
           <template #default="scope">
-            <el-button link type="primary" size="small" plain @click="handleClick(scope.$index, scope.row)"><span
+            <el-button link type="success" size="small" plain @click="handleClick(scope.$index, scope.row)"><span
                 style="font-weight: bolder">修 改</span>
             </el-button>
           </template>
@@ -57,10 +57,10 @@
     </div>
 
     <!--    抽屉-->
-    <el-drawer title="健康管家更改为" :visible.sync="drawerTableVisible" :before-close="handleClose" size="600px">
+    <el-drawer title="健康管家更改为" :visible.sync="drawerTableVisible" :before-close="handleClose" size="530px">
       <div style="margin-top: 0px">
         <el-radio-group v-model="radioNurse" size="medium">
-          <el-radio-button v-for="nurse in nurseData" :label="nurse" :key="nurse"  style="width: 270px" >
+          <el-radio-button v-for="nurse in nurseData" :label="nurse" :key="nurse"  style="width: 250px" >
             <el-card>
               <el-descriptions :title="nurse.name"  :column="1">
                 <el-descriptions-item label="护工ID号">{{nurse.nurseId}}</el-descriptions-item>

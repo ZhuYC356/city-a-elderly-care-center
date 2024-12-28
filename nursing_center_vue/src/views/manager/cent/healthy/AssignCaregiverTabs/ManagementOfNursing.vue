@@ -56,58 +56,70 @@
       </div>
     </div>
     <!--    展示细节的抽屉-->
-    <el-drawer title="负责的老人有" :visible.sync="detailsDrawerTableVisible" :before-close="detailsClose" size="600px">
-      <div style="margin-top: 0px">
-        <el-radio-group v-model="radioNurse" size="medium">
-          <el-radio-button v-for="nurse in nurseData" :label="nurse" :key="nurse"  style="width: 270px" >
+    <el-drawer title="负责的老人有" :visible.sync="detailsDrawerTableVisible" :before-close="detailsClose" size="530px">
+      <div style="margin-top: -10px">
+        <el-alert
+            title="注意！选中即代表移除负责该老人，可选择多个"
+            type="error" center style="margin: 10px;width: 500px">
+        </el-alert>
+        <el-alert
+            title="该健康管家暂时没有负责的老人"
+            type="info" center style="margin: 10px;width: 500px" v-show="this.elderlyData.length==0">
+        </el-alert>
+        <el-checkbox-group v-model="detailsElderly" size="medium">
+          <el-checkbox-button v-for="elderly in elderlyData" :label="elderly" :key="elderly" style="width: 250px">
             <el-card>
-              <el-descriptions :title="nurse.name"  :column="1">
-                <el-descriptions-item label="老人ID号">{{nurse.nurseId}}</el-descriptions-item>
-                <el-descriptions-item label="老人姓名">{{nurse.nurseName}}</el-descriptions-item>
-                <el-descriptions-item label="老人性别">{{nurse.gender}}</el-descriptions-item>
-                <el-descriptions-item label="老人年龄">{{nurse.gender}}</el-descriptions-item>
-                <el-descriptions-item label="联系方式">{{nurse.contactInfo}}</el-descriptions-item>
+              <el-descriptions :title="elderly.name" :column="1">
+                <el-descriptions-item label="老人ID号">{{ elderly.elderlyId }}</el-descriptions-item>
+                <el-descriptions-item label="老人姓名">{{ elderly.name }}</el-descriptions-item>
+                <el-descriptions-item label="老人性别">{{ elderly.age }}</el-descriptions-item>
+                <el-descriptions-item label="老人年龄">{{ elderly.gender }}</el-descriptions-item>
+                <el-descriptions-item label="联系方式">{{ elderly.contactInfo }}</el-descriptions-item>
                 <el-descriptions-item label="自理能力等级">
-                  <el-tag v-if="nurse.nurseLevel==1" type="danger">不自理</el-tag>
-                  <el-tag v-else-if="nurse.nurseLevel==2" type="warning">部分自理</el-tag>
-                  <el-tag v-else-if="nurse.nurseLevel==3" type="success">自行disabled</el-tag>
+                  <el-tag v-if="elderly.selfCareStatus==1" type="danger">不自理</el-tag>
+                  <el-tag v-else-if="elderly.selfCareStatus==2" type="warning">部分自理</el-tag>
+                  <el-tag v-else-if="elderly.selfCareStatus==3" type="success">自行disabled</el-tag>
                 </el-descriptions-item>
-                <el-descriptions-item label="入住状态">
-                  <el-tag v-if="nurse.nurseLevel==1" type="success">已入住</el-tag>
-                  <el-tag v-else-if="nurse.nurseLevel==0" type="info">已离开</el-tag>
+                <el-descriptions-item label="身体状态">
+                  <el-tag type="info">{{ elderly.physicalCondition }}</el-tag>
                 </el-descriptions-item>
               </el-descriptions>
             </el-card>
-          </el-radio-button>
-        </el-radio-group>
+          </el-checkbox-button>
+        </el-checkbox-group>
       </div>
 
     </el-drawer>
     <!--    添加老人的抽屉-->
-    <el-drawer title="可添加的老人有" :visible.sync="addDrawerTableVisible" :before-close="addClose" size="600px">
+    <el-drawer title="可添加的老人有" :visible.sync="addDrawerTableVisible" :before-close="addClose" size="530px">
       <div style="margin-top: 0px">
-        <el-radio-group v-model="radioNurse" size="medium">
-          <el-radio-button v-for="nurse in nurseData" :label="nurse" :key="nurse"  style="width: 270px" >
+        <el-alert
+            title="所有老人均已分配护工了"
+            type="info" center style="margin: 10px;width: 500px" v-show="this.nurseIsNullElderly.length==0">
+        </el-alert>
+
+        <el-checkbox-group v-model="addElderly" size="medium">
+          <el-checkbox-button v-for="elderly in nurseIsNullElderly" :label="elderly" :key="elderly"
+                              style="width: 250px">
             <el-card>
-              <el-descriptions :title="nurse.name"  :column="1">
-                <el-descriptions-item label="老人ID号">{{nurse.nurseId}}</el-descriptions-item>
-                <el-descriptions-item label="老人姓名">{{nurse.nurseName}}</el-descriptions-item>
-                <el-descriptions-item label="老人性别">{{nurse.gender}}</el-descriptions-item>
-                <el-descriptions-item label="老人年龄">{{nurse.gender}}</el-descriptions-item>
-                <el-descriptions-item label="联系方式">{{nurse.contactInfo}}</el-descriptions-item>
+              <el-descriptions :title="elderly.elderlyName" :column="1">
+                <el-descriptions-item label="老人ID号">{{ elderly.elderlyId }}</el-descriptions-item>
+                <el-descriptions-item label="老人姓名">{{ elderly.elderlyName }}</el-descriptions-item>
+                <el-descriptions-item label="老人性别">{{ elderly.age }}</el-descriptions-item>
+                <el-descriptions-item label="老人年龄">{{ elderly.gender }}</el-descriptions-item>
+                <el-descriptions-item label="联系方式">{{ elderly.contactInfo }}</el-descriptions-item>
                 <el-descriptions-item label="自理能力等级">
-                  <el-tag v-if="nurse.nurseLevel==1" type="danger">不自理</el-tag>
-                  <el-tag v-else-if="nurse.nurseLevel==2" type="warning">部分自理</el-tag>
-                  <el-tag v-else-if="nurse.nurseLevel==3" type="success">自行disabled</el-tag>
+                  <el-tag v-if="elderly.selfCareStatus==1" type="danger">不自理</el-tag>
+                  <el-tag v-else-if="elderly.selfCareStatus==2" type="warning">部分自理</el-tag>
+                  <el-tag v-else-if="elderly.selfCareStatus==3" type="success">自行disabled</el-tag>
                 </el-descriptions-item>
-                <el-descriptions-item label="入住状态">
-                  <el-tag v-if="nurse.nurseLevel==1" type="success">已入住</el-tag>
-                  <el-tag v-else-if="nurse.nurseLevel==0" type="info">已离开</el-tag>
+                <el-descriptions-item label="身体状态">
+                  <el-tag type="info">{{ elderly.physicalCondition }}</el-tag>
                 </el-descriptions-item>
               </el-descriptions>
             </el-card>
-          </el-radio-button>
-        </el-radio-group>
+          </el-checkbox-button>
+        </el-checkbox-group>
       </div>
 
     </el-drawer>
@@ -121,6 +133,7 @@ export default {
   name: "out-office-registration",
   mounted() {
     this.getNursingInfo();
+    this.getNurseIsNullElderlyInfo()
   },
   computed: {
     filterTableData: function () {
@@ -156,27 +169,16 @@ export default {
         "serviceEvaluation": null,
         "elderlyList": []
       },
-      // elderlyData: [],
-      // elderForm: {
-      //   "elderlyId": null,
-      //   "elderlyName": null,
-      //   "age": null,
-      //   "gender": null,
-      //   "contactInfo": null,
-      //   "medicalHistory": null,
-      //   "nurseId": null,
-      //   "nurseName": null,
-      //   "nurseLevel": null,
-      //   "checkInTime": null,
-      //   "checkOutTime": null,
-      //   "physicalCondition": null
-      // },
 
-      // 抽屉
+      // 详情抽屉
       detailsDrawerTableVisible: false,
+      detailsElderly: [],
+      elderlyData: [],
+
+      // 添加抽屉
       addDrawerTableVisible: false,
-      radioNurse:{},
-      elderlyData: []
+      addElderly: [],
+      nurseIsNullElderly: []
     };
   },
   methods: {
@@ -184,70 +186,96 @@ export default {
       axios
           .get("http://127.0.0.1:9090/nurse-info/getAllNurses")
           .then((res) => {
-            console.log("返回护工数据");
-            console.log(res.data.data);
+            // console.log("返回护工数据");
+            // console.log(res.data.data);
             this.nurseData = res.data.data;
           })
           .catch((err) => {
             console.error(err);
           });
     },
-
-
-    detailsClick(index,row) {
-      this.elderForm=row;
-      // console.log("点击了row")
-      // console.log(this.elderForm)
-      this.drawerTableVisible = true;
+    getNurseIsNullElderlyInfo() {
+      axios
+          .get("http://127.0.0.1:9090/elderly-info/getAllElderly")
+          .then((res) => {
+            this.nurseIsNullElderly = res.data.data;
+            this.nurseIsNullElderly = this.nurseIsNullElderly.filter(function (data) {
+              return data.nurseId == 0;
+            });
+            console.log("返回护士为空的老人数据");
+            console.log(this.nurseIsNullElderly);
+          })
+          .catch((err) => {
+            console.error(err);
+          });
     },
-    addClick(index,row) {
-      this.elderForm=row;
+
+    detailsClick(index, row) {
+      this.nurseForm = row;
+      this.elderlyData = this.nurseForm.elderlyList
       // console.log("点击了row")
-      // console.log(this.elderForm)
-      this.drawerTableVisible = true;
+      // console.log(this.elderlyData)
+      this.detailsDrawerTableVisible = true;
+    },
+    addClick(index, row) {
+      this.nurseForm = row;
+      this.elderlyData = this.nurseForm.elderlyList
+      this.addDrawerTableVisible = true;
     },
     detailsClose(done) {
-      if (Object.keys(this.radioNurse).length == 0||this.elderForm.nurseId==this.radioNurse.nurseId) {
-        this.radioNurse={}
+      if (this.detailsElderly.length == 0) {
+        this.detailsElderly = []
         done();
       } else {
-        this.$confirm('确定将 '+this.elderForm.elderlyName+" 的护工更改为 "+this.radioNurse.name+" ？", '提示', {
+        this.$confirm('确定移除 '+this.nurseForm.nurseName+' 负责的这 '+this.detailsElderly.length+' 位老人？', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          this.drawerFormSubmit();
-          this.radioNurse= {}
+          let delElderForm = {};
+          for(let i=0;i<this.detailsElderly.length;i++){
+            delElderForm[String(this.detailsElderly[i].elderlyId)] = null;
+          }
+          console.log(delElderForm)
+          this.drawerFormSubmit(delElderForm);
+          this.detailsElderly = []
           done();
         }).catch(() => {
           this.$message({
             type: 'info',
             message: '已取消更改'
           });
-          this.radioNurse= {}
+          this.detailsElderly = []
           done();
         });
       }
     },
     addClose(done) {
-      if (Object.keys(this.radioNurse).length == 0||this.elderForm.nurseId==this.radioNurse.nurseId) {
-        this.radioNurse={}
+      if (this.addElderly.length == 0) {
+        this.addElderly = []
         done();
       } else {
-        this.$confirm('确定将 '+this.elderForm.elderlyName+" 的护工更改为 "+this.radioNurse.name+" ？", '提示', {
+        this.$confirm('确定为 '+this.nurseForm.nurseName+' 添加 '+this.addElderly.length+' 位老人？', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          this.drawerFormSubmit();
-          this.radioNurse= {}
+          let addEldertoNurseForm = {};
+          // console.log("addElderly")
+          // console.log(this.addElderly)
+          for(let i=0;i<this.addElderly.length;i++){
+            addEldertoNurseForm[String(this.addElderly[i].elderlyId)] = this.nurseForm.nurseId;
+          }
+          // console.log(addEldertoNurseForm)
+          this.drawerFormSubmit(addEldertoNurseForm);
+          this.addElderly = []
           done();
         }).catch(() => {
           this.$message({
             type: 'info',
             message: '已取消更改'
           });
-          this.radioNurse= {}
+          this.addElderly = []
           done();
         });
       }
