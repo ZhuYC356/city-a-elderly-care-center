@@ -1,19 +1,26 @@
 <template>
   <div>
     <!--      搜索栏-->
-    <el-input
-        v-model="name"
-        placeholder="请填写需查询的老人姓名"
-        clearable
-        prefix-icon="el-icon-search"
-        style="width: 250px;"
-    >
-    </el-input>
+    <div style="margin-left: 10px;">
+      <el-input
+          v-model="name"
+          placeholder="请填写需查询的老人姓名"
+          clearable
+          prefix-icon="el-icon-search"
+          style="width: 250px;margin-right: 50px"
+      >
+      </el-input>
+      未分配管家
+      <el-switch
+          v-model="nurseIsNull"
+          active-color="#13ce66">
+      </el-switch>
+    </div>
 
     <!--      表格：展示老人信息，可以选有无管家-->
-    <div style="margin-top: 5px">
+    <div style="margin-top: 10px">
       <el-table
-          :data="elderlyData"
+          :data="filterTableData"
           style="width: 100%; margin:auto;text-align: center;"
           cell-style="text-align: center;"
           height="270"
@@ -27,8 +34,8 @@
         <el-table-column property="nurseId" label="护士ID号"/>
         <el-table-column property="nurseName" label="护士姓名"/>
         <el-table-column property="contactInfo" label="老人联系方式"/>
-        <el-table-column property="physicalCondition" label="身体状况描述" width="120"/>
-        <el-table-column fixed="right" label="Operations" min-width="120">
+        <el-table-column property="physicalCondition" label="身体状况描述"/>
+        <el-table-column fixed="right" label="Operations" min-width="150px">
           <template #default="scope">
             <!--              todo 点击事件-->
             <el-button link type="success" size="small" plain @click="handleClick(scope.$index, scope.row)">
@@ -63,9 +70,35 @@ export default {
   mounted() {
     this.getElderlyInfo();
   },
+  computed: {
+    filterTableData: function () {
+      let nameValue = this.name.toLowerCase();
+
+      let filteredData = this.elderlyData;
+      if (this.nurseIsNull) {
+        filteredData = filteredData.filter(function (data) {
+          return data.nurseId == 0;
+        });
+      }
+
+      if (nameValue) {
+        filteredData = filteredData.filter(function (data) {
+          return data.elderlyName.toLowerCase().includes(nameValue);
+        });
+      }
+      return filteredData;
+    }
+  },
+  watch: {
+    nurseIsNull(newVal) {
+      // 当 nurseIsNull 变化时，重新过滤数据
+      this.filterTableData;  // 会触发 computed 属性的 getter
+    }
+  },
   data() {
     return {
       name: "",
+      nurseIsNull: false,
 
       // 表格、弹窗设置
       // formLabelWidth: '140px',
@@ -95,15 +128,16 @@ export default {
   },
   methods: {
     getElderlyInfo() {
-        axios
-            .get("http://127.0.0.1:9090/elderly-info/getAllElderly")
-            .then((res) => {
-              console.log(res.data.data);
-              this.elderlyData = res.data.data;
-            })
-            .catch((err) => {
-              console.error(err);
-            });
+      axios
+          .get("http://127.0.0.1:9090/elderly-info/getAllElderly")
+          .then((res) => {
+            console.log(res.data.data);
+            this.elderlyData = res.data.data;
+            this.filteredData = this.elderlyData;
+          })
+          .catch((err) => {
+            console.error(err);
+          });
 
     },
 

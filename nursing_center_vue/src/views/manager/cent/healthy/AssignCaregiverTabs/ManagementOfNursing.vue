@@ -1,7 +1,7 @@
 <template>
   <div>
     <!--      根据名字查询-->
-    <div style="margin-top: 15px; margin-left: 10px">
+    <div style="margin-left: 10px">
       <el-input
           v-model="name"
           placeholder="请填写需查询的护工姓名"
@@ -14,7 +14,7 @@
 
 
     <!--      表格：展示健康管家信息-->
-    <div style="margin-top: 5px">
+    <div style="margin-top: 10px">
       <el-table
           :data="filterTableData"
           style="width: 100%; margin:auto;text-align: center;"
@@ -70,7 +70,7 @@
         <el-table-column property="nurseLevel" label="护理等级"/>
         <el-table-column property="serviceEvaluation" label="服务评价"/>
         <el-table-column property="elderlyList.length" label="负责老人个数"/>
-        <el-table-column fixed="right" label="Operations" min-width="120">
+        <el-table-column fixed="right" label="Operations" min-width="150px">
           <template #default="scope">
             <!--              todo 点击事件-->
             <el-button link type="success" size="small" plain @click="handleClick(scope.$index, scope.row)">

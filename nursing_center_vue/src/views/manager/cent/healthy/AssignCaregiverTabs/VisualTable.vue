@@ -1,4 +1,6 @@
 <template>
+  <div>
+<!--    <el-button icon="el-icon-refresh-right" circle style="float:right;margin-right: 15px" @click="refresh"></el-button>-->
   <div class="tableInline">
     <div>
       <div id="echarsNursing" style="width: 400px; height: 350px;margin:auto"></div>
@@ -16,6 +18,7 @@
       ></el-alert>
     </div>
 
+  </div>
   </div>
 
 </template>
@@ -39,6 +42,7 @@ export default {
     }
   },
   methods: {
+    // refresh(){location.reload() },
     initChartNursing() {
       axios
           .get("http://127.0.0.1:9090/nurse-info/getAllNurses")
@@ -47,7 +51,7 @@ export default {
             console.log(res.data.data);
             this.nurseData = res.data.data;
             for (let i = 0; i < this.nurseData.length; i++) {
-              this.nursingXAxis.push("护工:" + this.nurseData[i].nurseName);
+              this.nursingXAxis.push(this.nurseData[i].nurseName);
               let itemYAxis = {}
               itemYAxis.value = this.nurseData[i].elderlyList.length;
               itemYAxis.itemStyle = {
@@ -55,8 +59,6 @@ export default {
               };
               this.nursingYAxis.push(itemYAxis);
             }
-            console.log("2222222");
-            console.log(this.nursingYAxis);
             // 获取 DOM 元素并初始化 ECharts 实例
             let myChartNursing = echarts.init(document.getElementById('echarsNursing'));
             // 设置图表的选项
@@ -143,5 +145,6 @@ export default {
   display: flex;
   justify-content: flex-start;
   flex-wrap: wrap;
+  margin-top: 5px;
 }
 </style>

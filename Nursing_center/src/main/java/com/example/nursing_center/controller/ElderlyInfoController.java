@@ -10,6 +10,7 @@ import com.example.nursing_center.pojo.ElderlyInfo;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,36 +28,43 @@ import java.util.Map;
 public class ElderlyInfoController {
     @Resource
     private com.example.nursing_center.service.IElderlyInfoService elderlyInfoService;
+
     @GetMapping("/getAll")
-    public Result getAll(){
+    public Result getAll() {
         return elderlyInfoService.getAll();
     }
+
     @PostMapping("/add")
-    public Result add(@RequestBody Info info){
-        System.out.println(info+"121222222222222222222222222222222222222");
+    public Result add(@RequestBody Info info) {
+        System.out.println(info + "121222222222222222222222222222222222222");
         return elderlyInfoService.add(info);
     }
+
     @GetMapping("/getById/{id}")
-    public Result getById(@PathVariable Integer id){
-        System.out.println("++++++++++++++++++++++++++++"+id+"__________________________");
+    public Result getById(@PathVariable Integer id) {
+        System.out.println("++++++++++++++++++++++++++++" + id + "__________________________");
         return elderlyInfoService.getAllById(id);
     }
+
     @PostMapping("/selectByFrom")
-    public Result selectByFrom(@RequestBody ElderlyInfo elderlyInfo){
+    public Result selectByFrom(@RequestBody ElderlyInfo elderlyInfo) {
         return elderlyInfoService.selectByFrom(elderlyInfo);
     }
+
     @PostMapping("/updateById")
-    public Result updateById(@RequestBody Info info){
+    public Result updateById(@RequestBody Info info) {
         System.out.println(info);
         return elderlyInfoService.updateAllById(info);
     }
+
     @GetMapping("/getElderlyInfoByRoomAndBed/{floorNumber}/{roomNumber}/{bedNumber}")
-    public Result getElderlyInfoByRoomAndBed(@PathVariable Integer floorNumber,@PathVariable String roomNumber,@PathVariable String bedNumber){
-        System.out.println("________________"+roomNumber+"_______________");
-        return elderlyInfoService.getElderlyInfoByRoomAndBed(roomNumber,bedNumber,floorNumber);
+    public Result getElderlyInfoByRoomAndBed(@PathVariable Integer floorNumber, @PathVariable String roomNumber, @PathVariable String bedNumber) {
+        System.out.println("________________" + roomNumber + "_______________");
+        return elderlyInfoService.getElderlyInfoByRoomAndBed(roomNumber, bedNumber, floorNumber);
     }
+
     @GetMapping("/getElderlyInfoByIdNumber/{idNumber}")
-    public Result getElderlyInfoByIdNumber(@PathVariable String idNumber){
+    public Result getElderlyInfoByIdNumber(@PathVariable String idNumber) {
         return elderlyInfoService.getElderlyInfoByIdNumber(idNumber);
     }
 
@@ -65,10 +73,12 @@ public class ElderlyInfoController {
     public ResultGeneric<List<AssignElderly>> getAllElderly() {
         return elderlyInfoService.getAllElderly();
     }
+
     @GetMapping("/getElderlyWithoutNurse")
     public ResultGeneric<List<AssignElderly>> getElderlyWithoutNurse(@RequestParam(value = "elderlyName", required = false) String elderlyName) {
         return elderlyInfoService.getElderlyWithoutNurse(elderlyName);
     }
+
     /**
      * 统计 nurseId 为空和不为空的个数
      */
@@ -88,6 +98,49 @@ public class ElderlyInfoController {
         result.put("nurseIdIsNull", countNurseIdIsNull);
         result.put("nurseIdIsNotNull", countNurseIdIsNotNull);
 
+        return result;
+    }
+
+    /**
+     * 批量更新 nurse_id 字段
+     *
+     * @param updateIds key: 老人 id, value: 对应的护士 id
+     * @return 更新结果
+     */
+    @PostMapping("/updateNurseIds")
+    public Map<String, Object> updateNurseIds(@RequestBody Map<Integer, Integer> updateIds) {
+        // 统计更新成功和失败的数量
+        int successCount = 0;
+        int failureCount = 0;
+
+        // 遍历更新数据
+        for (Map.Entry<Integer, Integer> entry : updateIds.entrySet()) {
+            Integer elderlyId = entry.getKey();
+            Integer nurseId = entry.getValue();
+
+            try {
+                // 更新对应的 nurse_id
+                ElderlyInfo elderlyInfo = new ElderlyInfo();
+                elderlyInfo.setElderlyId(elderlyId);
+                elderlyInfo.setNurseId(nurseId);
+
+                boolean isUpdated = elderlyInfoService.updateById(elderlyInfo);
+                if (isUpdated) {
+                    successCount++;
+                } else {
+                    failureCount++;
+                }
+            } catch (Exception e) {
+                // 更新失败计数
+                failureCount++;
+            }
+        }
+
+        // 返回更新结果
+        Map<String, Object> result = new HashMap<>();
+        result.put("successCount", successCount);
+        result.put("failureCount", failureCount);
+        result.put("total", updateIds.size());
         return result;
     }
 }

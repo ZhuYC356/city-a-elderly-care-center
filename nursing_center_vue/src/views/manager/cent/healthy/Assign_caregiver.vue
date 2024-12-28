@@ -13,7 +13,7 @@
       </div>
 
       <el-tabs tab-position="right">
-        <el-tab-pane label="可视化表格"><VisualTable></VisualTable></el-tab-pane>
+        <el-tab-pane label="数据可视化"><VisualTable></VisualTable></el-tab-pane>
         <el-tab-pane label="管理护工服务对象"><ManagementOfNursing></ManagementOfNursing></el-tab-pane>
         <el-tab-pane label="为老人设置服务"><AssignForTheElderly></AssignForTheElderly></el-tab-pane>
       </el-tabs>
