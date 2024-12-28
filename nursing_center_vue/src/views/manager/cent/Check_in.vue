@@ -62,7 +62,16 @@
         <el-table :data="elderlyList" style="width: 100%;" height="365" :stripe="true"
                   :header-cell-style="{background:'#f3f6fd',color:'#555'}">
           <el-table-column type="selection" width="55"/>
+
           <el-table-column property="name" label="姓名" width="100"/>
+          <el-table-column label="头像" width="100">
+            <template v-slot="scope">
+              <div style="display: flex; align-items: center">
+                <el-image style=" height: 40px; border-radius: 50%" v-if="scope.row.avatar"
+                          :src="scope.row.avatar" :preview-src-list="[scope.row.avatar]"></el-image>
+              </div>
+            </template>
+          </el-table-column>
           <el-table-column property="gender" label="性别" width="80"/>
           <el-table-column property="age" label="年龄" width="80"/>
           <el-table-column property="familyContactInfo" label="家庭联系人电话" width="180"/>
@@ -182,6 +191,15 @@
             >
             </el-option>
           </el-select>
+        </el-form-item>
+        <el-form-item :label-width="formLabelWidth" label="照片" prop="avatar">
+          <el-upload
+              :action="$baseUrl + '/files/upload'"
+              list-type="picture"
+              :on-success="handleCoverSuccess"
+          >
+            <el-button type="primary">上传照片</el-button>
+          </el-upload>
         </el-form-item>
       </el-form>
       <template #footer>
@@ -322,6 +340,12 @@
     <el-dialog :visible.sync="dialogFormVisible3" title="查询详情" width="500">
       <div>
         <el-form :model="viewInfo" label-width="auto" style="max-width: 600px">
+
+          <el-image
+              style="width: 100px; height: 100px;margin-left: 80px"
+              :src="viewInfo.avatar"
+              :preview-src-list="srcList">
+          </el-image>
           <el-form-item label="姓名" style="margin-top: 15px">
             <el-input v-model="viewInfo.name" style="width: 300px;" disabled>
               <template #prefix>
@@ -472,11 +496,14 @@ import Clock from "@/components/Clock.vue";
 export default {
   name: "入住登记",
   created() {
-    this.$request.get('/elderly-info/getAll').then(res => {
-      this.elderlyList = res.data
-    })
+    this.getAll()
   },
   methods: {
+    getAll() {
+      this.$request.get('/elderly-info/getAll').then(res => {
+        this.elderlyList = res.data
+      })
+    },
     getElderlyInfoByIdNumber() {
       if (this.outingRegistration.idNumber === '') {
         this.$message.error('请输入身份证号')
@@ -582,7 +609,9 @@ export default {
           this.riseElderly.nurseId === '' ||
           this.riseElderly.floorNumber === '' ||
           this.riseElderly.roomNumber === '' ||
-          this.riseElderly.bedNumber === '') {
+          this.riseElderly.bedNumber === ''||
+          this.riseElderly.avatar === ''
+      ) {
         console.log(this.riseElderly)
         this.$message.error('请填写完整信息')
       } else {
@@ -594,7 +623,7 @@ export default {
           }
         })
         this.dialogFormVisible = false
-        location.reload()
+        this.getAll()
       }
     },
     submitOutingRegistration() {
@@ -638,7 +667,7 @@ export default {
       this.selectFrom.name = '';
       this.selectFrom.bedNumber = '';
       this.selectFrom.date = '';
-      location.reload();
+      this.getAll()
     },
     handleClick(index, row) {
       this.dialogFormVisible3 = true
@@ -646,6 +675,7 @@ export default {
       this.$request.get('/elderly-info/getById/' + row.elderlyId).then(res => {
         console.log(res.data)
         this.viewInfo = res.data
+        this.srcList = [this.viewInfo.avatar]
       })
     },
     update(index, row) {
@@ -686,7 +716,10 @@ export default {
           this.dialogFormVisible1 = false
         }
       })
-    }
+    },
+    handleCoverSuccess(res) {
+      this.riseElderly.avatar = res.data
+    },
   },
   data() {
     return {
@@ -779,7 +812,7 @@ export default {
         bedNumber: "",
         physicalCondition: "",
         nurseLevel: '',
-
+        avatar: '',
         homeAddress: '',
         medicalHistory: '',
         allergyHistory: ''

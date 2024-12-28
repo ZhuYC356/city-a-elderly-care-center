@@ -3,6 +3,8 @@ package com.example.nursing_center.pojo;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Data;
+
 import java.io.Serializable;
 
 /**
@@ -13,6 +15,7 @@ import java.io.Serializable;
  * @author 第六组
  * @since 2024-12-19
  */
+@Data
 @TableName("nurse_info")
 public class NurseInfo implements Serializable {
 
@@ -71,6 +74,10 @@ public class NurseInfo implements Serializable {
      * 服务评价
      */
     private String serviceEvaluation;
+    /**
+     * 头像
+     */
+    private String avatar;
 
     /**
      * 状态,用于删除,1 可用，0 不可用

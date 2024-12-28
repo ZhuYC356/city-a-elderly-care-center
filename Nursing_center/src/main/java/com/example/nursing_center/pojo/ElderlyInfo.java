@@ -3,6 +3,8 @@ package com.example.nursing_center.pojo;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Data;
+
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
@@ -14,6 +16,7 @@ import java.time.LocalDateTime;
  * @author 第六组
  * @since 2024-12-19
  */
+@Data
 @TableName("elderly_info")
 public class ElderlyInfo implements Serializable {
 
@@ -109,10 +112,15 @@ public class ElderlyInfo implements Serializable {
      * 护理等级 1 最高级 ，2 高级，3 中级，4 低级
      */
     private Integer nurseLevel;
+    /**
+     * 老人头像
+     */
+    private String avatar;
 
     /**
      * 入住状态,用于删除,1 已入住，0 已离开
      */
+
     private String status;
 
 

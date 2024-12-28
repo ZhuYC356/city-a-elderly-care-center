@@ -43,5 +43,7 @@ public class Info {
     private String homeAddress;
     private String medicalHistory;
     private String allergyHistory;
+
+    private String avatar;
 }
 

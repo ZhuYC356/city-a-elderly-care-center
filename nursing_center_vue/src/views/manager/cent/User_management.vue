@@ -52,6 +52,14 @@
                   :header-cell-style="{background:'#f3f6fd',color:'#555'}">
           <el-table-column type="selection" width="55"/>
           <el-table-column property="name" label="姓名" width="100"/>
+          <el-table-column label="头像" width="70">
+            <template v-slot="scope">
+              <div style="display: flex; align-items: center">
+                <el-image style=" height: 40px; border-radius: 50%" v-if="scope.row.avatar"
+                          :src="scope.row.avatar" :preview-src-list="[scope.row.avatar]"></el-image>
+              </div>
+            </template>
+          </el-table-column>
           <el-table-column property="gender" label="性别" width="80"/>
           <el-table-column property="age" label="年龄" width="80"/>
           <el-table-column property="idNumber" label="身份证号" width="150"/>
@@ -88,6 +96,15 @@
     <!--      新增护工-->
     <el-dialog :visible.sync="dialogFormVisible" title="新增护工" width="500">
       <el-form :model="riseNursing" style="margin-top: 2px">
+        <el-form-item :label-width="formLabelWidth" label="照片" prop="avatar">
+          <el-upload
+              :action="$baseUrl + '/files/upload'"
+              list-type="picture"
+              :on-success="handleCoverSuccess"
+          >
+            <el-button type="primary">上传照片</el-button>
+          </el-upload>
+        </el-form-item>
         <el-form-item label="姓名:" :label-width="formLabelWidth">
           <el-input v-model="riseNursing.name" autocomplete="off"/>
         </el-form-item>
@@ -109,9 +126,17 @@
         <el-form-item label="工作经验:" :label-width="formLabelWidth">
           <el-input v-model="riseNursing.workExperience" autocomplete="off"/>
         </el-form-item>
-        <el-form-item label="执业证书:" :label-width="formLabelWidth">
-          <el-input v-model="riseNursing.professionalCertificate" autocomplete="off"/>
+
+        <el-form-item :label-width="formLabelWidth" label="照片" prop="avatar">
+          <el-upload
+              :action="$baseUrl + '/files/upload'"
+              list-type="picture"
+              :on-success="handleCoverSuccess1"
+          >
+            <el-button type="primary">上传证书</el-button>
+          </el-upload>
         </el-form-item>
+
         <el-form-item label="护理等级:" :label-width="formLabelWidth">
           <el-select v-model="riseNursing.nurseLevel" placeholder="选择护理等级">
             <el-option label="最高级" value="1"/>
@@ -177,14 +202,14 @@
               </template>
             </el-input>
           </el-form-item>
-          <el-form-item label="执业证书" style="margin-top: 15px">
-            <el-input v-model="viewInfo.professionalCertificate" style="width: 300px;" disabled>
-              <template #prefix>
-                <i class="el-icon-connection" style="font-size: 15px;margin-left: 3px"></i>
-              </template>
-            </el-input>
-          </el-form-item>
-          <el-form-item label="执业证书" style="margin-top: 15px">
+          <label style="margin-top: 15px;width: 300px;">证书:</label>
+          <br>
+          <el-image
+              style="width: 100px; height: 100px;margin-left: 80px"
+              :src="viewInfo.professionalCertificate"
+              :preview-src-list="srcList">
+          </el-image>
+          <el-form-item label="服务评价" style="margin-top: 15px">
             <el-input v-model="viewInfo.serviceEvaluation" style="width: 300px;" disabled>
               <template #prefix>
                 <i class="el-icon-connection" style="font-size: 15px;margin-left: 3px"></i>
@@ -194,6 +219,7 @@
         </el-form>
       </div>
     </el-dialog>
+
     <!--  修改-->
     <el-dialog :visible.sync="dialogFormVisibleUpdate" title="查询详情" width="500">
       <div>
@@ -240,12 +266,14 @@
               </template>
             </el-input>
           </el-form-item>
-          <el-form-item label="执业证书" style="margin-top: 15px">
-            <el-input v-model="updateInfo.professionalCertificate" style="width: 300px;">
-              <template #prefix>
-                <i class="el-icon-connection" style="font-size: 15px;margin-left: 3px"></i>
-              </template>
-            </el-input>
+          <el-form-item :label-width="formLabelWidth" label="证书" prop="avatar">
+            <el-upload
+                :action="$baseUrl + '/files/upload'"
+                list-type="picture"
+                :on-success="handleCoverSuccess1"
+            >
+              <el-button type="primary">上传证书</el-button>
+            </el-upload>
           </el-form-item>
           <el-form-item label="服务评价" style="margin-top: 15px">
             <el-input v-model="updateInfo.serviceEvaluation" style="width: 300px;">
@@ -270,11 +298,14 @@
 export default {
   name: "护工管理",
   mounted() {
-    this.$request.get('/nurse-info/getAll').then(res => {
-      this.tableData = res.data
-    })
+    this.gatAll()
   },
   methods: {
+    gatAll(){
+      this.$request.get('/nurse-info/getAll').then(res => {
+        this.tableData = res.data
+      })
+    },
     submit() {
       if (this.riseNursing.name === '' ||
           this.riseNursing.gender === '' ||
@@ -306,6 +337,7 @@ export default {
       console.log("row:" + row.nurseId)
       this.$request.get('/nurse-info/getById/' + row.nurseId).then(res => {
         this.viewInfo = res.data
+        this.srcList = [this.viewInfo.professionalCertificate]
       })
       this.dialogFormVisibleView = true
     },
@@ -349,7 +381,13 @@ export default {
         bedNumber: '',
         checkInTime: ''
       }
-    }
+    },
+    handleCoverSuccess(res) {
+      this.riseNursing.avatar = res.data
+    },
+    handleCoverSuccess1(res) {
+      this.riseNursing.professionalCertificate = res.data
+    },
   },
   data() {
     return {
@@ -366,6 +404,7 @@ export default {
         nurseLevel: '',
         serviceEvaluation: '',
       },
+      srcList:[],
       viewInfo: {
         name: '',
         nurseId: '',
@@ -389,6 +428,7 @@ export default {
         professionalCertificate: '',
         homeAddress: '',
         nurseLevel: '',
+        avatar:''
       },
       dialogFormVisible: false,
       dialogFormVisibleView: false,

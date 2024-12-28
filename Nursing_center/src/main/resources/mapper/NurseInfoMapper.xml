@@ -2,8 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.nursing_center.mapper.NurseInfoMapper">
     <insert id="addInfo">
-        insert into nurse_info(name,id_number,gender,age,contact_info,work_experience,professional_certificate,nurse_level)
-        values(#{name},#{idNumber},#{gender},#{age},#{contactInfo},#{workExperience},#{professionalCertificate},#{nurseLevel})
+        insert into nurse_info(name,id_number,gender,age,contact_info,work_experience,professional_certificate,nurse_level,avatar)
+        values(#{name},#{idNumber},#{gender},#{age},#{contactInfo},#{workExperience},#{professionalCertificate},#{nurseLevel},#{avatar})
     </insert>
 
     <select id="getAll" resultType="com.example.nursing_center.pojo.NurseInfo">

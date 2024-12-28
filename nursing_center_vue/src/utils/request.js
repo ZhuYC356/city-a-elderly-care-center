@@ -25,7 +25,7 @@ request.interceptors.request.use(config => {
 request.interceptors.response.use(
     response => {
         let res = response.data;
-        let user = JSON.parse(localStorage.getItem("nursing_center_user") || '{}')
+        let user = JSON.parse(localStorage.getItem("nursing_center_user"))
         if (user === null) {
             router.push('/login')
         }

@@ -25,4 +25,9 @@ public class NoticeServiceImpl extends ServiceImpl<NoticeMapper, Notice> impleme
     public Result gatAll() {
         return Result.success(noticeMapper.gatAll());
     }
+
+    @Override
+    public Result add(Notice notice) {
+        return Result.success(noticeMapper.add(notice));
+    }
 }
