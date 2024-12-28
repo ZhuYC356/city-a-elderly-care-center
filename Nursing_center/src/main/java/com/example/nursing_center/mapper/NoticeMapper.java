@@ -3,6 +3,8 @@ package com.example.nursing_center.mapper;
 import com.example.nursing_center.pojo.Notice;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
+import java.util.List;
+
 /**
  * <p>
  * 公告信息表 Mapper 接口
@@ -13,4 +15,5 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface NoticeMapper extends BaseMapper<Notice> {
 
+    List<Notice> gatAll();
 }

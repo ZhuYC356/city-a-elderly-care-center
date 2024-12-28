@@ -1,5 +1,6 @@
 package com.example.nursing_center.controller;
 
+import com.example.nursing_center.common.enums.ResultCodeEnum;
 import com.example.nursing_center.controller.Result.Login;
 import com.example.nursing_center.service.IAdminService;
 import com.example.nursing_center.util.MD5Util;
@@ -37,20 +38,21 @@ public class AdminController {
         login.setPassword(MD5Util.encrypt(login.getPassword()));
         System.out.println(login.getPassword());
         List<Admin> list = adminService.Login(login);
-        return !list.isEmpty() ? Result.success() : Result.error();
+        return !list.isEmpty() ? Result.success(list.get(0)) : Result.error(ResultCodeEnum.USER_ACCOUNT_ERROR);
     }
 
     @GetMapping("/getAll")
     public Result getAll() {
-        System.out.println("______________________________________________"+adminService.list());
+        System.out.println("______________________________________________" + adminService.list());
         return Result.success(adminService.list());
     }
 
     @PostMapping("/add")
     public Result add(@RequestBody Admin admin) {
-        System.out.println(admin+"___________________________________-");
+        System.out.println(admin + "___________________________________-");
         return adminService.add(admin);
     }
+
     @GetMapping("/deleteById/{id}")
     public Result deleteById(@PathVariable("id") Integer id) {
         return adminService.removeById(id) ? Result.success() : Result.error();

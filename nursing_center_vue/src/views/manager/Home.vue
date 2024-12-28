@@ -87,29 +87,17 @@ export default {
         sumService: 49
       },
       user: JSON.parse(localStorage.getItem('user')),
-      notices: [
-        {
-          title: '欢迎使用',
-          content: '欢迎使用本系统',
-          time: '2024-11-11'
-        },
-        {
-          title: '关于',
-          content: '关于本系统',
-          time: '2024-11-12'
-        },
-        {
-          title: '关于',
-          content: '关于本系统',
-          time: '2024-11-13'
-        },
-        {
-          title: '关于',
-          content: '关于本系统',
-          time: '2024-11-14'
-        }
-
-      ]
+      notices: []
+    }
+  },
+  created() {
+    this.getNotice()
+  },
+  methods: {
+    getNotice() {
+      this.$request.get('/notice/list').then(res => {
+        this.notices = res.data
+      })
     }
   },
   components: {
