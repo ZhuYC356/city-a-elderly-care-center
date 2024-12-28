@@ -76,6 +76,23 @@
         SELECT care_status FROM care_record WHERE elderly_id = #{elderlyId}
     </select>
 
+    <!--服务关注的表格查询语句-->
+    <select id="getAllElderlyProjects" resultType="com.example.nursing_center.controller.Result.ServiceConcern">
+        SELECT
+            name,
+            gender,
+            age,
+            id_number,
+            nurse_name,
+            project_name,
+            description,
+            care_status,
+            service_duration,
+            price
+        FROM
+            service_concern_and_record
+    </select>
+
     <delete id="deleteByElderlyId">
         DELETE FROM care_record WHERE elderly_id = #{elderlyId}
     </delete>

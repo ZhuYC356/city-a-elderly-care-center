@@ -2,6 +2,7 @@ package com.example.nursing_center.controller;
 
 
 import com.example.nursing_center.controller.Result.RecordForm;
+import com.example.nursing_center.controller.Result.ServiceConcern;
 import com.example.nursing_center.service.ICareRecordService;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
@@ -64,4 +65,10 @@ public class CareRecordController {
         return careRecordService.removeRecord(elderlyId);
     }
 
+
+
+    @GetMapping("/getAllElderlyProjects")
+    public List<ServiceConcern> getAllElderlyProjects(){
+        return careRecordService.getAllElderlyProjects();
+    }
 }
