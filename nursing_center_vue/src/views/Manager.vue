@@ -42,7 +42,7 @@
           </el-menu-item>
           <el-submenu index="register">
             <template slot="title">
-              <i class="el-icon-menu"></i><span>客户管理</span>
+              <i class="el-icon-user-solid"></i><span>客户管理</span>
             </template>
             <el-menu-item index="/check_in">居住信息管理</el-menu-item>
             <el-menu-item index="/check_out_registration">退住审核</el-menu-item>
@@ -51,21 +51,21 @@
 
           <el-submenu index="work">
             <template slot="title">
-              <i class="el-icon-menu"></i><span>床位管理</span>
+              <i class="el-icon-office-building"></i><span>床位管理</span>
             </template>
             <el-menu-item index="/bunk">床位示意图</el-menu-item>
             <el-menu-item index="/bunk_manager">床位管理</el-menu-item>
           </el-submenu>
           <el-submenu index="examine">
             <template slot="title">
-              <i class="el-icon-menu"></i><span>护理模块</span>
+              <i class="el-icon-first-aid-kit"></i><span>护理模块</span>
             </template>
             <el-menu-item index="/Nursing_programs_Manager">护理项目</el-menu-item>
             <el-menu-item index="/nursing_programs_history">护理记录</el-menu-item>
           </el-submenu>
           <el-submenu index="inspection">
             <template slot="title">
-              <i class="el-icon-menu"></i><span>健康管理</span>
+              <i class="el-icon-first-aid-kit"></i><span>健康管理</span>
             </template>
             <el-menu-item index="/assign_caregiver">设置服务对象</el-menu-item>
             <el-menu-item index="/service_Concern">服务关注</el-menu-item>
@@ -78,7 +78,7 @@
           </el-submenu>
           <el-submenu index="user">
             <template slot="title">
-              <i class="el-icon-menu"></i><span>用户管理</span>
+              <i class="el-icon-s-custom"></i><span>用户管理</span>
             </template>
             <el-menu-item index="/User_management">护工信息</el-menu-item>
             <el-menu-item index="/administrator_information">管理员信息</el-menu-item>
