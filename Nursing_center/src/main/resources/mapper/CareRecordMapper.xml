@@ -77,21 +77,40 @@
     </select>
 
     <!--服务关注的表格查询语句-->
-    <select id="getAllElderlyProjects" resultType="com.example.nursing_center.controller.Result.ServiceConcern">
+    <select id="getAllElderlyProjects" resultMap="elderlyProjectResultMap">
         SELECT
-            name,
-            gender,
-            age,
-            id_number,
-            nurse_name,
-            project_name,
-            description,
-            care_status,
-            service_duration,
-            price
-        FROM
-            service_concern_and_record
+        sc.elderly_id AS elderlyId,
+        sc.name AS name,
+        sc.gender AS gender,
+        sc.age AS age,
+        sc.id_number AS idNumber,
+        sc.nurse_name AS nurseName,
+        sc.project_name AS projectName,
+        sc.description AS description,
+        sc.care_status AS careStatus,
+        sc.price AS price,
+        sc.service_duration AS serviceDuration
+        FROM service_concern_and_record sc
+        <if test="name != null and name != ''">
+            WHERE sc.name LIKE CONCAT('%', #{name}, '%')
+        </if>
     </select>
+
+    <resultMap id="elderlyProjectResultMap" type="com.example.nursing_center.controller.Result.ServiceConcern">
+        <id property="idNumber" column="idNumber"/>
+        <result property="name" column="name"/>
+        <result property="gender" column="gender"/>
+        <result property="age" column="age"/>
+        <result property="nurseName" column="nurseName"/>
+        <collection property="careProjectForElderlyList" ofType="com.example.nursing_center.controller.Result.CareProjectForElderly">
+            <result property="projectName" column="projectName"/>
+            <result property="description" column="description"/>
+            <result property="careStatus" column="careStatus"/>
+            <result property="price" column="price"/>
+            <result property="careEndTime" column="serviceDuration"/>
+        </collection>
+    </resultMap>
+
 
     <delete id="deleteByElderlyId">
         DELETE FROM care_record WHERE elderly_id = #{elderlyId}

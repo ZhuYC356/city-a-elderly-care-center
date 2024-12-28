@@ -30,11 +30,22 @@
         e.name AS elderlyName,
         e.age AS elderlyAge,
         e.gender AS elderlyGender,
+        e.id_number AS idNumber,
+        e.self_care_status AS selfCareStatus,
+        e.home_address AS homeAddress,
         e.contact_info AS elderlyContactInfo,
-        e.medical_history AS elderlyMedicalHistory,
-        e.physical_condition AS elderlyPhysicalCondition,
-        e.check_in_time AS elderlyCheckInTime,
-        e.check_out_time AS elderlyCheckOutTime
+        e.family_contact_info AS familyContactInfo,
+        e.photo AS photo,
+        e.medical_history AS medicalHistory,
+        e.allergy_history AS allergyHistory,
+        e.physical_condition AS physicalCondition,
+        e.bed_id AS bedId,
+        e.nurse_id AS assignedNurseId,
+        e.check_in_time AS checkInTime,
+        e.check_out_time AS checkOutTime,
+        e.nurse_level AS elderlyNurseLevel,
+        e.status AS elderlyStatus
+
         FROM nurse_info n
         LEFT JOIN elderly_info e ON n.nurse_id = e.nurse_id
         <if test="nurseName != null and nurseName != ''">
@@ -54,16 +65,27 @@
         <result property="serviceEvaluation" column="serviceEvaluation"/>
 
         <!-- 使用嵌套查询的方式获取老人列表 -->
-        <collection property="elderlyList" ofType="com.example.nursing_center.controller.Result.AssignElderly">
+        <collection property="elderlyList" ofType="com.example.nursing_center.pojo.ElderlyInfo">
             <id property="elderlyId" column="elderlyId"/>
-            <result property="elderlyName" column="elderlyName"/>
-            <result property="age" column="elderlyAge"/>
+            <result property="name" column="elderlyName"/>
             <result property="gender" column="elderlyGender"/>
+            <result property="age" column="elderlyAge"/>
+            <result property="idNumber" column="idNumber"/>
+            <result property="selfCareStatus" column="selfCareStatus"/>
+            <result property="homeAddress" column="homeAddress"/>
             <result property="contactInfo" column="elderlyContactInfo"/>
-            <result property="medicalHistory" column="elderlyMedicalHistory"/>
-            <result property="physicalCondition" column="elderlyPhysicalCondition"/>
-            <result property="checkInTime" column="elderlyCheckInTime"/>
-            <result property="checkOutTime" column="elderlyCheckOutTime"/>
+            <result property="familyContactInfo" column="familyContactInfo"/>
+            <result property="photo" column="photo"/>
+            <result property="medicalHistory" column="medicalHistory"/>
+            <result property="allergyHistory" column="allergyHistory"/>
+            <result property="physicalCondition" column="physicalCondition"/>
+            <result property="bedId" column="bedId"/>
+            <result property="nurseId" column="assignedNurseId"/>
+            <result property="checkInTime" column="checkInTime"/>
+            <result property="checkOutTime" column="checkOutTime"/>
+            <result property="nurseLevel" column="elderlyNurseLevel"/>
+            <result property="status" column="elderlyStatus"/>
+
         </collection>
     </resultMap>
 

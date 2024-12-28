@@ -2,6 +2,7 @@ package com.example.nursing_center.controller;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.example.nursing_center.common.Result;
 import com.example.nursing_center.common.ResultGeneric;
 import com.example.nursing_center.controller.Result.AssignElderly;
@@ -109,34 +110,36 @@ public class ElderlyInfoController {
      */
     @PostMapping("/updateNurseIds")
     public Map<String, Object> updateNurseIds(@RequestBody Map<Integer, Integer> updateIds) {
-        // 统计更新成功和失败的数量
         int successCount = 0;
         int failureCount = 0;
 
-        // 遍历更新数据
         for (Map.Entry<Integer, Integer> entry : updateIds.entrySet()) {
             Integer elderlyId = entry.getKey();
             Integer nurseId = entry.getValue();
 
             try {
-                // 更新对应的 nurse_id
-                ElderlyInfo elderlyInfo = new ElderlyInfo();
-                elderlyInfo.setElderlyId(elderlyId);
-                elderlyInfo.setNurseId(nurseId);
+                UpdateWrapper<ElderlyInfo> updateWrapper = new UpdateWrapper<>();
+                updateWrapper.eq("elderly_id", elderlyId);  // 根据 elderlyId 更新
 
-                boolean isUpdated = elderlyInfoService.updateById(elderlyInfo);
+                // 如果 nurseId 为 null，则清空 nurseId
+                if (nurseId == null) {
+                    updateWrapper.set("nurse_id", null);
+                } else {
+                    updateWrapper.set("nurse_id", nurseId);
+                }
+
+                boolean isUpdated = elderlyInfoService.update(updateWrapper);
                 if (isUpdated) {
                     successCount++;
                 } else {
                     failureCount++;
                 }
+
             } catch (Exception e) {
-                // 更新失败计数
                 failureCount++;
             }
         }
 
-        // 返回更新结果
         Map<String, Object> result = new HashMap<>();
         result.put("successCount", successCount);
         result.put("failureCount", failureCount);

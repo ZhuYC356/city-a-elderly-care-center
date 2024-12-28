@@ -17,30 +17,25 @@
       </el-switch>
     </div>
 
-    <!--      表格：展示老人信息，可以选有无管家-->
+    <!--      表格：展示老人信息，可以选无管家-->
     <div style="margin-top: 10px">
       <el-table
           :data="filterTableData"
           style="width: 100%; margin:auto;text-align: center;"
           cell-style="text-align: center;"
-          height="270"
           :stripe="true"
           v-loading="loading"
           :header-cell-style="{ background: '#f3f6fd', color: '#555' ,textAlign: 'center'}"
       >
-        <el-table-column type="selection" width="55"/>
+        <!--        <el-table-column type="selection" width="55"/>-->
         <el-table-column property="elderlyId" label="老人ID号"/>
         <el-table-column property="elderlyName" label="老人姓名"/>
         <el-table-column property="nurseId" label="护士ID号"/>
         <el-table-column property="nurseName" label="护士姓名"/>
         <el-table-column property="contactInfo" label="老人联系方式"/>
         <el-table-column property="physicalCondition" label="身体状况描述"/>
-        <el-table-column fixed="right" label="Operations" min-width="150px">
+        <el-table-column fixed="right" label="更换/添加护工">
           <template #default="scope">
-            <!--              todo 点击事件-->
-            <el-button link type="success" size="small" plain @click="handleClick(scope.$index, scope.row)">
-              <span style="font-weight: bolder">详 情</span>
-            </el-button>
             <el-button link type="primary" size="small" plain @click="handleClick(scope.$index, scope.row)"><span
                 style="font-weight: bolder">修 改</span>
             </el-button>
@@ -60,6 +55,32 @@
         />
       </div>
     </div>
+
+    <!--    抽屉-->
+    <el-drawer title="健康管家更改为" :visible.sync="drawerTableVisible" :before-close="handleClose" size="600px">
+      <div style="margin-top: 0px">
+        <el-radio-group v-model="radioNurse" size="medium">
+          <el-radio-button v-for="nurse in nurseData" :label="nurse" :key="nurse"  style="width: 270px" >
+            <el-card>
+              <el-descriptions :title="nurse.name"  :column="1">
+                <el-descriptions-item label="护工ID号">{{nurse.nurseId}}</el-descriptions-item>
+                <el-descriptions-item label="护工姓名">{{nurse.nurseName}}</el-descriptions-item>
+                <el-descriptions-item label="护工性别">{{nurse.gender}}</el-descriptions-item>
+                <el-descriptions-item label="联系方式">{{nurse.contactInfo}}</el-descriptions-item>
+                <el-descriptions-item label="护理等级">
+                  <el-tag v-if="nurse.nurseLevel==1" type="danger">最高级</el-tag>
+                  <el-tag v-else-if="nurse.nurseLevel==2" type="warning">高级</el-tag>
+                  <el-tag v-else-if="nurse.nurseLevel==3" type="success">中级</el-tag>
+                  <el-tag v-else-if="nurse.nurseLevel==4" type="primary">低级</el-tag>
+                </el-descriptions-item>
+                <el-descriptions-item label="服务评价">{{nurse.serviceEvaluation}}</el-descriptions-item>
+              </el-descriptions>
+            </el-card>
+          </el-radio-button>
+        </el-radio-group>
+      </div>
+
+    </el-drawer>
   </div>
 </template>
 <script>
@@ -69,6 +90,7 @@ export default {
   name: "out-office-registration",
   mounted() {
     this.getElderlyInfo();
+    this.getNurseInfo();
   },
   computed: {
     filterTableData: function () {
@@ -91,8 +113,7 @@ export default {
   },
   watch: {
     nurseIsNull(newVal) {
-      // 当 nurseIsNull 变化时，重新过滤数据
-      this.filterTableData;  // 会触发 computed 属性的 getter
+      this.filterTableData;
     }
   },
   data() {
@@ -101,29 +122,25 @@ export default {
       nurseIsNull: false,
 
       // 表格、弹窗设置
-      // formLabelWidth: '140px',
-      // currentPage: 0,
-      // pageSize: 0,
+      formLabelWidth: '140px',
+      currentPage: 0,
+      pageSize: 0,
 
       // 表格字段
       elderlyData: [],
       elderForm: {
-        "elderlyId": null,
-        "elderlyName": null,
-        "age": null,
-        "gender": null,
-        "contactInfo": null,
-        "medicalHistory": null,
-        "nurseId": null,
-        "nurseName": null,
-        "nurseLevel": null,
-        "checkInTime": null,
-        "checkOutTime": null,
-        "physicalCondition": null
+        "elderlyId": null, "nurseId": null,
+        "age": null, "gender": null, "contactInfo": null, "medicalHistory": null, "elderlyName": null,
+        "nurseName": null, "nurseLevel": null, "checkInTime": null, "checkOutTime": null, "physicalCondition": null
       },
 
-      // todo 弹窗开关控制
-      // dialogTableVisible: false,
+      // 抽屉
+      drawerTableVisible: false,
+      radioNurse:{},
+      nurseData : [],
+
+
+
     };
   },
   methods: {
@@ -133,7 +150,19 @@ export default {
           .then((res) => {
             console.log(res.data.data);
             this.elderlyData = res.data.data;
-            this.filteredData = this.elderlyData;
+          })
+          .catch((err) => {
+            console.error(err);
+          });
+
+    },
+    getNurseInfo() {
+      axios
+          .get("http://127.0.0.1:9090/nurse-info/getAll")
+          .then((res) => {
+            console.log(res.data.data);
+            this.nurseData = res.data.data;
+            // console.log(this.nurseData)
           })
           .catch((err) => {
             console.error(err);
@@ -141,14 +170,40 @@ export default {
 
     },
 
-    handleClick(index) {
-      let itemData = this.tableData[index];
-      this.dialogTableVisible = true;
-      this.elderForm = itemData;
+    handleClick(index, row) {
+      this.elderForm=row;
+      // console.log("点击了row")
+      // console.log(this.elderForm)
+      this.drawerTableVisible = true;
     },
-    dialogFormSubmit() {
-      this.dialogTableVisible = false;
-      axios.post('http://localhost:9090/outing-registration/update', this.elderForm)
+    handleClose(done) {
+      if (Object.keys(this.radioNurse).length == 0||this.elderForm.nurseId==this.radioNurse.nurseId) {
+        this.radioNurse={}
+        done();
+      } else {
+        this.$confirm('确定将 '+this.elderForm.elderlyName+" 的护工更改为 "+this.radioNurse.name+" ？", '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.drawerFormSubmit();
+          this.radioNurse= {}
+          done();
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消更改'
+          });
+          this.radioNurse= {}
+          done();
+        });
+      }
+    },
+    drawerFormSubmit() {
+      let updateElderForm = {
+        [String(this.elderForm.elderlyId)]: this.radioNurse.nurseId,
+      };
+      axios.post('http://127.0.0.1:9090/elderly-info/updateNurseIds', updateElderForm)
           .then((response) => {
             this.$message({
               showClose: true,
@@ -167,8 +222,10 @@ export default {
           });
     },
 
-  },
-};
+  }
+  ,
+}
+;
 </script>
 
 <style scoped>

@@ -19,65 +19,24 @@
           :data="filterTableData"
           style="width: 100%; margin:auto;text-align: center;"
           cell-style="text-align: center;"
-          height="270"
           :stripe="true"
           v-loading="loading"
           :header-cell-style="{ background: '#f3f6fd', color: '#555' ,textAlign: 'center'}"
       >
-
-        <el-table-column type="expand">
-          <template slot-scope="props">
-            <el-card shadow="never" v-show="props.row.elderlyList.length==0" class="expanded_table">
-              暂无负责老人！！！
-            </el-card>
-            <el-form label-position="left" inline class="demo-table-expand">
-              <div class="expanded_table">
-
-                <el-table
-                    :data="props.row.elderlyList"
-                    style="width: 100%; margin:auto;text-align: center;"
-                    cell-style="text-align: center;"
-                    :stripe="true"
-                    :header-cell-style="{ background: '#f3f6fd', color: '#555' ,textAlign: 'center'}"
-                    v-show="props.row.elderlyList.length!=0"
-                >
-                  <el-table-column property="elderlyId" label="老人ID号"/>
-                  <el-table-column property="elderlyName" label="老人姓名"/>
-                  <el-table-column property="gender" label="老人性别"/>
-                  <el-table-column property="age" label="老人年龄"/>
-                  <el-table-column property="contactInfo" label="联系方式"/>
-                  <el-table-column fixed="right" label="Operations" min-width="120">
-                    <template #default="scope">
-                      <!--              todo 点击事件-->
-                      <el-button link type="success" size="small" plain @click="handleClick(scope.$index, scope.row)">
-                        <span style="font-weight: bolder">详 情</span>
-                      </el-button>
-                      <el-button link type="primary" size="small" plain
-                                 @click="elderlyhandleClick(scope.$index, scope.row)"><span
-                          style="font-weight: bolder">移 除</span>
-                      </el-button>
-                    </template>
-                  </el-table-column>
-                </el-table>
-              </div>
-            </el-form>
-          </template>
-        </el-table-column>
-        <el-table-column property="nurseId" label="护士ID号"/>
-        <el-table-column property="nurseName" label="护士姓名"/>
+        <el-table-column property="nurseId" label="护工ID号"/>
+        <el-table-column property="nurseName" label="护工姓名"/>
         <el-table-column property="gender" label="护工性别"/>
         <el-table-column property="contactInfo" label="联系方式"/>
         <el-table-column property="nurseLevel" label="护理等级"/>
         <el-table-column property="serviceEvaluation" label="服务评价"/>
-        <el-table-column property="elderlyList.length" label="负责老人个数"/>
-        <el-table-column fixed="right" label="Operations" min-width="150px">
+        <el-table-column property="elderlyList.length" label="负责老人个数" min-width="100px"/>
+        <el-table-column fixed="right" label="负责老人" min-width="150px">
           <template #default="scope">
-            <!--              todo 点击事件-->
-            <el-button link type="success" size="small" plain @click="handleClick(scope.$index, scope.row)">
+            <el-button link type="success" size="small" plain @click="detailsClick(scope.$index, scope.row)">
               <span style="font-weight: bolder">详 情</span>
             </el-button>
-            <el-button link type="primary" size="small" plain @click="handleClick(scope.$index, scope.row)"><span
-                style="font-weight: bolder">修 改</span>
+            <el-button link type="primary" size="small" plain @click="addClick(scope.$index, scope.row)">
+              <span style="font-weight: bolder">添 加</span>
             </el-button>
           </template>
         </el-table-column>
@@ -96,6 +55,63 @@
         />
       </div>
     </div>
+    <!--    展示细节的抽屉-->
+    <el-drawer title="负责的老人有" :visible.sync="detailsDrawerTableVisible" :before-close="detailsClose" size="600px">
+      <div style="margin-top: 0px">
+        <el-radio-group v-model="radioNurse" size="medium">
+          <el-radio-button v-for="nurse in nurseData" :label="nurse" :key="nurse"  style="width: 270px" >
+            <el-card>
+              <el-descriptions :title="nurse.name"  :column="1">
+                <el-descriptions-item label="老人ID号">{{nurse.nurseId}}</el-descriptions-item>
+                <el-descriptions-item label="老人姓名">{{nurse.nurseName}}</el-descriptions-item>
+                <el-descriptions-item label="老人性别">{{nurse.gender}}</el-descriptions-item>
+                <el-descriptions-item label="老人年龄">{{nurse.gender}}</el-descriptions-item>
+                <el-descriptions-item label="联系方式">{{nurse.contactInfo}}</el-descriptions-item>
+                <el-descriptions-item label="自理能力等级">
+                  <el-tag v-if="nurse.nurseLevel==1" type="danger">不自理</el-tag>
+                  <el-tag v-else-if="nurse.nurseLevel==2" type="warning">部分自理</el-tag>
+                  <el-tag v-else-if="nurse.nurseLevel==3" type="success">自行disabled</el-tag>
+                </el-descriptions-item>
+                <el-descriptions-item label="入住状态">
+                  <el-tag v-if="nurse.nurseLevel==1" type="success">已入住</el-tag>
+                  <el-tag v-else-if="nurse.nurseLevel==0" type="info">已离开</el-tag>
+                </el-descriptions-item>
+              </el-descriptions>
+            </el-card>
+          </el-radio-button>
+        </el-radio-group>
+      </div>
+
+    </el-drawer>
+    <!--    添加老人的抽屉-->
+    <el-drawer title="可添加的老人有" :visible.sync="addDrawerTableVisible" :before-close="addClose" size="600px">
+      <div style="margin-top: 0px">
+        <el-radio-group v-model="radioNurse" size="medium">
+          <el-radio-button v-for="nurse in nurseData" :label="nurse" :key="nurse"  style="width: 270px" >
+            <el-card>
+              <el-descriptions :title="nurse.name"  :column="1">
+                <el-descriptions-item label="老人ID号">{{nurse.nurseId}}</el-descriptions-item>
+                <el-descriptions-item label="老人姓名">{{nurse.nurseName}}</el-descriptions-item>
+                <el-descriptions-item label="老人性别">{{nurse.gender}}</el-descriptions-item>
+                <el-descriptions-item label="老人年龄">{{nurse.gender}}</el-descriptions-item>
+                <el-descriptions-item label="联系方式">{{nurse.contactInfo}}</el-descriptions-item>
+                <el-descriptions-item label="自理能力等级">
+                  <el-tag v-if="nurse.nurseLevel==1" type="danger">不自理</el-tag>
+                  <el-tag v-else-if="nurse.nurseLevel==2" type="warning">部分自理</el-tag>
+                  <el-tag v-else-if="nurse.nurseLevel==3" type="success">自行disabled</el-tag>
+                </el-descriptions-item>
+                <el-descriptions-item label="入住状态">
+                  <el-tag v-if="nurse.nurseLevel==1" type="success">已入住</el-tag>
+                  <el-tag v-else-if="nurse.nurseLevel==0" type="info">已离开</el-tag>
+                </el-descriptions-item>
+              </el-descriptions>
+            </el-card>
+          </el-radio-button>
+        </el-radio-group>
+      </div>
+
+    </el-drawer>
+
   </div>
 </template>
 <script>
@@ -156,8 +172,11 @@ export default {
       //   "physicalCondition": null
       // },
 
-      // todo 弹窗开关控制
-      // dialogTableVisible: false,
+      // 抽屉
+      detailsDrawerTableVisible: false,
+      addDrawerTableVisible: false,
+      radioNurse:{},
+      elderlyData: []
     };
   },
   methods: {
@@ -175,14 +194,67 @@ export default {
     },
 
 
-    handleClick(index) {
-      let itemData = this.tableData[index];
-      this.dialogTableVisible = true;
-      this.elderForm = itemData;
+    detailsClick(index,row) {
+      this.elderForm=row;
+      // console.log("点击了row")
+      // console.log(this.elderForm)
+      this.drawerTableVisible = true;
     },
-    dialogFormSubmit() {
-      this.dialogTableVisible = false;
-      axios.post('http://localhost:9090/outing-registration/update', this.elderForm)
+    addClick(index,row) {
+      this.elderForm=row;
+      // console.log("点击了row")
+      // console.log(this.elderForm)
+      this.drawerTableVisible = true;
+    },
+    detailsClose(done) {
+      if (Object.keys(this.radioNurse).length == 0||this.elderForm.nurseId==this.radioNurse.nurseId) {
+        this.radioNurse={}
+        done();
+      } else {
+        this.$confirm('确定将 '+this.elderForm.elderlyName+" 的护工更改为 "+this.radioNurse.name+" ？", '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.drawerFormSubmit();
+          this.radioNurse= {}
+          done();
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消更改'
+          });
+          this.radioNurse= {}
+          done();
+        });
+      }
+    },
+    addClose(done) {
+      if (Object.keys(this.radioNurse).length == 0||this.elderForm.nurseId==this.radioNurse.nurseId) {
+        this.radioNurse={}
+        done();
+      } else {
+        this.$confirm('确定将 '+this.elderForm.elderlyName+" 的护工更改为 "+this.radioNurse.name+" ？", '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.drawerFormSubmit();
+          this.radioNurse= {}
+          done();
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消更改'
+          });
+          this.radioNurse= {}
+          done();
+        });
+      }
+    },
+
+    drawerFormSubmit(submitFrom) {
+      axios.post('http://127.0.0.1:9090/elderly-info/updateNurseIds', submitFrom)
           .then((response) => {
             this.$message({
               showClose: true,
