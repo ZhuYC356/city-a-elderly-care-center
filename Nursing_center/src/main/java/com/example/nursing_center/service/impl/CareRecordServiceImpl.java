@@ -2,6 +2,7 @@ package com.example.nursing_center.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.nursing_center.controller.Result.RecordForm;
+import com.example.nursing_center.controller.Result.ServiceConcern;
 import com.example.nursing_center.mapper.CareRecordMapper;
 import com.example.nursing_center.pojo.CareRecord;
 import com.example.nursing_center.service.ICareRecordService;
@@ -48,6 +49,11 @@ public class CareRecordServiceImpl extends ServiceImpl<CareRecordMapper, CareRec
         } else {
             return "只能移除护理状态为1的记录";
         }
+    }
+
+    @Override
+    public List<ServiceConcern> getAllElderlyProjects() {
+        return careRecordMapper.getAllElderlyProjects();
     }
 
 
