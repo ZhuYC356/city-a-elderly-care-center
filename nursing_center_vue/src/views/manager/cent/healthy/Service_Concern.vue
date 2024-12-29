@@ -30,7 +30,7 @@
         <template #default="props">
           <div m="4" style="width: 90%;margin: auto;">
             <h2>护理服务项目</h2>
-            <el-table :data="props.row.family" :border="true"
+            <el-table :data="props.row.careProjectForElderlyList" :border="true"
                       :row-class-name="tableRowClassName"
                       highlight-current-row>
               <el-table-column label="项目名称" prop="projectName" />
@@ -65,169 +65,37 @@
 </style>
 
 <script setup>
-import { computed, ref } from 'vue'
+import {computed, onMounted, onUnmounted, ref} from 'vue'
+import axios from "axios";
 
-const tableData = [
-  {
-    name: '张三',
-    gender: '男',
-    age: '67',
-    idNumber: '410303197201104081',
-    nurseName: 'CA 94114',
-    family: [
-      {
-        projectName: '全套按摩马萨基',
-        description: '从头给你按到脚',
-        careStatus: '到期',
-        careEndTime: '2024-12-26',
-        price: '998.00',
-      },
-      {
-        projectName: '尼哥同款鞭策套餐',
-        description: '给你原汁原味的尼哥体验',
-        careStatus: '欠费',
-        careEndTime: '2025-01-01',
-        price: '198.00',
-      },
-      {
-        projectName: '麦小鼠电疗服务',
-        description: '猛攻！',
-        careStatus: '未到期',
-        careEndTime: '2024-12-28',
-        price: '648.00',
-      },
-    ],
-  },
-  {
-    name: '李四',
-    gender: '男',
-    age: '67',
-    idNumber: '410303197201104081',
-    nurseName: 'CA 94114',
-    family: [
-      {
-        projectName: '全套按摩马萨基',
-        description: '从头给你按到脚',
-        careStatus: '到期',
-        careEndTime: '2024-12-26',
-        price: '998.00',
-      },
-      {
-        projectName: '尼哥同款鞭策套餐',
-        description: '给你原汁原味的尼哥体验',
-        careStatus: '欠费',
-        careEndTime: '2025-01-01',
-        price: '198.00',
-      },
-      {
-        projectName: '麦小鼠电疗服务',
-        description: '猛攻！',
-        careStatus: '未到期',
-        careEndTime: '2024-12-28',
-        price: '648.00',
-      },
-    ],
-  },
-  {
-    name: '威龙',
-    gender: '男',
-    age: '67',
-    idNumber: '410303197201104081',
-    nurseName: 'CA 94114',
-    family: [
-      {
-        projectName: '全套按摩马萨基',
-        description: '从头给你按到脚',
-        careStatus: '到期',
-        careEndTime: '2024-12-26',
-        price: '998.00',
-      },
-      {
-        projectName: '尼哥同款鞭策套餐',
-        description: '给你原汁原味的尼哥体验',
-        careStatus: '欠费',
-        careEndTime: '2025-01-01',
-        price: '198.00',
-      },
-      {
-        projectName: '麦小鼠电疗服务',
-        description: '猛攻！',
-        careStatus: '未到期',
-        careEndTime: '2024-12-28',
-        price: '648.00',
-      },
-    ],
-  },
-  {
-    name: '阿巴阿巴',
-    gender: '男',
-    age: '67',
-    idNumber: '410303197201104081',
-    nurseName: 'CA 94114',
-    family: [
-      {
-        projectName: '全套按摩马萨基',
-        description: '从头给你按到脚',
-        careStatus: '到期',
-        careEndTime: '2024-12-26',
-        price: '998.00',
-      },
-      {
-        projectName: '尼哥同款鞭策套餐',
-        description: '给你原汁原味的尼哥体验',
-        careStatus: '欠费',
-        careEndTime: '2025-01-01',
-        price: '198.00',
-      },
-      {
-        projectName: '麦小鼠电疗服务',
-        description: '猛攻！',
-        careStatus: '未到期',
-        careEndTime: '2024-12-28',
-        price: '648.00',
-      },
-    ],
-  },
-  {
-    name: '印度阿三',
-    gender: '男',
-    age: '67',
-    idNumber: '410303197201104081',
-    nurseName: 'CA 94114',
-    family: [
-      {
-        projectName: '全套按摩马萨基',
-        description: '从头给你按到脚',
-        careStatus: '到期',
-        careEndTime: '2024-12-26',
-        price: '998.00',
-      },
-      {
-        projectName: '尼哥同款鞭策套餐',
-        description: '给你原汁原味的尼哥体验',
-        careStatus: '欠费',
-        careEndTime: '2025-01-01',
-        price: '198.00',
-      },
-      {
-        projectName: '麦小鼠电疗服务',
-        description: '猛攻！',
-        careStatus: '未到期',
-        careEndTime: '2024-12-28',
-        price: '648.00',
-      },
-    ],
-  },
-]
+const tableData = ref([]);
+
+
+const getAllElderlyProjects = () => {
+  // 发送 GET 请求到后端
+  axios.get('http://localhost:9090/care-record/getAllElderlyProjects')
+      .then(response => {
+        console.log('从后端成功获取服务关注的信息:', response.data);
+        tableData.value = response.data;
+        console.log('打印tableData的内容:', tableData.value);
+      })
+      .catch(error => {
+        console.error('错误:', error);
+      });
+}
+onMounted(()=>{
+  getAllElderlyProjects()
+})
 
 
 const search = ref('')
 const filterTableData = computed(() =>
-    tableData.filter(
+    tableData.value.filter(
         (data) =>
             !search.value ||
             data.name.toLowerCase().includes(search.value.toLowerCase())
     )
 )
+
 
 </script>
