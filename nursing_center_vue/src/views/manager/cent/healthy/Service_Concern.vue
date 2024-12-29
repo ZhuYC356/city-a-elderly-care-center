@@ -36,11 +36,11 @@
               <el-table-column label="项目名称" prop="projectName" />
               <el-table-column label="护理项目描述" prop="description" />
               <el-table-column label="项目服务状态" prop="careStatus" />
-              <el-table-column sortable label="服务到期时间" prop="careEndTime" />
+              <el-table-column sortable label="服务时长" prop="careEndTime" />
               <el-table-column sortable label="价格" prop="price" />
               <el-table-column label="操作">
-                <el-button style="color: #3f9dfd">续费</el-button>
-                <el-button type="danger" plain>移除</el-button>
+                <el-button style="color: #3f9dfd" @click="serviceProjectRenew = true">续费</el-button>
+                <el-button type="danger" plain @click="serviceProjectDelete = true">移除</el-button>
               </el-table-column>
             </el-table>
           </div>
@@ -52,12 +52,113 @@
       <el-table-column label="身份证号" prop="idNumber" />
       <el-table-column label="护工名" prop="nurseName" />
       <el-table-column label="操作">
-        <el-button type="success" plain>购买护理项目</el-button>
+        <el-button type="success" plain @click="drawer = true">购买护理项目</el-button>
       </el-table-column>
     </el-table>
 
-  </div>
 
+
+
+    <el-dialog
+        title="护理项目续费"
+        :visible.sync="serviceProjectRenew"
+        width="30%"
+        center>
+      <el-form :label-position="labelPosition" label-width="80px" :model="formLabelAlign">
+        <el-form-item label="续费项目">
+          <el-input v-model="formLabelAlign.name" placeholder="项目名，不能自己改" disabled></el-input>
+        </el-form-item>
+        <el-form-item label="续费时长">
+          <el-input v-model="formLabelAlign.region"></el-input>
+        </el-form-item>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="serviceProjectRenew = false" plain>取 消</el-button>
+        <el-button type="primary" plain @click="serviceProjectRenew = false">确 定</el-button>
+      </span>
+    </el-dialog>
+
+
+
+    <el-dialog
+        title="提示"
+        :visible.sync="serviceProjectDelete"
+        width="30%"
+        center>
+      <h2 style="text-align: center;color: #F56C6C">确定要移除该项目吗？</h2>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="serviceProjectDelete = false" plain>取 消</el-button>
+        <el-button type="danger" plain  @click="serviceProjectDelete = false">确 定</el-button>
+      </span>
+    </el-dialog>
+
+
+    <el-drawer
+        title="购买护理项目"
+        :visible.sync="drawer"
+        :direction="direction"
+        size="40%">
+      <div style="display: flex;">
+        <el-card style="width: 50%;margin: 1%">
+          <template #header>
+            <div class="card-header">
+              <span>项目1</span>
+            </div>
+          </template>
+          <p v-for="o in 4" :key="o" class="text item">{{ '项目内容 ' + o }}</p>
+          <template #footer>底部内容</template>
+        </el-card>
+
+        <el-card style="width: 50%;margin: 1%">
+          <template #header>
+            <div class="card-header">
+              <span>项目2</span>
+            </div>
+          </template>
+          <p v-for="o in 4" :key="o" class="text item">{{ '项目内容 ' + o }}</p>
+          <template #footer>底部内容</template>
+        </el-card>
+      </div>
+
+      <div style="display: flex;">
+        <el-card style="width: 50%;margin: 1%">
+          <template #header>
+            <div class="card-header">
+              <span>项目3</span>
+            </div>
+          </template>
+          <p v-for="o in 4" :key="o" class="text item">{{ '项目内容 ' + o }}</p>
+          <template #footer>底部内容</template>
+        </el-card>
+
+        <el-card style="width: 50%;margin: 1%">
+          <template #header>
+            <div class="card-header">
+              <span>项目4</span>
+            </div>
+          </template>
+          <p v-for="o in 4" :key="o" class="text item">{{ '项目内容 ' + o }}</p>
+          <template #footer>底部内容</template>
+        </el-card>
+      </div>
+
+      <div style="display: flex;">
+        <el-card style="width: 50%;margin: 1%">
+          <template #header>
+            <div class="card-header">
+              <span>项目5</span>
+            </div>
+          </template>
+          <p v-for="o in 4" :key="o" class="text item">{{ '项目内容 ' + o }}</p>
+          <template #footer>底部内容</template>
+        </el-card>
+
+      </div>
+    </el-drawer>
+
+
+
+  </div>
 </template>
 
 <style>
@@ -65,8 +166,11 @@
 </style>
 
 <script setup>
-import {computed, onMounted, onUnmounted, ref} from 'vue'
+import {computed, onMounted, ref} from 'vue'
 import axios from "axios";
+
+const serviceProjectRenew = ref(false);
+const serviceProjectDelete = ref(false);
 
 const tableData = ref([]);
 
@@ -96,6 +200,20 @@ const filterTableData = computed(() =>
             data.name.toLowerCase().includes(search.value.toLowerCase())
     )
 )
+
+
+const labelPosition = ref('right');
+const formLabelAlign = ref({
+  name: '',
+  region: '',
+  type: ''
+});
+
+
+
+const drawer = ref(false);
+const direction = ref('ltr');
+
 
 
 </script>
