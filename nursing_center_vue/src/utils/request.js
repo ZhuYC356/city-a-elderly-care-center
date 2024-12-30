@@ -14,6 +14,10 @@ request.interceptors.request.use(config => {
     config.headers['Content-Type'] = 'application/json;charset=utf-8';        // 设置请求头格式
     // let user = JSON.parse(localStorage.getItem("xm-user") || '{}')  // 获取缓存的用户信息
     // config.headers['token'] = user.token  // 设置请求头
+    let user = JSON.parse(localStorage.getItem("nursing_center_user"))
+    if (user === null) {
+        router.push('/login')
+    }
     return config
 }, error => {
     console.error('request error: ' + error) // for debug
