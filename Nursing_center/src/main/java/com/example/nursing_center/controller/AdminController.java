@@ -1,5 +1,6 @@
 package com.example.nursing_center.controller;
 
+import cn.hutool.core.date.DateTime;
 import com.example.nursing_center.common.enums.ResultCodeEnum;
 import com.example.nursing_center.controller.Result.Login;
 import com.example.nursing_center.service.IAdminService;
@@ -9,6 +10,7 @@ import com.example.nursing_center.pojo.Admin;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -38,7 +40,13 @@ public class AdminController {
         login.setPassword(MD5Util.encrypt(login.getPassword()));
         System.out.println(login.getPassword());
         List<Admin> list = adminService.Login(login);
-        return !list.isEmpty() ? Result.success(list.get(0)) : Result.error(ResultCodeEnum.USER_ACCOUNT_ERROR);
+        if (!list.isEmpty()) {
+            Admin admin = list.get(0);
+            admin.setDatetime(new DateTime());
+            return Result.success(admin);
+        }else {
+            return Result.error(ResultCodeEnum.USER_ACCOUNT_ERROR);
+        }
     }
 
     @GetMapping("/getAll")

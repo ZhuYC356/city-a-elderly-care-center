@@ -1,7 +1,10 @@
 package com.example.nursing_center.pojo;
 
+import cn.hutool.core.date.DateTime;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+import lombok.Data;
+
 import java.io.Serializable;
 
 /**
@@ -12,6 +15,7 @@ import java.io.Serializable;
  * @author 第六组
  * @since 2024-12-19
  */
+@Data
 public class Admin implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -56,6 +60,13 @@ public class Admin implements Serializable {
      * 邮箱
      */
     private String email;
+
+    /**
+     * datatime
+     * @return
+     */
+    private DateTime datetime;
+
 
     public Integer getId() {
         return id;

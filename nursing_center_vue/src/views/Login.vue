@@ -104,6 +104,7 @@ export default {
           this.$router.push('/')  // 跳转主页
           console.log(res.data)
           localStorage.setItem('nursing_center_user', JSON.stringify(res.data));
+          localStorage.setItem('time', Date.now());
         } else {
           this.$message.error(res.msg)
         }
