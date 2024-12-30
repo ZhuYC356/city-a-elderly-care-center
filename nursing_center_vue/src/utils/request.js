@@ -1,6 +1,6 @@
 import axios from 'axios'
 import router from "@/router";
-const time = 1 * 60 * 1000
+const time = 30 * 60 * 1000
 // 获取当前时间
 function getCurrentTime() {
     const now = new Date();
