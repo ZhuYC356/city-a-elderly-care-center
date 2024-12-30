@@ -127,6 +127,13 @@ const deleteRow = (index, tableData) => {
   console.log(elderlyId, projectId)
   // 弹出确认框
   const isConfirmed = window.confirm('您确定要移除此记录吗？');
+  if (!isConfirmed) {
+    Message({
+      message: '操作已取消',
+      type: 'warning',
+    });
+    return;
+  }
   request.get('/care-record/remove?elderlyId='+elderlyId+'&projectId='+projectId).then((res) => {
 
     console.log(res.data.message);  // 打印移除成功消息
