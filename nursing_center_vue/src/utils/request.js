@@ -1,6 +1,6 @@
 import axios from 'axios'
 import router from "@/router";
-
+const time = 1 * 60 * 1000
 // 获取当前时间
 function getCurrentTime() {
     const now = new Date();
@@ -9,7 +9,7 @@ function getCurrentTime() {
 
 // 判断两个时间是否相差30分钟
 function isWithin30Minutes(time1, time2) {
-    return Math.abs(time1 - time2) <= 30 * 60 * 1000;
+    return Math.abs(time1 - time2) <= time;
 }
 
 function pan() {
