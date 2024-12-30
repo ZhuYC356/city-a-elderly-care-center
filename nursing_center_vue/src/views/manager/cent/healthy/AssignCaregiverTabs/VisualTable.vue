@@ -33,7 +33,7 @@ export default {
   },
   data() {
     return {
-      colorTable: ["#5c7bd9", "#ffdc60", "#40b27d", "#a969c6", "#ff915a", "#ff88e0",],
+      colorTable: ["#5c7bd9", "#40b27d", "#ffdc60", "#a969c6", "#ff915a", "#ff88e0",],
       nurseData: [],
       nursingXAxis: [],
       nursingYAxis: [],

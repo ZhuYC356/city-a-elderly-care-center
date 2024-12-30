@@ -21,16 +21,17 @@
           cell-style="text-align: center;"
           :stripe="true"
           v-loading="loading"
+          :default-sort = "{prop: 'nurseId', order: 'ascending'}"
           :header-cell-style="{ background: '#f3f6fd', color: '#555' ,textAlign: 'center'}"
       >
-        <el-table-column property="nurseId" label="护工ID号"/>
-        <el-table-column property="nurseName" label="护工姓名"/>
+        <el-table-column property="nurseId" label="护工ID号" sortable/>
+        <el-table-column property="nurseName" label="护工姓名" sortable/>
         <el-table-column property="gender" label="护工性别"/>
-        <el-table-column property="contactInfo" label="联系方式"/>
-        <el-table-column property="nurseLevel" label="护理等级"/>
+        <el-table-column property="contactInfo" label="联系方式" sortable/>
+        <el-table-column property="nurseLevel" label="护理等级" sortable/>
         <el-table-column property="serviceEvaluation" label="服务评价"/>
-        <el-table-column property="elderlyList.length" label="负责老人个数" min-width="100px"/>
-        <el-table-column fixed="right" label="负责老人" min-width="150px">
+        <el-table-column property="elderlyList.length" label="负责老人个数" min-width="110px" sortable/>
+        <el-table-column fixed="right" label="负责老人" min-width="140px">
           <template #default="scope">
             <el-button link type="success" size="small" plain @click="detailsClick(scope.$index, scope.row)">
               <span style="font-weight: bolder">详 情</span>

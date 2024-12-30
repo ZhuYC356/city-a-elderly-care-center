@@ -49,7 +49,7 @@
             :page-sizes="[5, 10, 20, 50]"
             background=true
             layout="total, sizes, prev, pager, next, jumper"
-            :total="this.AllElderlyData.length"
+            :total="total"
             @size-change="handleSizeChange"
             @current-change="handleCurrentChange"
         />
@@ -109,6 +109,7 @@ export default {
           return data.elderlyName.toLowerCase().includes(nameValue);
         });
       }
+      this.total = filteredData.length;
       return filteredData;
     }
   },
@@ -126,7 +127,7 @@ export default {
       formLabelWidth: '140px',
       currentPage: 1,
       pageSize: 10,
-      // total: 0,
+      total: 0,
 
       // 表格字段
       elderlyData: [],
@@ -155,6 +156,7 @@ export default {
             // this.total = res.data.data.length;
             this.AllElderlyData = res.data.data;
             this.handleCurrentChange(1)
+            this.total=this.AllElderlyData.length;
           })
           .catch((err) => {
             console.error(err);
