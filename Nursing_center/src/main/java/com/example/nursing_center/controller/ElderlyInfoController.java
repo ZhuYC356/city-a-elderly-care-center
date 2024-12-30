@@ -3,6 +3,7 @@ package com.example.nursing_center.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.nursing_center.common.Result;
 import com.example.nursing_center.common.ResultGeneric;
 import com.example.nursing_center.controller.Result.AssignElderly;
@@ -153,6 +154,27 @@ public class ElderlyInfoController {
         result.put("failureCount", failureCount);
         result.put("total", updateIds.size());
         return result;
+    }
+    /**
+     * 分页查询
+     */
+    @GetMapping("/page")
+    public List<ElderlyInfo> page(@RequestParam Integer pageNum,
+                       @RequestParam Integer pageSize,
+                       @RequestParam(defaultValue = "") String name,
+                       @RequestParam(defaultValue = "false")boolean nurseIsNull) {
+        // 创建查询条件
+        QueryWrapper<ElderlyInfo> queryWrapper = new QueryWrapper<>();
+        queryWrapper.like("name", name);
+        if (nurseIsNull) {
+            queryWrapper.isNull("nurse_id");
+        }
+        queryWrapper.eq("status", 1);
+
+        // 执行分页查询
+        Page<ElderlyInfo> page = elderlyInfoService.page(new Page<>(pageNum, pageSize), queryWrapper);
+
+        return page.getRecords();
     }
 }
 

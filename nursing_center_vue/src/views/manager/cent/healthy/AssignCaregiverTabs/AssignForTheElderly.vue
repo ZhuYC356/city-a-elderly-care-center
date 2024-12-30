@@ -47,11 +47,11 @@
             v-model:current-page="currentPage"
             v-model:page-size="pageSize"
             :page-sizes="[5, 10, 20, 50]"
-            :size="size"
-            :disabled="disabled"
             background=true
             layout="total, sizes, prev, pager, next, jumper"
-            :total="elderlyData.length"
+            :total="this.AllElderlyData.length"
+            @size-change="handleSizeChange"
+            @current-change="handleCurrentChange"
         />
       </div>
     </div>
@@ -85,6 +85,7 @@
 </template>
 <script>
 import axios from "axios";
+import request from "@/utils/request";
 
 export default {
   name: "out-office-registration",
@@ -123,11 +124,13 @@ export default {
 
       // 表格、弹窗设置
       formLabelWidth: '140px',
-      currentPage: 0,
-      pageSize: 0,
+      currentPage: 1,
+      pageSize: 10,
+      // total: 0,
 
       // 表格字段
       elderlyData: [],
+      AllElderlyData:[],
       elderForm: {
         "elderlyId": null, "nurseId": null,
         "age": null, "gender": null, "contactInfo": null, "medicalHistory": null, "elderlyName": null,
@@ -149,7 +152,9 @@ export default {
           .get("http://127.0.0.1:9090/elderly-info/getAllElderly")
           .then((res) => {
             console.log(res.data.data);
-            this.elderlyData = res.data.data;
+            // this.total = res.data.data.length;
+            this.AllElderlyData = res.data.data;
+            this.handleCurrentChange(1)
           })
           .catch((err) => {
             console.error(err);
@@ -168,6 +173,35 @@ export default {
             console.error(err);
           });
 
+    },
+    handleSizeChange(val){
+      this.pageSize=val
+      // axios.get("http://127.0.0.1:9090/elderly-info/page", {
+      //   params: {pageSize: this.pageSize, pageNum: this.currentPage,
+      //     name: this.name, nurseIsNull: this.nurseIsNull}})
+      //     .then((res) => {
+      //       console.log(res.data);
+      //       this.elderlyData=res.data
+      //     })
+      //     .catch((err) => {
+      //       console.error(err);
+      //     });
+      this.elderlyData=this.AllElderlyData.slice((this.currentPage-1)*this.pageSize,this.currentPage*this.pageSize)
+    },
+
+    handleCurrentChange(val){
+      this.currentPage=val
+      // axios.get("http://127.0.0.1:9090/elderly-info/page", {
+      //   params: {pageSize: this.pageSize, pageNum: this.currentPage,
+      //     name: this.name, nurseIsNull: this.nurseIsNull}})
+      //     .then((res) => {
+      //       console.log(res.data);
+      //       this.elderlyData=res.data
+      //     })
+      //     .catch((err) => {
+      //       console.error(err);
+      //     });
+      this.elderlyData=this.AllElderlyData.slice((this.currentPage-1)*this.pageSize,this.currentPage*this.pageSize)
     },
 
     handleClick(index, row) {

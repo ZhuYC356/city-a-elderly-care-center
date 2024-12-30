@@ -37,7 +37,7 @@ export default {
       nurseData: [],
       nursingXAxis: [],
       nursingYAxis: [],
-      withoutAssigned: 0,
+      withoutAssigned: null,
       hasAssigned: 0
     }
   },
