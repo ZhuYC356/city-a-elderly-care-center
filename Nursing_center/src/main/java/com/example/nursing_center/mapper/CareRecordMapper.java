@@ -21,11 +21,15 @@ public interface CareRecordMapper extends BaseMapper<CareRecord> {
 
     List<RecordForm> select(String name, String projectName);
 
-    List<RecordForm> getRecordById();
 
-    String getCareStatus(Integer elderlyId);
 
-    void deleteByElderlyId(Integer elderlyId);
+    String getCareStatus(Integer elderlyId, Integer projectId);
+
 
     List<ServiceConcern> getAllElderlyProjects();
+
+    List<RecordForm> getRecordById(Integer elderlyId, Integer projectId);
+
+    int updateCareStatus(Integer elderlyId, Integer projectId, Integer careStatus);
+
 }

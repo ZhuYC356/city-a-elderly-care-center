@@ -1,6 +1,7 @@
 package com.example.nursing_center.controller;
 
 
+import com.example.nursing_center.common.Result;
 import com.example.nursing_center.controller.Result.RecordForm;
 import com.example.nursing_center.controller.Result.ServiceConcern;
 import com.example.nursing_center.service.ICareRecordService;
@@ -50,20 +51,30 @@ public class CareRecordController {
      * @param elderlyId
      * @return
      */
-    @GetMapping("/getRecordById")
-    public List<RecordForm> getRecordById(@RequestParam Integer elderlyId) {
-        return careRecordService.getRecordById(elderlyId);
+    @GetMapping("/getRecordById/{elderlyId}/{projectId}")
+    public Result getRecordById(@PathVariable Integer elderlyId, @PathVariable Integer projectId) {
+        return Result.success(careRecordService.getRecordById(elderlyId, projectId));
+//        System.out.println(elderlyId+"_____________________________"+projectId);
+//        return null;
     }
 
     /**
      * 根据护理记录ID删除护理记录，仅当护理状态为1时删除
+     *
      * @param
      * @return
      */
-    @DeleteMapping("/remove")
-    public String removeRecord(@RequestParam Integer elderlyId) {
-        return careRecordService.removeRecord(elderlyId);
+    @GetMapping("/remove")
+    public Result removeRecord(@RequestParam Integer elderlyId,
+                               @RequestParam Integer projectId) {
+        try {
+            String message = careRecordService.removeRecord(elderlyId, projectId);
+            return Result.success(message);
+        } catch (Exception e) {
+            return Result.failure(e.getMessage());
+        }
     }
+
 
 
 
