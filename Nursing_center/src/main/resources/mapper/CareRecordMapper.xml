@@ -3,28 +3,11 @@
 <mapper namespace="com.example.nursing_center.mapper.CareRecordMapper">
 
 
+
     <select id="getRecord" resultType="com.example.nursing_center.controller.Result.RecordForm">
-        /*SELECT
-            e.elderly_id AS elderlyId,
-            e.name AS elderlyName,
-            e.id_number AS idNumber,
-            p.project_name AS projectName,
-            p.nurse_level AS nurseLevel,
-            n.name AS nurseName,
-            r.care_status AS careStatus
-        FROM
-            care_record r
-                JOIN
-            elderly_info e ON r.elderly_id = e.elderly_id
-                JOIN
-            care_project p ON r.project_id = p.project_id
-                JOIN
-            nurse_info n ON r.nurse_id = n.nurse_id
-        WHERE
-            r.status = '1' AND e.status = '1' AND p.status = '1' AND n.status = '1'
-        ORDER BY
-            r.care_start_time DESC;*/
-            select * from service_concern_and_record;
+
+                    select * from service_concern_and_record;
+
     </select>
     <select id="select" resultType="com.example.nursing_center.controller.Result.RecordForm">
         <!--SELECT
@@ -57,31 +40,35 @@
           and project_name like concat('%',#{projectName},'%')
     </select>
     <select id="getRecordById" resultType="com.example.nursing_center.controller.Result.RecordForm">
-        /*SELECT
-            ei.name AS elderlyName,
-            ei.id_number AS idNumber,
-            cp.project_name AS projectName,
-            cp.nurse_level AS nurseLevel,
-            ni.name AS nurseName,
-            cr.care_status AS careStatus
-        FROM
-            care_record cr
-                JOIN
-            elderly_info ei ON cr.elderly_id = ei.elderly_id
-                JOIN
-            care_project cp ON cr.project_id = cp.project_id
-                JOIN
-            nurse_info ni ON cr.nurse_id = ni.nurse_id
-        WHERE
-            cr.elderly_id = #{elderlyId}*/
-        SELECT name, idNumber, projectName, nurseLevel, nurseName, careStatus
-        FROM service_concern_and_record
-        WHERE elderlyId = #{elderlyId};
+        SELECT
+            sc.elderly_id AS elderlyId,
+            sc.name AS name,
+            sc.gender AS gender,
+            sc.age AS age,
+            sc.id_number AS idNumber,
+            sc.nurse_name AS nurseName,
+            sc.project_id AS projectId,
+            sc.project_name AS projectName,
+            sc.description AS description,
+            sc.care_status AS careStatus,
+            sc.price AS price,
+            sc.service_duration AS serviceDuration
+        FROM service_concern_and_record sc
+        WHERE elderly_id = #{elderlyId} and project_id = #{projectId}
 
     </select>
     <select id="getCareStatus" resultType="String">
-        SELECT care_status FROM service_concern_and_record WHERE elderly_id = #{elderlyId}
+        SELECT care_status FROM service_concern_and_record
+        WHERE elderly_id = #{elderlyId}
+        AND project_id = #{projectId}
     </select>
+
+
+    <update id="updateCareStatus">
+        UPDATE elderly_and_project
+        SET status = #{careStatus}
+        WHERE elderly_id = #{elderlyId} AND project_id = #{projectId}
+    </update>
 
     <!--服务关注的表格查询语句-->
     <select id="getAllElderlyProjects" resultMap="elderlyProjectResultMap">
@@ -103,6 +90,8 @@
         </if>
     </select>
 
+
+
     <resultMap id="elderlyProjectResultMap" type="com.example.nursing_center.controller.Result.ServiceConcern">
         <id property="idNumber" column="idNumber"/>
         <result property="name" column="name"/>
@@ -118,8 +107,4 @@
         </collection>
     </resultMap>
 
-
-    <delete id="deleteByElderlyId">
-        DELETE FROM service_concern_and_record WHERE elderly_id = #{elderlyId}
-    </delete>
 </mapper>

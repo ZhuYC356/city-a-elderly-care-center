@@ -3,8 +3,7 @@ import {reactive, ref, onMounted} from 'vue';
 import request from '@/utils/request';
 import axios from "axios";
 import * as XLSX from 'xlsx';
-import { Message } from 'element-ui';
-
+import {Message} from 'element-ui';
 // 表单数据
 const form = reactive({
   name: '',
@@ -18,6 +17,8 @@ const addForm = reactive({
   nurseLevel: '',
   nurseName: '',
   careStatus: '',
+  description: '',
+  projectId: '',
 });
 // 分页配置
 const currentPage4 = ref(5)
@@ -81,12 +82,13 @@ const detailDialogContent = ref('');
 // 查看详情的函数
 const viewDetails = (index, row) => {
   const elderlyId = row.elderlyId; // 从当前选中的行获取老人的 ID
-
-  axios
-      .get(`http://localhost:9090/care-record/getRecordById`, { params: { elderlyId } }) // 发送请求，带上老人 ID
-      .then((res) => {
-        if (res.data && Array.isArray(res.data)) {
-          detailDialogContent.value = res.data.map(record => `
+  const projectId = row.projectId; // 从当前选中的行获取护理项目名称
+  console.log(elderlyId, projectId)
+  request.get('/care-record/getRecordById/' + elderlyId + '/' + projectId).then((res) => {
+    console.log(res.data);
+    if (res.data && Array.isArray(res.data)) {
+      detailDialogContent.value = res.data.map((record) => {
+        return `
           <p>
             <strong>老人姓名:</strong> ${record.name || '未提供'}<br>
             <strong>身份证号:</strong> ${record.idNumber || '未提供'}<br>
@@ -94,28 +96,24 @@ const viewDetails = (index, row) => {
             <strong>护理等级:</strong> ${record.nurseLevel || '未提供'}<br>
             <strong>护理人:</strong> ${record.nurseName || '未提供'}<br>
             <strong>护理状态:</strong> ${record.careStatus || '未提供'}<br>
-            <strong>护理状态:</strong> ${record.careStatus || '未提供'}<br>
+            <strong>护理详情:</strong> ${record.description || '未提供'}<br>
           </p>
-        `).join('<hr>');  // 拼接每一条记录的详细信息，分隔使用 <hr> 标签
-          detailDialogVisible.value = true;  // 显示详情弹窗
-        } else {
-          Message({
-            message: '未找到详细信息',
-            type: 'warning',
-          })
-        }
-      })
-      .catch((err) => {
-        console.error('获取护理记录失败', err);
-        Message.error('获取护理记录失败，请稍后重试')
+        `;
+      }).join('');  // 拼接每一条记录的详细信息，分隔使用 <hr> 标签
+      detailDialogVisible.value = true;  // 显示详情弹窗
+    } else {
+      Message({
+        message: '未找到详细信息',
+        type: 'warning',
       });
-};
+    }
+  })
+}
 
 
 // 移除记录的函数
 const deleteRow = (index, tableData) => {
   const record = tableData[index];
-
   // 判断护理状态，只有护理状态为1时才能移除
   if (record.careStatus !== '1') {  // 假设护理状态是字符串 '1'
     alert('只有护理状态为1时才能移除记录');
@@ -123,13 +121,28 @@ const deleteRow = (index, tableData) => {
   }
 
   const elderlyId = record.elderlyId;  // 获取需要移除记录的老人ID
+  const projectId = record.projectId;
 
+
+  console.log(elderlyId, projectId)
   // 弹出确认框
   const isConfirmed = window.confirm('您确定要移除此记录吗？');
+  request.get('/care-record/remove?elderlyId='+elderlyId+'&projectId='+projectId).then((res) => {
 
+    console.log(res.data.message);  // 打印移除成功消息
+    tableData.splice(index, 1);  // 从表格中移除对应的记录
+    Message({
+      message: '记录已成功移除',
+      type: 'success',
+    })
+  })
+      .catch((err) => {
+        console.error('移除记录失败', err);
+        Message.error('移除记录失败')
+      })
   // 发送删除请求
-  axios
-      .delete('http://localhost:9090/care-record/remove', { params: { elderlyId } })
+  /*axios
+      .get('http://localhost:9090/care-record/remove' + '/' + elderlyId + '/' + projectId)
       .then((res) => {
         console.log(res.data.message);  // 打印移除成功消息
         tableData.splice(index, 1);  // 从表格中移除对应的记录
@@ -141,11 +154,8 @@ const deleteRow = (index, tableData) => {
       .catch((err) => {
         console.error('移除记录失败', err);
         Message.error('移除记录失败')
-      });
+      })*/
 }
-
-
-
 
 
 const selectedRows = ref([]);
@@ -270,11 +280,12 @@ const exportToExcel = () => {
         <el-table :data="tableData" style="width: 100%;" height="390" :stripe="true"
                   :header-cell-style="{background:'#f3f6fd',color:'#555'}" @selection-change="selectedRows = $event">
           <el-table-column type="selection" width="55"/>
-          <el-table-column property="elderlyId" label="ID" width="120"/>
+          <el-table-column property="elderlyId" label="ID" width="80"/>
           <el-table-column property="name" label="姓名" width="120"/>
           <el-table-column property="idNumber" label="身份证号" width="180"/>
+          <el-table-column property="projectId" label="护理项目id" width="100"/>
           <el-table-column property="projectName" label="护理项目" width="120"/>
-          <el-table-column property="nurseLevel" label="护理等级" width="120"/>
+          <el-table-column property="nurseLevel" label="护理等级" width="100"/>
           <el-table-column property="nurseName" label="护理人" width="120"/>
           <el-table-column property="careStatus" label="护理状态" width="100"/>
           <el-table-column fixed="right" label="操作" min-width="120">

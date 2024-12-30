@@ -3,11 +3,11 @@
 <!--    <el-button icon="el-icon-refresh-right" circle style="float:right;margin-right: 15px" @click="refresh"></el-button>-->
   <div class="tableInline">
     <div>
-      <div id="echarsNursing" style="width: 400px; height: 350px;margin:auto"></div>
+      <div id="echarsNursing" style="width: 33vw; height: 70vh;margin:auto"></div>
     </div>
 
     <div>
-      <div id="echarsElderly" style="width: 400px; height: 350px;"></div>
+      <div id="echarsElderly" style="width: 33vw; height: 70vh;"></div>
       <el-alert title="哇！所有老人都已分配护工啦" type="success"
                 v-show="this.withoutAssigned==0" style="margin-top: -80px;"
                 center show-icon

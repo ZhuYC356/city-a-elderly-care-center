@@ -21,9 +21,9 @@ public interface ICareRecordService extends IService<CareRecord> {
 
     List<RecordForm> select(String name, String projectName);
 
-    List<RecordForm> getRecordById(Integer elderlyId);
+    List<RecordForm> getRecordById(Integer elderlyId, Integer projectId);
 
-    String removeRecord(Integer elderlyId);
+    String removeRecord(Integer elderlyId, Integer projectId) throws Exception;
 
     List<ServiceConcern> getAllElderlyProjects();
 }
