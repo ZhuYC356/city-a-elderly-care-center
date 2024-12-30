@@ -6,8 +6,9 @@ import com.example.nursing_center.controller.Result.Form;
 import com.example.nursing_center.pojo.CareProject;
 import com.example.nursing_center.service.impl.CareProjectServiceImpl;
 import jakarta.annotation.Resource;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Date;
 
 /**
  * <p>
@@ -47,9 +48,22 @@ public class CareProjectController {
     }
 
     @PostMapping("/addProject")
-    public Result addProject(@RequestBody CareProject careProject) {
+    public Result addProject(@RequestBody CareProject careProject)  {
+//        String[] s = careProject.getServiceDuration().toString().split(" ");
+//        System.out.println(s[3]);
+//        careProject.setServiceDuration(new Date(s[3]));
         System.out.println(careProject);
-        return Result.success();
+        return careProjectService.addProject(careProject);
+    }
+    @GetMapping("/deleteProject/{projectId}")
+    public Result deleteProject(@PathVariable int projectId) {
+        System.out.println(projectId);
+        return careProjectService.deleteProject(projectId);
+    }
+    @PostMapping("/updateProject")
+    public Result updateForm(@RequestBody CareProject careProject) {
+        System.out.println(careProject);
+        return careProjectService.updateProject(careProject);
     }
 
 }

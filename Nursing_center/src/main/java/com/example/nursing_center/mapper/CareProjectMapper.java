@@ -16,6 +16,8 @@ import java.util.List;
  */
 public interface CareProjectMapper extends BaseMapper<CareProject> {
 
+    int addProject(CareProject careProject);
+
     List<CareProject> getData();
 
     List<CareProject> myListPage(Form form);
@@ -23,4 +25,8 @@ public interface CareProjectMapper extends BaseMapper<CareProject> {
     List<CareProject> select(Form form);
 
     int changeActive(int active, Integer projectId);
+
+    int deleteProject(int projectId);
+
+    int updateProject(CareProject careProject);
 }

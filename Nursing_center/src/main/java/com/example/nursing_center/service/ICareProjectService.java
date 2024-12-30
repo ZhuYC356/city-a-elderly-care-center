@@ -22,4 +22,10 @@ public interface ICareProjectService extends IService<CareProject> {
     Result select(Form form);
 
     Result changeActive(Boolean isActive, Integer projectId);
+
+    Result addProject(CareProject careProject);
+
+    Result deleteProject(int projectId);
+
+    Result updateProject(CareProject careProject);
 }

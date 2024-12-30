@@ -50,4 +50,20 @@ public class CareProjectServiceImpl extends ServiceImpl<CareProjectMapper, CareP
         System.out.println(active);
         return Result.success(careProjectMapper.changeActive(active,projectId));
     }
+
+    @Override
+    public Result addProject(CareProject careProject) {
+        return Result.success(careProjectMapper.addProject(careProject));
+    }
+
+
+    @Override
+    public Result deleteProject(int projectId) {
+        return Result.success(careProjectMapper.deleteProject(projectId));
+    }
+
+    @Override
+    public Result updateProject(CareProject careProject) {
+        return Result.success(careProjectMapper.updateProject(careProject));
+    }
 }

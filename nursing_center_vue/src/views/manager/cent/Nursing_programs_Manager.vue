@@ -26,18 +26,18 @@ const handleSizeChange=(val)=>{
 const background=ref('true')
 const tableData=ref('')
 const getData=()=>{
-      request.get('care-project/getData').then(res=>{
-        total.value=res.data.length
-      })
+  request.get('care-project/getData').then(res=>{
+    total.value=res.data.length
+  })
 }
 onMounted(()=>{
-    select()
-    getData()
+  select()
+  getData()
 })
 const select=()=>{
-    request.post('care-project/select',form).then(res=>{
-      tableData.value=res.data
-    })
+  request.post('care-project/select',form).then(res=>{
+    tableData.value=res.data
+  })
 
 }
 const clearAll=()=>{
@@ -83,13 +83,13 @@ const changeSwitch=(index,row)=>{
   request.get("care-project/changeActive/"+row.isActive+"/"+row.projectId).then(res=>{
     success()
   }).catch(err=>{
-      fail()
+    fail()
   })
   rowClass({row, index})
 }
 const drawer=ref(false)
 const toggleDrawer=()=>{
-    drawer.value=!drawer.value
+  drawer.value=!drawer.value
 }
 const addFormRef=ref(null)
 const addForm=reactive({
@@ -103,13 +103,15 @@ const addForm=reactive({
 const addProject=()=>{
   addFormRef.value.validate((valid)=>{
     if(valid){
-      console.log(addForm.serviceDuration)
+      console.log(addForm.serviceDuration.toString())
       request.post("care-project/addProject",addForm).then(res=>{
         success()
         drawer.value=false
       }).catch(err=>{
         error()
       })
+      getData()
+      select()
     }
     else {
       error()
@@ -124,6 +126,50 @@ const clear=()=>{
   addForm.frequency=''
   addForm.nurseLevel=''
   addForm.projectName=''
+}
+const dialogFormVisible=ref(false)
+const update=(index,row)=>{
+  updateForm.projectId=row.projectId
+  updateForm.projectName=row.projectName
+  updateForm.description=row.description
+  updateForm.serviceDuration=row.serviceDuration
+  updateForm.price=row.price
+  updateForm.frequency=row.frequency
+  updateForm.nurseLevel=row.nurseLevel
+  dialogFormVisible.value=true
+}
+const updateForm=reactive({
+  projectId:'',
+  projectName:'',
+  description:'',
+  serviceDuration:'',
+  price:'',
+  frequency:'',
+  nurseLevel:''
+})
+const cancelUpdate=()=>{
+  dialogFormVisible.value=false
+}
+const updateFormRef=ref(false)
+const updateProject=()=>{
+  updateFormRef.value.validate((valid)=>{
+    if(valid){
+      request.post("care-project/updateProject",updateForm).then(res=>{
+        dialogFormVisible.value=false
+        success()
+        select()
+      }).catch(err=>{})
+    }
+  })
+}
+const deleteProject=(index,row)=>{
+  request.get("care-project/deleteProject/"+row.projectId).then(res=>{
+    success()
+  }).catch(err=>{
+    error()
+  })
+  select()
+  getData()
 }
 </script>
 
@@ -183,7 +229,7 @@ const clear=()=>{
               <el-input v-model="addForm.description" type="textarea" class="myInput" placeholder="请填写项目描述"/>
             </el-form-item>
             <el-form-item label="服务时长" prop="serviceDuration">
-            <el-time-picker v-model="addForm.serviceDuration"  placeholder="请填写项目持续时间"  class="myInput"/>
+              <el-time-picker v-model="addForm.serviceDuration"  placeholder="请填写项目持续时间"  class="myInput"/>
             </el-form-item>
             <el-form-item label="服务价格" prop="price" >
               <el-input v-model="addForm.price" placeholder="请输入项目价格（元）" class="myInput"/>
@@ -233,100 +279,57 @@ const clear=()=>{
           </el-table-column>
           <el-table-column fixed="right" label="操作" min-width="120">
             <template #default="scope">
-              <el-button link type="primary" plain size="small" @click="update(scope.$index,scope.row)"><span style="font-weight: bolder">修 改</span>
+              <el-button link type="primary" size="small" @click="update(scope.$index,scope.row)"><span style="font-weight: bolder">修 改</span>
               </el-button>
-              <el-button link type="danger" plain size="small" @click="update(scope.$index,scope.row)"><span style="font-weight: bolder">删 除</span>
+              <el-button link type="danger" size="small" @click="deleteProject(scope.$index,scope.row)"><span style="font-weight: bolder">删 除</span>
               </el-button>
             </template>
           </el-table-column>
         </el-table>
 
 
-<!--        <el-dialog  width="50%" :visible.sync="dialogFormVisible" :append-to-body="true">-->
-<!--          <div>-->
-<!--            <span style="font-weight: bolder;font-size: 15px">床位调换</span>-->
-<!--            <el-form :model="updateForm" label-width="auto" style="max-width: 600px" :rules="rules"  ref="ruleFormRef">-->
-<!--              <el-form-item label="姓名" style="margin-top: 15px">-->
-<!--                <el-input v-model="updateForm.name" style="width: 300px;"  disabled>-->
-<!--                  <template #prefix>-->
-<!--                    <i class="el-icon-user" style="font-size: 15px;margin-left: 3px" ></i>-->
-<!--                  </template>-->
-<!--                </el-input>-->
-<!--              </el-form-item>-->
-<!--              <el-form-item label="性别">-->
-<!--                <el-select v-model="updateForm.gender" disabled style="width: 300px;" >-->
-<!--                </el-select>-->
-<!--              </el-form-item>-->
-<!--              <el-form-item label="楼号" prop="floorNumber">-->
-<!--                <el-select v-model="updateForm.floorNumber" placeholder="请选择楼号" style="width: 300px;" >-->
-<!--                  <template #prefix>-->
-<!--                    <i class="el-icon-box" style="font-size: 15px;margin-left: 3px" ></i>-->
-<!--                  </template>-->
-<!--                  <el-option label="5号楼" value="1"/>-->
-<!--                  <el-option label="6号楼" value="2"/>-->
-<!--                  <el-option label="7号楼" value="3"/>-->
-<!--                  <el-option label="8号楼" value="4"/>-->
-<!--                </el-select>-->
-<!--              </el-form-item>-->
-
-<!--              <el-form-item style="margin-right: 20px;margin-top: 15px" label="入住日期">-->
-<!--                <el-date-picker-->
-<!--                    v-model="updateForm.date"-->
-<!--                    type="date"-->
-<!--                    clearable-->
-<!--                    style="width: 300px"-->
-<!--                    disabled="true"-->
-<!--                />-->
-<!--              </el-form-item>-->
-<!--              <el-form-item label="现房间号">-->
-<!--                <el-input v-model="updateForm.roomNumber" disabled style="width: 300px;">-->
-<!--                  <template #prefix>-->
-<!--                    <i class="el-icon-film" style="font-size: 15px;margin-left: 3px" ></i>-->
-<!--                  </template>-->
-<!--                </el-input>-->
-<!--              </el-form-item>-->
-<!--              <el-form-item label="新房间号" prop="newRoomNumber">-->
-<!--                <el-select v-model="updateForm.newRoomNumber" placeholder="请选择新房间号" style="width: 300px;">-->
-<!--                  <template #prefix>-->
-<!--                    <i class="el-icon-film" style="font-size: 15px;margin-left: 3px" ></i>-->
-<!--                  </template>-->
-<!--                  <el-option label="101" value="101"/>-->
-<!--                  <el-option label="102" value="102"/>-->
-<!--                  <el-option label="103" value="103"/>-->
-<!--                  <el-option label="104" value="104"/>-->
-<!--                </el-select>-->
-<!--              </el-form-item>-->
-
-<!--              <el-form-item style="margin-right: 20px;margin-top: 15px" label="现床位号">-->
-<!--                <el-input v-model="updateForm.bedNumber" disabled clearable style="width: 300px">-->
-<!--                  <template #prefix>-->
-<!--                    <i class="el-icon-postcard" style="font-size: 15px;margin-left: 3px" ></i>-->
-<!--                  </template>-->
-<!--                </el-input>-->
-<!--              </el-form-item>-->
-<!--              <el-form-item label="新床位号" prop="newBedNumber">-->
-<!--                <el-select v-model="updateForm.newBedNumber" placeholder="请选择新的床位号" style="width: 300px">-->
-<!--                  <template #prefix>-->
-<!--                    <i class="el-icon-tickets" style="font-size: 15px;margin-left: 3px" ></i>-->
-<!--                  </template>-->
-<!--                  <el-option label="1" value="1"/>-->
-<!--                  <el-option label="2" value="2"/>-->
-<!--                  <el-option label="3" value="3"/>-->
-<!--                  <el-option label="4" value="4"/>-->
-<!--                </el-select>-->
-<!--              </el-form-item>-->
-<!--            </el-form>-->
-
-<!--          </div>-->
-<!--          <template #footer>-->
-<!--            <div class="dialog-footer">-->
-<!--              <el-button @click="updateBed" type="primary"><span style="font-weight: bolder">确 认</span></el-button>-->
-<!--              <el-button type="danger" @click="cancelUpdate">-->
-<!--                <span style="font-weight: bolder">取 消</span>-->
-<!--              </el-button>-->
-<!--            </div>-->
-<!--          </template>-->
-<!--        </el-dialog>-->
+        <el-dialog  width="50%" :visible.sync="dialogFormVisible" :append-to-body="true">
+          <div>
+            <span style="font-weight: bolder;font-size: 15px">项目修改</span>
+            <el-form :model="updateForm" label-width="auto" style="max-width: 600px" :rules="rules"  ref="updateFormRef">
+              <el-form-item label="项目名称" prop="projectName" style="margin-top: 15px">
+                <el-input v-model="updateForm.projectName" placeholder="请输入项目名称" class="myInput"/>
+              </el-form-item>
+              <el-form-item label="项目描述">
+                <el-input v-model="updateForm.description" type="textarea" class="myInput" placeholder="请填写项目描述"/>
+              </el-form-item>
+              <el-form-item label="服务时长" prop="serviceDuration">
+                <el-time-picker v-model="updateForm.serviceDuration"  placeholder="请填写项目持续时间"  class="myInput"/>
+              </el-form-item>
+              <el-form-item label="服务价格" prop="price" >
+                <el-input v-model="updateForm.price" placeholder="请输入项目价格（元）" class="myInput"/>
+              </el-form-item>
+              <el-form-item label="服务频率" prop="frequency" >
+                <el-select v-model="updateForm.frequency" placeholder="请选择服务频率">
+                  <el-option label="每天" value="W" />
+                  <el-option label="每月" value="D" />
+                  <el-option label="每周" value="M" />
+                </el-select>
+              </el-form-item>
+              <el-form-item label="护理等级" style="margin-bottom: 25px" prop="nurseLevel">
+                <el-select v-model="updateForm.nurseLevel" placeholder="请选择服务等级">
+                  <el-option label="最高级" value="1" />
+                  <el-option label="高级" value="2" />
+                  <el-option label="中级" value="3" />
+                  <el-option label="低级" value="4" />
+                </el-select>
+              </el-form-item>
+            </el-form>
+          </div>
+          <template #footer>
+            <div class="dialog-footer">
+              <el-button @click="updateProject" type="primary"><span style="font-weight: bolder">确 认</span></el-button>
+              <el-button type="danger" @click="cancelUpdate">
+                <span style="font-weight: bolder">取 消</span>
+              </el-button>
+            </div>
+          </template>
+        </el-dialog>
 
         <div style="margin-top: 10px">
           <el-pagination

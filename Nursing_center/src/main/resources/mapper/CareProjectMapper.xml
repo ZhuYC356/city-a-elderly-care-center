@@ -28,5 +28,18 @@
         SET is_active = #{active}
         WHERE project_id = #{projectId}
     </update>
-
+    <insert id="addProject" parameterType="com.example.nursing_center.pojo.CareProject">
+        INSERT INTO care_project(project_name,description,service_duration,price,frequency,nurse_level)
+        VALUES(#{projectName},#{description},#{serviceDuration},#{price},#{frequency},#{nurseLevel})
+    </insert>
+    <update id="deleteProject">
+        UPDATE care_project
+        SET status = "0"
+        WHERE project_id = #{projectId}
+    </update>
+    <update id="updateProject" parameterType="com.example.nursing_center.pojo.CareProject">
+        UPDATE care_project
+        SET project_name = #{projectName},description = #{description},service_duration = #{serviceDuration},price = #{price},frequency = #{frequency},nurse_level = #{nurseLevel},updated_at = Now()
+        WHERE project_id = #{projectId}
+    </update>
 </mapper>
