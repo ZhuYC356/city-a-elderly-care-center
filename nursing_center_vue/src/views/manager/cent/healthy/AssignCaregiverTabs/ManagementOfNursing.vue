@@ -81,7 +81,7 @@
                   <el-tag v-else-if="elderly.selfCareStatus==3" type="success">自行disabled</el-tag>
                 </el-descriptions-item>
                 <el-descriptions-item label="身体状态">
-                  <el-tag type="info">{{ elderly.physicalCondition }}</el-tag>
+                  <el-tag type="info">{{ elderly.physicalCondition || '无' }}</el-tag>
                 </el-descriptions-item>
               </el-descriptions>
             </el-card>
@@ -104,7 +104,7 @@
             <el-card>
               <el-descriptions :title="elderly.elderlyName" :column="1">
                 <el-descriptions-item label="老人ID号">{{ elderly.elderlyId }}</el-descriptions-item>
-                <el-descriptions-item label="老人姓名">{{ elderly.elderlyName }}</el-descriptions-item>
+                <el-descriptions-item label="老人姓名">{{ elderly.name }}</el-descriptions-item>
                 <el-descriptions-item label="老人性别">{{ elderly.age }}</el-descriptions-item>
                 <el-descriptions-item label="老人年龄">{{ elderly.gender }}</el-descriptions-item>
                 <el-descriptions-item label="联系方式">{{ elderly.contactInfo }}</el-descriptions-item>
@@ -114,7 +114,7 @@
                   <el-tag v-else-if="elderly.selfCareStatus==3" type="success">自行disabled</el-tag>
                 </el-descriptions-item>
                 <el-descriptions-item label="身体状态">
-                  <el-tag type="info">{{ elderly.physicalCondition }}</el-tag>
+                  <el-tag type="info">{{ elderly.physicalCondition || '无' }}</el-tag>
                 </el-descriptions-item>
               </el-descriptions>
             </el-card>
@@ -147,6 +147,8 @@ export default {
       });
     }
   },
+  // todo watch 监听器
+  // 分页查询
   data() {
     return {
       name: "",
@@ -196,11 +198,13 @@ export default {
     },
     getNurseIsNullElderlyInfo() {
       axios
-          .get("http://127.0.0.1:9090/elderly-info/getAllElderly")
+          .get("http://127.0.0.1:9090/elderly-info/getAllElderlyInfo")
           .then((res) => {
-            this.nurseIsNullElderly = res.data.data;
+            this.nurseIsNullElderly = res.data;
+            console.log("返回护士为空的老人数据");
+            console.log(this.nurseIsNullElderly);
             this.nurseIsNullElderly = this.nurseIsNullElderly.filter(function (data) {
-              return data.nurseId == 0;
+              return data.nurseId == 0||!data.nurseId;
             });
             console.log("返回护士为空的老人数据");
             console.log(this.nurseIsNullElderly);

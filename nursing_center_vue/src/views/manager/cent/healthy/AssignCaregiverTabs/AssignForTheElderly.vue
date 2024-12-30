@@ -64,7 +64,7 @@
             <el-card>
               <el-descriptions :title="nurse.name"  :column="1">
                 <el-descriptions-item label="护工ID号">{{nurse.nurseId}}</el-descriptions-item>
-                <el-descriptions-item label="护工姓名">{{nurse.nurseName}}</el-descriptions-item>
+                <el-descriptions-item label="护工姓名">{{nurse.name}}</el-descriptions-item>
                 <el-descriptions-item label="护工性别">{{nurse.gender}}</el-descriptions-item>
                 <el-descriptions-item label="联系方式">{{nurse.contactInfo}}</el-descriptions-item>
                 <el-descriptions-item label="护理等级">

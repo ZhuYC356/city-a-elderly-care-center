@@ -69,6 +69,14 @@ public class ElderlyInfoController {
         return elderlyInfoService.getElderlyInfoByIdNumber(idNumber);
     }
 
+    /**
+     * 返回所有老人信息
+     * @return
+     */
+    @GetMapping("/getAllElderlyInfo")
+    public List<ElderlyInfo> getAllElderlyInfo() {
+        return elderlyInfoService.list();
+    }
 
     @GetMapping("/getAllElderly")
     public ResultGeneric<List<AssignElderly>> getAllElderly() {
