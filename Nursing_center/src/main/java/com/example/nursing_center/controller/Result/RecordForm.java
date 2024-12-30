@@ -11,7 +11,7 @@ import lombok.Data;
 @Data
 public class RecordForm {
     Integer elderlyId;
-    String elderlyName;
+    String name;
     String idNumber;
     String projectName;
     Integer nurseLevel;

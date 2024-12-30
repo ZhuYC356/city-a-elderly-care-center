@@ -3,15 +3,16 @@ import {reactive, ref, onMounted} from 'vue';
 import request from '@/utils/request';
 import axios from "axios";
 import * as XLSX from 'xlsx';
+import { Message } from 'element-ui';
 
 // 表单数据
 const form = reactive({
-  elderlyName: '',
+  name: '',
   projectName: '',
 });
 const addForm = reactive({
   elderlyId: '',
-  elderlyName: '',
+  name: '',
   idNumber: '',
   projectName: '',
   nurseLevel: '',
@@ -35,7 +36,7 @@ const handleCurrentChange = () => {
 // 搜索按钮点击事件
 const onSubmit = () => {
   let selectLink = 'http://localhost:9090/care-record/select?';
-  selectLink += `elderlyName=${form.elderlyName}`
+  selectLink += `name=${form.name}`
   selectLink += `&projectName=${form.projectName}`
 
   axios
@@ -54,7 +55,7 @@ onMounted(() => {
   console.log(tableData)
 })
 const clearAll = () => {
-  form.elderlyName = '';
+  form.name = '';
   form.project_name = '';
   getData();
 };
@@ -87,22 +88,26 @@ const viewDetails = (index, row) => {
         if (res.data && Array.isArray(res.data)) {
           detailDialogContent.value = res.data.map(record => `
           <p>
-            <strong>老人姓名:</strong> ${record.elderlyName || '未提供'}<br>
+            <strong>老人姓名:</strong> ${record.name || '未提供'}<br>
             <strong>身份证号:</strong> ${record.idNumber || '未提供'}<br>
             <strong>护理项目:</strong> ${record.projectName || '未提供'}<br>
             <strong>护理等级:</strong> ${record.nurseLevel || '未提供'}<br>
             <strong>护理人:</strong> ${record.nurseName || '未提供'}<br>
             <strong>护理状态:</strong> ${record.careStatus || '未提供'}<br>
+            <strong>护理状态:</strong> ${record.careStatus || '未提供'}<br>
           </p>
         `).join('<hr>');  // 拼接每一条记录的详细信息，分隔使用 <hr> 标签
           detailDialogVisible.value = true;  // 显示详情弹窗
         } else {
-          alert('未找到详细信息');
+          Message({
+            message: '未找到详细信息',
+            type: 'warning',
+          })
         }
       })
       .catch((err) => {
         console.error('获取护理记录失败', err);
-        alert('获取护理记录失败，请稍后重试');
+        Message.error('获取护理记录失败，请稍后重试')
       });
 };
 
@@ -119,19 +124,26 @@ const deleteRow = (index, tableData) => {
 
   const elderlyId = record.elderlyId;  // 获取需要移除记录的老人ID
 
+  // 弹出确认框
+  const isConfirmed = window.confirm('您确定要移除此记录吗？');
+
   // 发送删除请求
   axios
       .delete('http://localhost:9090/care-record/remove', { params: { elderlyId } })
       .then((res) => {
         console.log(res.data.message);  // 打印移除成功消息
         tableData.splice(index, 1);  // 从表格中移除对应的记录
-        alert('记录已成功移除');
+        Message({
+          message: '记录已成功移除',
+          type: 'success',
+        })
       })
       .catch((err) => {
         console.error('移除记录失败', err);
-        alert('移除记录失败，请稍后重试');
-      })
+        Message.error('移除记录失败')
+      });
 }
+
 
 
 
@@ -147,7 +159,7 @@ const submitReport = () => {
   let reportContent = selectedRows.value.map((data, index) => `
     第${index + 1}条:<br>
     老人编号: ${data.elderlyId || 'null'}<br>
-    老人姓名: ${data.elderlyName || 'null'}<br>
+    老人姓名: ${data.name || 'null'}<br>
     身份证号: ${data.idNumber || 'null'}<br>
     护理项目: ${data.projectName || 'null'}<br>
     护理等级: ${data.nurseLevel || 'null'}<br>
@@ -186,7 +198,7 @@ const exportToExcel = () => {
 
   const data = selectedRows.value.map(row => ({
     老人编号: row.elderlyId || 'null',
-    老人姓名: row.elderlyName || 'null',
+    老人姓名: row.name || 'null',
     身份证号: row.idNumber || 'null',
     护理项目: row.projectName || 'null',
     护理等级: row.nurseLevel || 'null',
@@ -218,7 +230,7 @@ const exportToExcel = () => {
       <div style="margin-top: 15px; margin-left: 10px">
         <el-form :inline="true" :model="form">
           <el-form-item style="margin-right: 20px">
-            <el-input v-model="form.elderlyName" placeholder="请填写老人姓名" clearable>
+            <el-input v-model="form.name" placeholder="请填写老人姓名" clearable>
               <template #prefix>
                 <i class="el-icon-user" style="font-size: 15px; margin-left: 3px"></i>
               </template>
@@ -259,7 +271,7 @@ const exportToExcel = () => {
                   :header-cell-style="{background:'#f3f6fd',color:'#555'}" @selection-change="selectedRows = $event">
           <el-table-column type="selection" width="55"/>
           <el-table-column property="elderlyId" label="ID" width="120"/>
-          <el-table-column property="elderlyName" label="姓名" width="120"/>
+          <el-table-column property="name" label="姓名" width="120"/>
           <el-table-column property="idNumber" label="身份证号" width="180"/>
           <el-table-column property="projectName" label="护理项目" width="120"/>
           <el-table-column property="nurseLevel" label="护理等级" width="120"/>

@@ -35,14 +35,14 @@ public class CareRecordController {
 
     /**
      * 根据姓名和护理项目搜索老人护理记录
-     * @param elderlyName
+     * @param name
      * @param projectName
      * @return
      */
     @GetMapping("/select")
-    public List<RecordForm> select(@RequestParam(required = false) String elderlyName,
+    public List<RecordForm> select(@RequestParam(required = false) String name,
                                    @RequestParam(required = false) String projectName) {
-        return careRecordService.select(elderlyName, projectName);
+        return careRecordService.select(name, projectName);
     }
 
     /**

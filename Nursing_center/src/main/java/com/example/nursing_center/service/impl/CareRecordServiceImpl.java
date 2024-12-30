@@ -31,8 +31,8 @@ public class CareRecordServiceImpl extends ServiceImpl<CareRecordMapper, CareRec
     }
 
     @Override
-    public List<RecordForm> select(String elderlyName, String projectName) {
-        return careRecordMapper.select(elderlyName, projectName);
+    public List<RecordForm> select(String name, String projectName) {
+        return careRecordMapper.select(name, projectName);
     }
 
     @Override

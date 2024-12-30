@@ -4,7 +4,7 @@
 
 
     <select id="getRecord" resultType="com.example.nursing_center.controller.Result.RecordForm">
-        SELECT
+        /*SELECT
             e.elderly_id AS elderlyId,
             e.name AS elderlyName,
             e.id_number AS idNumber,
@@ -23,38 +23,41 @@
         WHERE
             r.status = '1' AND e.status = '1' AND p.status = '1' AND n.status = '1'
         ORDER BY
-            r.care_start_time DESC;
+            r.care_start_time DESC;*/
+            select * from service_concern_and_record;
     </select>
     <select id="select" resultType="com.example.nursing_center.controller.Result.RecordForm">
-        SELECT
-        ei.elderly_id,              -- 老人ID
-        ei.name AS elderly_name,    -- 老人姓名
-        ei.id_number,               -- 老人身份证号
-        cp.project_name AS project_name,            -- 护理项目名称
-        cp.nurse_level,             -- 护理等级
-        ni.name AS nurse_name,      -- 护工姓名
-        cr.care_status              -- 护理状态
+        <!--SELECT
+        ei.elderly_id,              &#45;&#45; 老人ID
+        ei.name AS elderly_name,    &#45;&#45; 老人姓名
+        ei.id_number,               &#45;&#45; 老人身份证号
+        cp.project_name AS project_name,            &#45;&#45; 护理项目名称
+        cp.nurse_level,             &#45;&#45; 护理等级
+        ni.name AS nurse_name,      &#45;&#45; 护工姓名
+        cr.care_status              &#45;&#45; 护理状态
         FROM
         care_record cr
         JOIN
-        elderly_info ei ON cr.elderly_id = ei.elderly_id  -- 连接老人信息表
+        elderly_info ei ON cr.elderly_id = ei.elderly_id  &#45;&#45; 连接老人信息表
         JOIN
-        care_project cp ON cr.project_id = cp.project_id  -- 连接护理项目信息表
+        care_project cp ON cr.project_id = cp.project_id  &#45;&#45; 连接护理项目信息表
         JOIN
-        nurse_info ni ON cr.nurse_id = ni.nurse_id       -- 连接护工信息表
+        nurse_info ni ON cr.nurse_id = ni.nurse_id       &#45;&#45; 连接护工信息表
         WHERE
-        1 = 1 -- 作为条件的默认值，用于连接动态条件
+        1 = 1 &#45;&#45; 作为条件的默认值，用于连接动态条件
         <if test="elderlyName != null and elderlyName != ''">
-            AND ei.name LIKE CONCAT('%', #{elderlyName}, '%') -- 根据老人姓名模糊查询
+            AND ei.name LIKE CONCAT('%', #{elderlyName}, '%') &#45;&#45; 根据老人姓名模糊查询
         </if>
         <if test="projectName != null and projectName != ''">
-            AND cp.project_name LIKE CONCAT('%', #{projectName}, '%') -- 根据护理项目名称模糊查询
+            AND cp.project_name LIKE CONCAT('%', #{projectName}, '%') &#45;&#45; 根据护理项目名称模糊查询
         </if>
-        AND cr.status = '1'; -- 仅查询状态为1的有效记录
-
+        AND cr.status = '1'; &#45;&#45; 仅查询状态为1的有效记录-->
+        select * from service_concern_and_record
+        where name like concat('%',#{name},'%')
+          and project_name like concat('%',#{projectName},'%')
     </select>
     <select id="getRecordById" resultType="com.example.nursing_center.controller.Result.RecordForm">
-        SELECT
+        /*SELECT
             ei.name AS elderlyName,
             ei.id_number AS idNumber,
             cp.project_name AS projectName,
@@ -70,10 +73,14 @@
                 JOIN
             nurse_info ni ON cr.nurse_id = ni.nurse_id
         WHERE
-            cr.elderly_id = #{elderlyId}
+            cr.elderly_id = #{elderlyId}*/
+        SELECT name, idNumber, projectName, nurseLevel, nurseName, careStatus
+        FROM service_concern_and_record
+        WHERE elderlyId = #{elderlyId};
+
     </select>
     <select id="getCareStatus" resultType="String">
-        SELECT care_status FROM care_record WHERE elderly_id = #{elderlyId}
+        SELECT care_status FROM service_concern_and_record WHERE elderly_id = #{elderlyId}
     </select>
 
     <!--服务关注的表格查询语句-->
@@ -113,6 +120,6 @@
 
 
     <delete id="deleteByElderlyId">
-        DELETE FROM care_record WHERE elderly_id = #{elderlyId}
+        DELETE FROM service_concern_and_record WHERE elderly_id = #{elderlyId}
     </delete>
 </mapper>

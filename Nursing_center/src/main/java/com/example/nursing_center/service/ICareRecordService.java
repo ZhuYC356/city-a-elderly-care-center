@@ -19,7 +19,7 @@ public interface ICareRecordService extends IService<CareRecord> {
 
     List<RecordForm> getRecord();
 
-    List<RecordForm> select(String elderlyName, String projectName);
+    List<RecordForm> select(String name, String projectName);
 
     List<RecordForm> getRecordById(Integer elderlyId);
 
