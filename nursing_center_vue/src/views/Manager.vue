@@ -17,13 +17,12 @@
       <div class="manager-header-right">
         <el-dropdown placement="bottom">
           <div class="avatar">
-            <img src="@/assets/imgs/tou.jpg" alt="">
-<!--            <img :src="'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png'"/>-->
-            <div>{{ '管理员' }}</div>
+            <img :src="user.avatar ||'@/assets/imgs/tou.jpg'" alt="">
+            <div>{{ user.name || '管理员' }}</div>
           </div>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item @click.native="goToPerson">个人信息</el-dropdown-item>
-            <el-dropdown-item @click.native="$router.push('/password')">修改密码</el-dropdown-item>
+<!--            <el-dropdown-item @click.native="goToPerson">个人信息</el-dropdown-item>-->
+<!--            <el-dropdown-item @click.native="$router.push('/password')">修改密码</el-dropdown-item>-->
             <el-dropdown-item @click.native="logout">退出登录</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
@@ -34,8 +33,8 @@
     <div class="manager-main">
       <!--  侧边栏  -->
       <div class="manager-main-left">
-<!--        :default-openeds="['register', 'work','examine','inspection','pharmacy']"-->
-        <el-menu  router style="border: none" :default-active="$route.path">
+        <!--        :default-openeds="['register', 'work','examine','inspection','pharmacy']"-->
+        <el-menu router style="border: none" :default-active="$route.path">
           <el-menu-item index="/home">
             <i class="el-icon-s-home"></i>
             <span slot="title">系统首页</span>

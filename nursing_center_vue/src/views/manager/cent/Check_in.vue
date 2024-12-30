@@ -568,7 +568,6 @@ export default {
     },
     getElderlyInfo() {
       //   根据房间号床号查询老人信息
-      console.log("12121212121212")
       this.$request.get('/elderly-info/getElderlyInfoByRoomAndBed/' + this.checkOutRequests.floorNumber + '/' + this.checkOutRequests.roomNumber + '/' + this.checkOutRequests.bedNumber).then(res => {
         console.log(res.data)
         this.checkOutRequests.elderlyId = res.data.elderlyId
@@ -609,7 +608,7 @@ export default {
           this.riseElderly.nurseId === '' ||
           this.riseElderly.floorNumber === '' ||
           this.riseElderly.roomNumber === '' ||
-          this.riseElderly.bedNumber === ''||
+          this.riseElderly.bedNumber === '' ||
           this.riseElderly.avatar === ''
       ) {
         console.log(this.riseElderly)
