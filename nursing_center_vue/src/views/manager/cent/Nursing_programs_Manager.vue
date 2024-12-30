@@ -233,9 +233,9 @@ const clear=()=>{
           </el-table-column>
           <el-table-column fixed="right" label="操作" min-width="120">
             <template #default="scope">
-              <el-button link type="primary" size="small" @click="update(scope.$index,scope.row)"><span style="font-weight: bolder">修 改</span>
+              <el-button link type="primary" plain size="small" @click="update(scope.$index,scope.row)"><span style="font-weight: bolder">修 改</span>
               </el-button>
-              <el-button link type="danger" size="small" @click="update(scope.$index,scope.row)"><span style="font-weight: bolder">删 除</span>
+              <el-button link type="danger" plain size="small" @click="update(scope.$index,scope.row)"><span style="font-weight: bolder">删 除</span>
               </el-button>
             </template>
           </el-table-column>

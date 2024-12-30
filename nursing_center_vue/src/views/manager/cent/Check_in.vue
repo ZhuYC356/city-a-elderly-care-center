@@ -148,16 +148,16 @@
             <el-option label="低级" value="4"/>
           </el-select>
         </el-form-item>
-        <el-form-item label="选择护工:" :label-width="formLabelWidth">
-          <el-select v-model="riseElderly.nurseId" placeholder="选择护工">
-            <el-option
-                v-for="item in nurseList"
-                :key="item.nurseId"
-                :label="item.name"
-                :value="item.nurseId">
-            </el-option>
-          </el-select>
-        </el-form-item>
+<!--        <el-form-item label="选择护工:" :label-width="formLabelWidth">-->
+<!--          <el-select v-model="riseElderly.nurseId" placeholder="选择护工">-->
+<!--            <el-option-->
+<!--                v-for="item in nurseList"-->
+<!--                :key="item.nurseId"-->
+<!--                :label="item.name"-->
+<!--                :value="item.nurseId">-->
+<!--            </el-option>-->
+<!--          </el-select>-->
+<!--        </el-form-item>-->
         <el-form-item label="选择楼号:" :label-width="formLabelWidth">
           <el-select v-model="riseElderly.floorNumber" placeholder="选择楼号" @change="getRoomList(1)">
             <el-option
@@ -444,23 +444,20 @@
     <!--  修改信息-->
     <el-dialog :visible.sync="dialogFormVisible4" title="修改信息" width="500">
       <el-form :model="updateInfo">
-        <el-form-item label="姓名:" :label-width="formLabelWidth">
-          <el-input v-model="updateInfo.name" autocomplete="off"/>
-        </el-form-item>
-        <el-form-item label="身份证号:" :label-width="formLabelWidth">
-          <el-input v-model="updateInfo.idNumber" autocomplete="off"/>
+        <el-form-item :label-width="formLabelWidth" label="照片" prop="avatar">
+          <el-upload
+              :action="$baseUrl + '/files/upload'"
+              list-type="picture"
+              :on-success="handleCoverSuccessUpdate"
+          >
+            <el-button type="primary">上传照片</el-button>
+          </el-upload>
         </el-form-item>
         <el-form-item label="家庭联系电话:" :label-width="formLabelWidth">
           <el-input v-model="updateInfo.familyContactInfo" autocomplete="off"/>
         </el-form-item>
         <el-form-item label="身体状况描述:" :label-width="formLabelWidth">
           <el-input v-model="updateInfo.physicalCondition" autocomplete="off"/>
-        </el-form-item>
-        <el-form-item label="性别:" :label-width="formLabelWidth">
-          <el-select v-model="updateInfo.gender" placeholder="选择性别">
-            <el-option label="男性" value="M"/>
-            <el-option label="女性" value="F"/>
-          </el-select>
         </el-form-item>
         <el-form-item label="自理等级:" :label-width="formLabelWidth">
           <el-select v-model="updateInfo.selfCareStatus" placeholder="选择自理等级">
@@ -499,6 +496,50 @@ export default {
     this.getAll()
   },
   methods: {
+    updateClear() {
+      this.updateInfo = {
+        idNumber: '',
+        name: '',
+        elderlyId: '',
+        roomNumber: '',
+        floorNumber: '',
+        bedNumber: '',
+        checkInTime: '',
+        checkOutTime: '',
+        familyContactInfo: '',
+        physicalCondition: '',
+        selfCareStatus: '',
+        nurseLevel: '',
+        avatar: '',
+      }
+    },
+    infoViewClear() {
+      this.viewInfo = {
+        elderlyId: '',
+        name: '',
+        idNumber: '',
+        gender: '',
+        birthday: '',
+        age: '',
+        nation: '',
+        nativePlace: '',
+        politicalOutlook: '',
+        educationDegree: '',
+        maritalStatus: '',
+        householdType: '',
+        householdRegistrationAddress: '',
+        permanentResidenceAddress: '',
+        phoneNumber: '',
+        familyContactInfo: '',
+        physicalCondition: '',
+        selfCareStatus: '',
+        nurseLevel: '',
+        checkInTime: '',
+        floorNumber: '',
+        roomNumber: '',
+        bedNumber: ''
+      }
+    },
     getAll() {
       this.$request.get('/elderly-info/getAll').then(res => {
         this.elderlyList = res.data
@@ -605,7 +646,6 @@ export default {
           this.riseElderly.gender === '' ||
           this.riseElderly.selfCareStatus === '' ||
           this.riseElderly.nurseLevel === '' ||
-          this.riseElderly.nurseId === '' ||
           this.riseElderly.floorNumber === '' ||
           this.riseElderly.roomNumber === '' ||
           this.riseElderly.bedNumber === '' ||
@@ -651,7 +691,7 @@ export default {
       if (this.selectFrom.name === '' && this.selectFrom.bedNumber === '' && this.selectFrom.date === '') {
         this.$message.error('请填写搜索信息')
       } else {
-        this.$request.post('/elderly-info/selectByFrom', this.selectFrom).then(res => {
+        this.$request.post('/elderly-inqfo/selectByFrom', this.selectFrom).then(res => {
           console.log(res)
           if (res.data.length === 0) {
             this.$message.error('未查询到结果')
@@ -679,14 +719,24 @@ export default {
     },
     update(index, row) {
       this.updateInfo = row
+      console.log("row:" + row.elderlyId)
       this.dialogFormVisible4 = true
     },
     saveUpdate() {
+      if (
+          this.updateInfo.familyContactInfo === '' ||
+          this.updateInfo.physicalCondition === '' ||
+          this.updateInfo.selfCareStatus === '' ||
+          this.updateInfo.nurseLevel === ''
+      ) {
+        this.$message.error('请填写完整信息')
+        return
+      }
       this.dialogFormVisible4 = false
       this.$request.post('/elderly-info/updateById', this.updateInfo).then(res => {
-        console.log(res.code)
-        if (res.code === 200) {
+        if (res.code === "200") {
           this.$message.success('修改成功')
+          this.updateClear()
         } else {
           this.$message.error("修改失败")
         }
@@ -719,6 +769,9 @@ export default {
     handleCoverSuccess(res) {
       this.riseElderly.avatar = res.data
     },
+    handleCoverSuccessUpdate(res) {
+      this.updateInfo.avatar = res.data
+    },
   },
   data() {
     return {
@@ -737,6 +790,7 @@ export default {
         roomNumber: "",
         bedNumber: "",
         physicalCondition: "",
+        avatar: "",
       },
       viewInfo: {
         elderlyId: "",

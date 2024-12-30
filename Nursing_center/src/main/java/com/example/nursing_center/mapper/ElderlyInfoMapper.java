@@ -45,4 +45,6 @@ public interface ElderlyInfoMapper extends BaseMapper<ElderlyInfo> {
 
     // 移除老人的护工信息
     void removeNurseFromElderly(@Param("elderlyId") int elderlyId);
+
+    Integer updateAllById(Info info);
 }

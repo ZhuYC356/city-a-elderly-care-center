@@ -49,7 +49,6 @@ public class ElderlyInfoServiceImpl extends ServiceImpl<ElderlyInfoMapper, Elder
         bedInfoMapper.updateById(bedInfo);//更新床位已经使用
 
 //        2.添加老人信息
-
         info.setBedId(bedInfo.getBedId());//用于添加老人的信息表
         elderlyInfoMapper.add(info);
         System.out.println(info);
@@ -63,9 +62,7 @@ public class ElderlyInfoServiceImpl extends ServiceImpl<ElderlyInfoMapper, Elder
 
     @Override
     public Result updateAllById(Info info) {
-//        todo 添加修改
-        return Result.success();
-//        return Result.success(elderlyInfoMapper.updateAllById(info));
+        return Result.success(elderlyInfoMapper.updateAllById(info));
     }
 
     @Override
