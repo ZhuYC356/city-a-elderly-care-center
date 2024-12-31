@@ -21,4 +21,6 @@ public interface IAdminService extends IService<Admin> {
     List<Admin> Login(Login login);
 
     Result add(Admin admin);
+
+    List<Admin> gatAll();
 }

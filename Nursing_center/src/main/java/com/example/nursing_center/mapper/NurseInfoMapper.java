@@ -28,4 +28,6 @@ public interface NurseInfoMapper extends BaseMapper<NurseInfo> {
 
     // 查询特定护工（可以加入更多查询条件）
     AssignNurse findNurseById(@Param("nurseId") int nurseId);
+
+    List<NurseInfo> select(NurseInfo nurseInfo);
 }

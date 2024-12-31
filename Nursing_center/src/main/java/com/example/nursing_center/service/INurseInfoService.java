@@ -26,4 +26,6 @@ public interface INurseInfoService extends IService<NurseInfo> {
     ResultGeneric<List<AssignNurse>> getAllNurses(String nurseName);
 
     Result updateInfo(NurseInfo nurseInfo);
+
+    Result select(NurseInfo nurseInfo);
 }

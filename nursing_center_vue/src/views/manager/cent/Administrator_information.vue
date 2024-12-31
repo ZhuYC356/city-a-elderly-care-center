@@ -52,11 +52,11 @@
           <el-table-column property="email" label="邮箱" width="150"/>
           <el-table-column fixed="right" label="操作" min-width="120">
             <template v-slot="scope">
-              <el-button link type="danger" size="small" plain @click="deleteById(scope.$index,scope.row)">
-                <span style="font-weight: bolder">删除</span>
-              </el-button>
               <el-button link type="primary" size="small" plain @click="update(scope.$index,scope.row)"><span
                   style="font-weight: bolder">修 改</span>
+              </el-button>
+              <el-button link type="danger" size="small" plain @click="deleteById(scope.$index,scope.row)">
+                <span style="font-weight: bolder">删除</span>
               </el-button>
             </template>
           </el-table-column>
@@ -80,9 +80,9 @@
     <!--      新增管理员-->
     <el-dialog :visible.sync="dialogFormVisible" title="新增管理员" width="500">
       <el-form :model="riseAdmin" style="margin-top: 2px">
-        <el-form-item label="用户名:" :label-width="formLabelWidth">
-          <el-input v-model="riseAdmin.username" autocomplete="off"/>
-        </el-form-item>
+<!--        <el-form-item label="用户名:" :label-width="formLabelWidth">-->
+<!--          <el-input v-model="riseAdmin.username" autocomplete="off"/>-->
+<!--        </el-form-item>-->
         <el-form-item label="姓名:" :label-width="formLabelWidth">
           <el-input v-model="riseAdmin.name" autocomplete="off"/>
         </el-form-item>
@@ -149,6 +149,15 @@
     <el-dialog :visible.sync="dialogFormVisibleUpdate" title="查询详情" width="500">
       <div>
         <el-form :model="updateInfo" label-width="auto" style="max-width: 600px">
+          <el-form-item :label-width="formLabelWidth" label="照片" prop="avatar">
+            <el-upload
+                :action="$baseUrl + '/files/upload'"
+                list-type="picture"
+                :on-success="handleCoverSuccessUpdate"
+            >
+              <el-button type="primary">上传照片</el-button>
+            </el-upload>
+          </el-form-item>
           <el-form-item label="姓名" style="margin-top: 15px">
             <el-input v-model="updateInfo.name" style="width: 300px;">
               <template #prefix>
@@ -156,15 +165,15 @@
               </template>
             </el-input>
           </el-form-item>
-          <el-form-item label="身份证号" style="margin-top: 15px">
-            <el-input v-model="updateInfo.idNumber" style="width: 300px;">
+          <el-form-item label="手机号" style="margin-top: 15px">
+            <el-input v-model="updateInfo.phone" style="width: 300px;">
               <template #prefix>
                 <i class="el-icon-connection" style="font-size: 15px;margin-left: 3px"></i>
               </template>
             </el-input>
           </el-form-item>
-          <el-form-item label="联系方式" style="margin-top: 15px">
-            <el-input v-model="updateInfo.contactInfo" style="width: 300px;">
+          <el-form-item label="邮箱" style="margin-top: 15px">
+            <el-input v-model="updateInfo.email" style="width: 300px;">
               <template #prefix>
                 <i class="el-icon-connection" style="font-size: 15px;margin-left: 3px"></i>
               </template>
@@ -189,7 +198,7 @@ export default {
     this.gayAll()
   },
   methods: {
-    gayAll(){
+    gayAll() {
       this.$request.get('/admin/getAll').then(res => {
         this.tableData = res.data
       })
@@ -211,14 +220,20 @@ export default {
       }
     },
     update(index, row) {
-      console.log("row:" + row.nurseId)
-      this.$request.get('/nurse-info/getById/' + row.nurseId).then(res => {
-        this.updateInfo = res.data
-      })
+      console.log("row:" + row.id)
+      this.updateInfo = row
       this.dialogFormVisibleUpdate = true
     },
     save() {
-
+      this.$request.post('/admin/update', this.updateInfo).then(res => {
+        if (res.code === "200") {
+          this.$message.success("修改成功")
+          this.dialogFormVisibleUpdate = false
+          this.gayAll()
+        } else {
+          this.$message.error("修改失败")
+        }
+      })
     },
     select() {
 
@@ -242,6 +257,9 @@ export default {
     handleCoverSuccess(res) {
       this.riseAdmin.avatar = res.data
     },
+    handleCoverSuccessUpdate(res){
+      this.updateInfo.avatar = res.data
+    }
   },
   data() {
     return {
@@ -249,6 +267,8 @@ export default {
         name: '',
         phone: '',
         email: '',
+        avatar: '',
+        id: ''
       },
       viewInfo: {
         name: '',
@@ -261,7 +281,7 @@ export default {
         password: '',
         phone: '',
         email: '',
-        avatar:'',
+        avatar: '',
       },
       dialogFormVisible: false,
       dialogFormVisibleView: false,

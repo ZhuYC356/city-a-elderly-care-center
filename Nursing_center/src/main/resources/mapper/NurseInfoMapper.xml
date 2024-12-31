@@ -103,4 +103,16 @@
         FROM nurse_info n
         WHERE n.nurse_id = #{nurseId};
     </select>
+    <select id="select" resultType="com.example.nursing_center.pojo.NurseInfo">
+        select *
+        from nurse_info
+        where
+        1=1
+        <if test="name != null">
+            and name like concat('%',#{name},'%')
+        </if>
+        <if test="nurseLevel != null">
+            and nurse_level = #{nurseLevel}
+        </if>
+    </select>
 </mapper>

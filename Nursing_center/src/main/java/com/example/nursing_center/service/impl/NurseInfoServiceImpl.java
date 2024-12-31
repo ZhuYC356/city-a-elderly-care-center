@@ -44,6 +44,11 @@ public class NurseInfoServiceImpl extends ServiceImpl<NurseInfoMapper, NurseInfo
     }
 
     @Override
+    public Result select(NurseInfo nurseInfo) {
+        return Result.success(nurseInfoMapper.select(nurseInfo));
+    }
+
+    @Override
     public Result addInfo(NurseInfo nurseInfo) {
         return Result.success(nurseInfoMapper.addInfo(nurseInfo));
     }

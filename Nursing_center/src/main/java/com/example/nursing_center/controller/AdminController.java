@@ -51,8 +51,8 @@ public class AdminController {
 
     @GetMapping("/getAll")
     public Result getAll() {
-        System.out.println("______________________________________________" + adminService.list());
-        return Result.success(adminService.list());
+        System.out.println("______________________________________________" + adminService.gatAll());
+        return Result.success(adminService.gatAll());
     }
 
     @PostMapping("/add")
@@ -64,5 +64,13 @@ public class AdminController {
     @GetMapping("/deleteById/{id}")
     public Result deleteById(@PathVariable("id") Integer id) {
         return adminService.removeById(id) ? Result.success() : Result.error();
+    }
+    @GetMapping("/getById/{id}")
+    public Result getById(@PathVariable Integer id) {
+        return Result.success(adminService.getById(id));
+    }
+    @PostMapping("/update")
+    public Result update(@RequestBody Admin admin) {
+        return adminService.updateById(admin) ? Result.success() : Result.error();
     }
 }

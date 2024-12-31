@@ -24,4 +24,6 @@ public interface AdminMapper extends BaseMapper<Admin> {
     Integer add(Admin admin);
 
     int selectByIdCount(String username);
+
+    List<Admin> getAll();
 }

@@ -42,9 +42,6 @@
         <if test="name!=null">
             and name like "%"#{name}"%"
         </if>
-        <if test="idNumber!=null">
-            and id_number =#{idNumber}
-        </if>
         <if test="checkInTime!=null">
             and check_in_time=#{checkInTime}
         </if>

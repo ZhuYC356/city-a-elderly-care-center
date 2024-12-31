@@ -3,10 +3,10 @@
     <!--  头部  -->
     <div class="manager-header">
       <div class="manager-header-left">
-        <img src="@/assets/imgs/img.png"/>
+        <!--        <img src="@/assets/imgs/img.png"/>-->
+        <img style="height: 50px;width: 50px" src="@/assets/imgs/1.png"/>
         <div class="title">A市疗养中心</div>
       </div>
-
       <div class="manager-header-center">
         <el-breadcrumb separator-class="el-icon-arrow-right">
           <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
@@ -21,8 +21,8 @@
             <div>{{ user.name || '管理员' }}</div>
           </div>
           <el-dropdown-menu slot="dropdown">
-<!--            <el-dropdown-item @click.native="goToPerson">个人信息</el-dropdown-item>-->
-<!--            <el-dropdown-item @click.native="$router.push('/password')">修改密码</el-dropdown-item>-->
+            <!--            <el-dropdown-item @click.native="goToPerson">个人信息</el-dropdown-item>-->
+            <!--            <el-dropdown-item @click.native="$router.push('/password')">修改密码</el-dropdown-item>-->
             <el-dropdown-item @click.native="logout">退出登录</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>

@@ -80,7 +80,9 @@ onMounted(() => {
 // 同意申请
 const handleAgree = (index,row) => {
   addForm.value=row
-  addForm.value.adminId=1
+  let user = sessionStorage.getItem('nursing_center_user');
+  addForm.value.adminId=user.id
+  // addForm.value.adminId=1
   let flag = row.approvalStatus
   if (flag == 2) {
     alert("审批状态不为“2”才可以点击同意喔~")

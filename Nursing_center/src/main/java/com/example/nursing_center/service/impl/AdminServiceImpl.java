@@ -7,6 +7,7 @@ import com.example.nursing_center.pojo.Admin;
 import com.example.nursing_center.mapper.AdminMapper;
 import com.example.nursing_center.service.IAdminService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.example.nursing_center.util.AccountGenerator;
 import com.example.nursing_center.util.MD5Util;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
@@ -37,11 +38,19 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
 
     @Override
     public Result add(Admin admin) {
+//        UUID生成账户号
+        admin.setUsername(AccountGenerator.generateAccount());
         if (adminMapper.selectByIdCount(admin.getUsername())!=0){
-            return Result.error(ResultCodeEnum.USER_EXIST_ERROR);
+//            return Result.error(ResultCodeEnum.USER_EXIST_ERROR);
+            admin.setUsername(AccountGenerator.generateAccount());
         }
         admin.setPassword(MD5Util.encrypt(admin.getPassword()));
         admin.setRole("ADMIN");
         return Result.success(adminMapper.add(admin));
+    }
+
+    @Override
+    public List<Admin> gatAll() {
+        return adminMapper.getAll();
     }
 }

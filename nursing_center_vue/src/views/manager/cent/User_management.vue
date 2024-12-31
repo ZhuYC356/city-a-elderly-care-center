@@ -21,13 +21,6 @@
             </el-input>
           </el-form-item>
           <el-form-item style="margin-right: 20px">
-            <el-input v-model="selectFrom.bedNumber" placeholder="请填写工号" clearable>
-              <template #prefix>
-                <i class="el-icon-postcard" style="font-size: 15px;margin-left: 3px"></i>
-              </template>
-            </el-input>
-          </el-form-item>
-          <el-form-item style="margin-right: 20px">
             <el-select v-model="selectFrom.nurseLevel" placeholder="选择护理等级">
               <el-option label="最高级" value="1"/>
               <el-option label="高级" value="2"/>
@@ -301,7 +294,7 @@ export default {
     this.gatAll()
   },
   methods: {
-    gatAll(){
+    gatAll() {
       this.$request.get('/nurse-info/getAll').then(res => {
         this.tableData = res.data
       })
@@ -373,7 +366,9 @@ export default {
       }
     },
     select() {
-
+      this.$request.post('/nurse-info/select', this.selectFrom).then(res => {
+        this.tableData = res.data
+      })
     },
     clearAll() {
       this.selectFrom = {
@@ -381,6 +376,7 @@ export default {
         bedNumber: '',
         checkInTime: ''
       }
+      this.gatAll()
     },
     handleCoverSuccess(res) {
       this.riseNursing.avatar = res.data
@@ -404,7 +400,7 @@ export default {
         nurseLevel: '',
         serviceEvaluation: '',
       },
-      srcList:[],
+      srcList: [],
       viewInfo: {
         name: '',
         nurseId: '',
@@ -428,7 +424,7 @@ export default {
         professionalCertificate: '',
         homeAddress: '',
         nurseLevel: '',
-        avatar:''
+        avatar: ''
       },
       dialogFormVisible: false,
       dialogFormVisibleView: false,
@@ -437,7 +433,8 @@ export default {
       selectFrom: {
         name: '',
         bedNumber: '',
-        checkInTime: ''
+        checkInTime: '',
+        nurseLevel: ''
       },
       formLabelWidth: '140px',
     }

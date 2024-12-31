@@ -55,5 +55,11 @@ public class NurseInfoController {
 //        return Result.success();
         return nurseInfoService.updateInfo(nurseInfo);
     }
+    @PostMapping("/select")
+    public Result select(@RequestBody NurseInfo nurseInfo) {
+        System.out.println("_______________________________"+nurseInfo+"______________________");
+//        return Result.success();
+        return nurseInfoService.select(nurseInfo);
+    }
 
 }

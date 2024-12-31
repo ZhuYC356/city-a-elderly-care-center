@@ -27,5 +27,8 @@
     <select id="selectByIdCount" resultType="java.lang.Integer">
         select count(*) from admin where username=#{username}
     </select>
+    <select id="getAll" resultType="com.example.nursing_center.pojo.Admin">
+        select * from admin
+    </select>
 </mapper>
 

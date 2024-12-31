@@ -34,13 +34,13 @@
               </template>
             </el-input>
           </el-form-item>
-          <el-form-item style="margin-right: 20px">
-            <el-input v-model="selectFrom.bedNumber" placeholder="请填写床位号" clearable>
-              <template #prefix>
-                <i class="el-icon-postcard" style="font-size: 15px;margin-left: 3px"></i>
-              </template>
-            </el-input>
-          </el-form-item>
+<!--          <el-form-item style="margin-right: 20px">-->
+<!--            <el-input v-model="selectFrom.bedNumber" placeholder="请填写床位号" clearable>-->
+<!--              <template #prefix>-->
+<!--                <i class="el-icon-postcard" style="font-size: 15px;margin-left: 3px"></i>-->
+<!--              </template>-->
+<!--            </el-input>-->
+<!--          </el-form-item>-->
           <el-form-item style="margin-right: 20px">
             <el-date-picker
                 v-model="selectFrom.checkInTime"
@@ -691,7 +691,7 @@ export default {
       if (this.selectFrom.name === '' && this.selectFrom.bedNumber === '' && this.selectFrom.date === '') {
         this.$message.error('请填写搜索信息')
       } else {
-        this.$request.post('/elderly-inqfo/selectByFrom', this.selectFrom).then(res => {
+        this.$request.post('/elderly-info/selectByFrom', this.selectFrom).then(res => {
           console.log(res)
           if (res.data.length === 0) {
             this.$message.error('未查询到结果')
