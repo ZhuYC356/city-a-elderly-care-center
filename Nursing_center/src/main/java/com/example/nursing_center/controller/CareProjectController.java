@@ -9,6 +9,7 @@ import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * <p>
@@ -65,5 +66,14 @@ public class CareProjectController {
         System.out.println(careProject);
         return careProjectService.updateProject(careProject);
     }
+    @GetMapping("/getLength")
+    public Result getLength() {
+        return careProjectService.getLength();
+    }
+    @GetMapping("/getProjectName")
+    public List<CareProject> getProjectName() {
+        return careProjectService.getProjectName();
+    }
+
 
 }

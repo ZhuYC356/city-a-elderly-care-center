@@ -1,8 +1,8 @@
 package com.example.nursing_center.controller;
 
 
-import com.example.nursing_center.common.Result;
 import com.example.nursing_center.controller.Result.Money;
+import com.example.nursing_center.controller.Result.ProjectRate;
 import com.example.nursing_center.service.impl.FinancialServiceImpl;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,5 +28,9 @@ public class FinancialController {
     @GetMapping("/getAll")
     public List<Money> getAll(){
         return financialService.getAll();
+    }
+    @GetMapping("/ProjectRate")
+    public List<ProjectRate> getProjectRate(){
+        return financialService.getProjectRate();
     }
 }

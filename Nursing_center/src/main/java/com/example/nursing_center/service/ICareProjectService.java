@@ -5,6 +5,8 @@ import com.example.nursing_center.controller.Result.Form;
 import com.example.nursing_center.pojo.CareProject;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.List;
+
 /**
  * <p>
  * 存储护理项目信息 服务类
@@ -28,4 +30,8 @@ public interface ICareProjectService extends IService<CareProject> {
     Result deleteProject(int projectId);
 
     Result updateProject(CareProject careProject);
+
+    Result getLength();
+
+    List<CareProject> getProjectName();
 }

@@ -9,6 +9,8 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * <p>
  * 存储护理项目信息 服务实现类
@@ -65,5 +67,15 @@ public class CareProjectServiceImpl extends ServiceImpl<CareProjectMapper, CareP
     @Override
     public Result updateProject(CareProject careProject) {
         return Result.success(careProjectMapper.updateProject(careProject));
+    }
+
+    @Override
+    public Result getLength() {
+        return Result.success(careProjectMapper.getLength());
+    }
+
+    @Override
+    public List<CareProject> getProjectName() {
+        return careProjectMapper.getProjectName();
     }
 }

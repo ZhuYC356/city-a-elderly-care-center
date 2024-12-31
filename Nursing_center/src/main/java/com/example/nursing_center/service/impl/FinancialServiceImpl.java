@@ -2,8 +2,11 @@ package com.example.nursing_center.service.impl;
 
 import cn.hutool.core.date.DateTime;
 import com.example.nursing_center.controller.Result.Money;
+import com.example.nursing_center.controller.Result.ProjectRate;
+import com.example.nursing_center.pojo.CareProject;
 import com.example.nursing_center.pojo.Financial;
 import com.example.nursing_center.mapper.FinancialMapper;
+import com.example.nursing_center.service.ICareProjectService;
 import com.example.nursing_center.service.IFinancialService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import jakarta.annotation.Resource;
@@ -29,6 +32,8 @@ public class FinancialServiceImpl extends ServiceImpl<FinancialMapper, Financial
 
     @Resource
     private FinancialMapper financialMapper;
+    @Resource
+    private ICareProjectService ICareProjectService;
     @Override
     public List<Money> getAll() {
         Date date = new Date();
@@ -72,9 +77,37 @@ public class FinancialServiceImpl extends ServiceImpl<FinancialMapper, Financial
            money.setPayMoney(sumPay[i]);
            monies.set(i,money);
        }
-
-
         return monies;
     }
+
+    @Override
+    public List<ProjectRate> getProjectRate() {
+        List<CareProject> careProjects = ICareProjectService.getProjectName();
+        System.out.println(careProjects);
+        List<ProjectRate> projectRates = new ArrayList<>(careProjects.size());
+        int sum[]= new int[careProjects.size()];
+        for(int i=0;i<sum.length;i++){
+            sum[i]=0;
+        }
+        List<Financial> financials= financialMapper.getAll();
+        for(int i=0;i<financials.size();i++){
+            for(int j=0;j<sum.length;j++){
+                if(financials.get(i).getProjectId()==j){
+                    sum[j]++;
+                }
+            }
+        }
+        for(int i=0;i<careProjects.size();i++){
+            ProjectRate projectRate = new ProjectRate();
+            projectRate.setProjectId(careProjects.get(i).getProjectId());
+            projectRate.setProjectName(careProjects.get(i).getProjectName());
+            projectRate.setNumber(sum[i]);
+            projectRates.add(projectRate);
+        }
+
+        System.out.println(projectRates);
+        return projectRates;
+    }
+
 
 }

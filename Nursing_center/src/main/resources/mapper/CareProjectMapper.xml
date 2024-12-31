@@ -42,4 +42,10 @@
         SET project_name = #{projectName},description = #{description},service_duration = #{serviceDuration},price = #{price},frequency = #{frequency},nurse_level = #{nurseLevel},updated_at = Now()
         WHERE project_id = #{projectId}
     </update>
+    <select id="getLength" resultType="int">
+        select count(*) from care_project;
+    </select>
+    <select id="getProjectName" resultType="com.example.nursing_center.pojo.CareProject">
+        select project_id,project_name from care_project;
+    </select>
 </mapper>

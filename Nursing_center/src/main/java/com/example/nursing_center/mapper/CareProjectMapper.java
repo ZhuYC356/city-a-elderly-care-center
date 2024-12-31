@@ -29,4 +29,8 @@ public interface CareProjectMapper extends BaseMapper<CareProject> {
     int deleteProject(int projectId);
 
     int updateProject(CareProject careProject);
+
+    int getLength();
+
+    List<CareProject> getProjectName();
 }

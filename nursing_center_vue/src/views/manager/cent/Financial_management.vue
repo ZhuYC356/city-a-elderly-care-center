@@ -57,47 +57,64 @@ onMounted( () => {
     // chartInstance.value = echarts.init(chartDom.value);
     chartInstance.setOption(option);
 })
-
-
-
-  chartInstance1=echarts.init(chartDom1.value)
-  const option1 = {
-    title: {
-      text: '项目收入占比图',
-      subtext: 'Really Data',
-      left: 'center'
-    },
-    tooltip: {
-      trigger: 'item'
-    },
-    legend: {
-      orient: 'vertical',
-      left: 'left'
-    },
-    series: [
-      {
-        name: 'Access From',
-        type: 'pie',
-        radius: '50%',
-        data: [
-          { value: 1048, name: 'Search Engine' },
-          { value: 735, name: 'Direct' },
-          { value: 580, name: 'Email' },
-          { value: 484, name: 'Union Ads' },
-          { value: 300, name: 'Video Ads' }
-        ],
-        emphasis: {
-          itemStyle: {
-            shadowBlur: 10,
-            shadowOffsetX: 0,
-            shadowColor: 'rgba(0, 0, 0, 0.5)'
+  request.get("/financial/ProjectRate").then(res=>{
+    console.log(res)
+    let name=[];
+    let number=[]
+    res.forEach(ele=>{
+      name.push(ele.projectName)
+      number.push(ele.number)
+    })
+    // Map<String, Integer> map = new HashMap<>();
+    const map = new Map();
+    for(let i=0;i<name.length;i++){
+      map.set(name[i],number[i]);
+    }
+    console.log(name)
+    console.log(number)
+    console.log(map)
+    chartInstance1=echarts.init(chartDom1.value)
+    const option1 = {
+      title: {
+        text: '项目次数占比图',
+        subtext: 'Really Data',
+        left: 'center'
+      },
+      tooltip: {
+        trigger: 'item'
+      },
+      legend: {
+        orient: 'vertical',
+        left: 'left',
+        data: map.keys()
+      },
+      series: [
+        {
+          name: '项目次数',
+          type: 'pie',
+          radius: '50%',
+          data: [],
+          emphasis: {
+            itemStyle: {
+              shadowBlur: 10,
+              shadowOffsetX: 0,
+              shadowColor: 'rgba(0, 0, 0, 0.5)'
+            }
           }
         }
-      }
-    ]
-  }
-  // chartInstance.value = echarts.init(chartDom1.value);
-  chartInstance1.setOption(option1);
+      ]
+    }
+    for(let i=0;i<=number.length;i++){
+      option1.series[0].data.push({
+        value: map.get(name[i]),
+        name: name[i]
+      })
+    }
+    console.log(option1)
+    chartInstance1.setOption(option1);
+  })
+
+
 
 });
 </script>
@@ -115,10 +132,10 @@ onMounted( () => {
         <hr style="margin: 10px">
       </div>
         <div style="display: flex;margin-top: 60px">
-          <div ref="chartDom" style="width: 600px; height: 400px;margin-left: -30px;"></div>
-          <div ref="chartDom1" style="width: 600px; height: 400px;margin-left: 40px;margin-top: 10px"></div>
+          <div ref="chartDom" style="width: 1000px; height: 400px;margin-left: -20px;"></div>
+          <div ref="chartDom1" style="width: 600px; height: 400px;margin-left: 30px;margin-top: 10px"></div>
         </div>
-        <div style="margin-left: 200px;margin-top: -40px">
+        <div style="margin-left: 250px;margin-top: -40px">
           <span style="font-size: 13px;font-weight: bolder;color: #8c939d">{{year}}总年度收入支出表</span>
         </div>
       </el-card>
