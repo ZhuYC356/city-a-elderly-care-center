@@ -18,8 +18,6 @@ import java.util.List;
  * @since 2024-12-19
  */
 public interface IElderlyInfoService extends IService<ElderlyInfo> {
-
-
     Result getAll();
 
     Result add(Info info);
@@ -35,5 +33,6 @@ public interface IElderlyInfoService extends IService<ElderlyInfo> {
     Result getAllById(Integer id);
 
     ResultGeneric<List<AssignElderly>> getAllElderly();
+
     ResultGeneric<List<AssignElderly>> getElderlyWithoutNurse(String elderlyName);
 }

@@ -106,6 +106,9 @@ export default {
   },
   created() {
     this.user = JSON.parse(localStorage.getItem('nursing_center_user'))
+    if (this.user===null){
+      this.$router.push('/login')
+    }
   },
   methods: {
     updateUser() {
