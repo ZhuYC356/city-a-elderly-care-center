@@ -30,10 +30,6 @@
         ci.approval_time AS approvalTime
         FROM
         elderly_info ei,check_out_requests ci
-        /*LEFT JOIN*/
-        /*check_out_requests ci ON ei.elderly_id = ci.elderly_id
-        WHERE
-        1 = 1*/
         WHERE ei.elderly_id = ci.elderly_id
         <if test="name != null and name !='' ">
             AND ei.name LIKE CONCAT('%', #{name}, '%')
