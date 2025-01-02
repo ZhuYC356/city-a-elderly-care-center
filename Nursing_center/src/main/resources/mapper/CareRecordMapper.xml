@@ -10,31 +10,6 @@
 
     </select>
     <select id="select" resultType="com.example.nursing_center.controller.Result.RecordForm">
-        <!--SELECT
-        ei.elderly_id,              &#45;&#45; 老人ID
-        ei.name AS elderly_name,    &#45;&#45; 老人姓名
-        ei.id_number,               &#45;&#45; 老人身份证号
-        cp.project_name AS project_name,            &#45;&#45; 护理项目名称
-        cp.nurse_level,             &#45;&#45; 护理等级
-        ni.name AS nurse_name,      &#45;&#45; 护工姓名
-        cr.care_status              &#45;&#45; 护理状态
-        FROM
-        care_record cr
-        JOIN
-        elderly_info ei ON cr.elderly_id = ei.elderly_id  &#45;&#45; 连接老人信息表
-        JOIN
-        care_project cp ON cr.project_id = cp.project_id  &#45;&#45; 连接护理项目信息表
-        JOIN
-        nurse_info ni ON cr.nurse_id = ni.nurse_id       &#45;&#45; 连接护工信息表
-        WHERE
-        1 = 1 &#45;&#45; 作为条件的默认值，用于连接动态条件
-        <if test="elderlyName != null and elderlyName != ''">
-            AND ei.name LIKE CONCAT('%', #{elderlyName}, '%') &#45;&#45; 根据老人姓名模糊查询
-        </if>
-        <if test="projectName != null and projectName != ''">
-            AND cp.project_name LIKE CONCAT('%', #{projectName}, '%') &#45;&#45; 根据护理项目名称模糊查询
-        </if>
-        AND cr.status = '1'; &#45;&#45; 仅查询状态为1的有效记录-->
         select * from service_concern_and_record
         where name like concat('%',#{name},'%')
           and project_name like concat('%',#{projectName},'%')
@@ -52,6 +27,7 @@
             sc.description AS description,
             sc.care_status AS careStatus,
             sc.price AS price,
+            sc.nurse_level AS nurseLevel,
             sc.service_duration AS serviceDuration
         FROM service_concern_and_record sc
         WHERE elderly_id = #{elderlyId} and project_id = #{projectId}
