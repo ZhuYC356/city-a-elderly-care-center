@@ -350,7 +350,7 @@ const bedStatusData = ref([]);
 const iconColor = ref(["","#2CBE56","#999999","#ffa406","#df0003","#000000","#409EFF","#a0a224","#df007e"])
 
 const handleChange = () => {
-  // 发送 GET 请求到后端
+  // 发送 GET 请求到后端.
   axios.get('http://localhost:9090/bed-info/selectBedInfoByFloor', {
     params: {
       floor: value.value // 将选择的值作为参数传递
