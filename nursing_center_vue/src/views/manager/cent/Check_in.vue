@@ -367,7 +367,7 @@
               </template>
             </el-input>
           </el-form-item>
-          <el-form-item label="省份证号" style="margin-top: 15px">
+          <el-form-item label="身份证号" style="margin-top: 15px">
             <el-input v-model="viewInfo.idNumber" style="width: 300px;" disabled>
               <template #prefix>
                 <i class="el-icon-connection" style="font-size: 15px;margin-left: 3px"></i>
